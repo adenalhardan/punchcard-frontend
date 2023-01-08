@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "punchcard",
+    "name": "Punchcard",
     "slug": "punchcard",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,9 +18,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.adenalhardan.punchcard",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSBluetoothAlwaysUsageDescription": "App would like to use Bluetooth",
+        "NSBluetoothPeripheralUsageDescription": "App would like to use Bluetooth"
+      }
     },
     "android": {
+      "package": "com.adenalhardan.punchcard",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
