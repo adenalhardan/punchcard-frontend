@@ -1,39 +1,4 @@
 {
-  "expo": {
-    "name": "Punchcard",
-    "slug": "punchcard",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "bundleIdentifier": "com.adenalhardan.punchcard",
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSBluetoothAlwaysUsageDescription": "App would like to use Bluetooth",
-        "NSBluetoothPeripheralUsageDescription": "App would like to use Bluetooth"
-      }
-    },
-    "android": {
-      "package": "com.adenalhardan.punchcard",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+  "name": "Punchcard",
+  "displayName": "Punchcard"
 }

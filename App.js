@@ -1,52 +1,33 @@
 import {useEffect, useState} from 'react'
 import {StyleSheet, Text, SafeAreaView} from 'react-native'
+import {NativeModules, NativeEventEmitter} from 'react-native'
 
-//import {BleManager} from 'react-native-ble-plx'
-//import Peripheral, {Service, Characteristic} from 'react-native-peripheral'
-
-//const manager = new BleManager()
+const {Bluetooth} = NativeModules
+const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
 const App = () => {
-	const [devices, setDevices] = useState([])
-	/*
+	const [devices, setDevices] = useState(new Set())
+
 	useEffect(() => {
-		manager.startDeviceScan(null, {allowDuplicates: false}, async (error, device) => {
-			if(error) {
-				manager.stopDeviceScan()
-			}
-
-			setDevices([...devices, device.localName])
-		})
-
-		Peripheral.onStateChanged(state => {
-			if(state === 'poweredOn') {
-				const ch = new Characteristic({
-					uuid: '...',
-					value: '...',
-					properties: ['read', 'write'],
-					permissions: ['readable', 'writeable']
-				})
-
-				const service = new Service({
-					uuid: '...',
-					characteristics: [ch]
-				})
-
-				Peripheral.addService(serivce).then(() => {
-					Peripheral.startAdvertising({
-						name: 'name from API',
-						serviceUuids: ['...']
-					})
-				})
+		Bluetooth.scan()
+		Bluetooth.broadcast('THE_PHONE')
+		
+		BluetoothEvents.addListener('foundDevice', device => {
+			if(!devices.has(device)) {
+				setDevices(prev => new Set(prev.add(device)))
 			}
 		})
+
+		return () => {
+			BluetoothEvents.removeAllListeners()
+		}
 	}, [])
-	*/
+	
 	return (
 		<SafeAreaView style = {styles.container}>
-			<Text>Devices:</Text>
-			
-			{devices.map(device => (
+			<Text>Devices: </Text>
+
+			{[...devices].map(device => (
 				<Text key = {device}>{device}</Text>
 			))}
 		</SafeAreaView>
@@ -56,10 +37,10 @@ const App = () => {
 export default App
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	container: {
+		flex: 1,
+		backgroundColor: '#FFFFFF',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+})
