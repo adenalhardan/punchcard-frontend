@@ -7,10 +7,18 @@ const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
 const App = () => {
 	const [devices, setDevices] = useState(new Set())
+	const [name, setName] = useState(null)
 
 	useEffect(() => {
+		(async () => {
+			const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-name')
+			const {name} = await response.json()
+
+			setName(name)
+			Bluetooth.broadcast(name)
+		})()
+
 		Bluetooth.scan()
-		Bluetooth.broadcast('THE_PHONE')
 		
 		BluetoothEvents.addListener('foundDevice', device => {
 			if(!devices.has(device)) {
@@ -25,7 +33,7 @@ const App = () => {
 	
 	return (
 		<SafeAreaView style = {styles.container}>
-			<Text>Devices: </Text>
+			<Text>{name}'s Devices: </Text>
 
 			{[...devices].map(device => (
 				<Text key = {device}>{device}</Text>
