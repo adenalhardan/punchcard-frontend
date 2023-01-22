@@ -7,17 +7,31 @@ const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
 const App = () => {
 	const [devices, setDevices] = useState(new Set())
-	const [name, setName] = useState(null)
+	const [prefix, setPrefix] = useState(null)
+	const [id, setId] = useState(null)
 
 	useEffect(() => {
 		(async () => {
-			const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-name')
-			const {name} = await response.json()
+			try {
+				const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-prefix')
+				const {prefix} = await response.json()
+				setPrefix(prefix)
 
-			setName(name)
-			Bluetooth.broadcast(name)
+			} catch(error) {
+				throw error
+			}
+
+			try {
+				const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-id')
+				const {id} = await response.json()
+				setId(id)
+
+			} catch(error) {
+				throw error
+			}
 		})()
 
+		Bluetooth.broadcast(prefix.concat(id))
 		Bluetooth.scan()
 		
 		BluetoothEvents.addListener('foundDevice', device => {
@@ -27,13 +41,13 @@ const App = () => {
 		})
 
 		return () => {
-			BluetoothEvents.removeAllListeners()
+			BluetoothEvents.removeAllListeners('foundDevice')
 		}
 	}, [])
 	
 	return (
 		<SafeAreaView style = {styles.container}>
-			<Text>{name}'s Devices: </Text>
+			<Text>{prefix + id}'s Devices: </Text>
 
 			{[...devices].map(device => (
 				<Text key = {device}>{device}</Text>
