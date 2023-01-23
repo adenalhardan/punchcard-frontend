@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import {StyleSheet, Text, SafeAreaView} from 'react-native'
+
 import {NativeModules, NativeEventEmitter} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const {Bluetooth} = NativeModules
 const BluetoothEvents = new NativeEventEmitter(Bluetooth)
@@ -13,25 +15,16 @@ const App = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-prefix')
-				const {prefix} = await response.json()
-				setPrefix(prefix)
+				const prefix = await getPrefix()
+				const id = await getId()
 
-			} catch(error) {
-				throw error
-			}
-
-			try {
-				const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-id')
-				const {id} = await response.json()
-				setId(id)
+				Bluetooth.broadcast(prefix.concat(id))
 
 			} catch(error) {
 				throw error
 			}
 		})()
 
-		Bluetooth.broadcast(prefix.concat(id))
 		Bluetooth.scan()
 		
 		BluetoothEvents.addListener('foundDevice', device => {
@@ -44,6 +37,34 @@ const App = () => {
 			BluetoothEvents.removeAllListeners('foundDevice')
 		}
 	}, [])
+
+	const getPrefix = async () => {
+		const url = 'https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-prefix'
+		const response = await fetch(url)
+		const {prefix} = await response.json()
+
+		setPrefix(prefix)
+		return prefix
+	}
+
+	const getId = async () => {
+		const url = 'https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-id'
+		const key = 'id'
+
+		let id = await AsyncStorage.getItem(key)
+
+		if(id === null) {
+			const response = await fetch(url)
+			const json = await response.json()
+
+			id = json.id
+		}
+	
+		setId(id)
+		await AsyncStorage.setItem(key, id)
+
+		return id
+	}
 	
 	return (
 		<SafeAreaView style = {styles.container}>
