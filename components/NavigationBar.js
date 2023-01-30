@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 
 const NavigationBar = ({page, onPress}) => (
@@ -11,7 +11,8 @@ const NavigationBar = ({page, onPress}) => (
             <Text style = {page === 'hostEvent' ? styles.selected : styles.unselected}>Host Event</Text>
         </TouchableOpacity>
     </View>
-) 
+)
+
 
 export default NavigationBar
 
@@ -19,10 +20,10 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '6%',
-        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'space-around',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: 'green'
     },
 
     button: {

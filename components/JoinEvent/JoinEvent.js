@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import {View, StyleSheet, useWindowDimensions, FlatList} from 'react-native'
 
 import Event from './components/Event'

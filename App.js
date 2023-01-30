@@ -19,7 +19,7 @@ const App = () => {
 		{key: 'joinEvent', render: () => <JoinEvent/>},
 		{key: 'hostEvent', render: () => <HostEvent/>}
 	]
-
+	
 	const [devices, setDevices] = useState(new Set())
 
 	const [prefix, setPrefix] = useState(null)
@@ -89,7 +89,7 @@ const App = () => {
 	
 	return (
 		<>
-			<SafeAreaView/>
+			<SafeAreaView style = {{}}/>
 			<NavigationBar page = {page} onPress = {onPress}/>
 			<View style = {styles.container}>
 				<FlatList

@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import {View, FlatList, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 
 import Event from './components/Event'
@@ -16,7 +16,9 @@ const testEvents = [
     {}
 ]
 
-const HostEvent = () => {
+const HostEvent = ({onScroll}) => {
+    const [offset, setOffset] = useState(0)
+
     const {width} = useWindowDimensions()
 
     return (
