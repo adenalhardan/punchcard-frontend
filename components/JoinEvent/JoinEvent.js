@@ -19,7 +19,7 @@ const testEvents = [
     {fields:  {
         "name": {
             "data_type": "string",
-            "data_presence": "required"
+            "data_presence": "optional"
         }
     }}, 
     {fields:  {

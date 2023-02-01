@@ -1,16 +1,32 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
 import Field from './components/Field'
 import Submit from './components/Submit'
 
 const Event = ({fields, selected, onPress}) => {
+    const [inputs, setInputs] = useState(Object.assign(...Object.keys(fields).map((field) => (
+        {[field]: ''}
+    ))))
+
+    const [completed, setCompleted] = useState(false)
+
+    useEffect(() => {
+        setCompleted(Object.entries(fields).every(([field, {data_presence}]) => (
+            data_presence === 'optional' || inputs[field] !== ''
+        )))
+    }, [inputs])
+
+    const setInput = ([field, _]) => (text) => {
+        setInputs({...inputs, [field]: text})
+    }
+
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
                 <Text style = {styles.title}>Event</Text>
             </View>
-
+            
             <View style = {styles.body}>
                 <Text style = {styles.host}>Host</Text>
 
@@ -18,11 +34,11 @@ const Event = ({fields, selected, onPress}) => {
                     <>
                         <View style = {styles.fields}>
                             {Object.entries(fields).map((field, i) => (
-                                <Field key = {i} field = {field}/>
+                                <Field key = {i} field = {field} setInput = {setInput(field)}/>
                             ))}
                         </View>
                         
-                        <Submit/>
+                        <Submit enabled = {completed}/>
                     </>
                 }
             </View>

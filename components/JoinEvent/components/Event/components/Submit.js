@@ -1,9 +1,9 @@
 import React from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-const Submit = () => (
+const Submit = ({enabled}) => (
     <View style = {styles.container}>
-        <TouchableOpacity style = {styles.button}>
+        <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled}>
             <Text style = {styles.text}>Submit</Text>
         </TouchableOpacity>
     </View>
@@ -17,7 +17,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
 
-    button: {
+    enabled: {
+        backgroundColor: 'green',
+        padding: 5,
+        borderRadius: 8
+    },
+
+    disabled: {
         backgroundColor: 'grey',
         padding: 5,
         borderRadius: 8
