@@ -2,7 +2,7 @@ import React from 'react'
 import {View, TextInput, Text, StyleSheet, TouchableOpacity} from 'react-native'
 
 const Field = ({name, type, presence, setName, onTypePress, onPresencePress, onDeletePress}) => (
-    <View style = {styles.container}>
+    <View style = {name === '' ? {...styles.container, opacity: 0.5} : styles.container}>
         <TextInput style = {styles.input} placeholder = "Field Name" value = {name} onChangeText = {setName}/>
 
         <TouchableOpacity style = {styles.presence} onPress = {onPresencePress}>

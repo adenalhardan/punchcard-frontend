@@ -5,10 +5,17 @@ import Field from './components/Field'
 
 const Fields = ({fields, setFields}) => {
     useEffect(() => {
-        if(fields[fields.length - 1].name !== '') {
+        if(fields.length === 0 || fields[fields.length - 1].name !== '') {
             setFields([...fields, {name: '', type: 'string', presence: 'required'}])
         }
+
     }, [fields])
+
+    useEffect(() => {
+        if(fields.length === 1 && fields[0].presence === 'optional') {
+            setFields()
+        }
+    })
 
     const setName = (index) => (text) => {
         setFields(fields.map((field, i) => (i === index ? {
@@ -27,11 +34,13 @@ const Fields = ({fields, setFields}) => {
     }
 
     const onPresencePress = (index) => () => {
-        setFields(fields.map((field, i) => (i === index ? {
-            name: field.name,
-            type: field.type,
-            presence: field.presence === 'required' ? 'optional' : 'required'
-        } : field)))
+        if(fields.length > 2 || (index === 0 && fields[0].presence === 'optional')) {
+            setFields(fields.map((field, i) => (i === index ? {
+                name: field.name,
+                type: field.type,
+                presence: field.presence === 'required' ? 'optional' : 'required'
+            } : field)))
+        }
     }
 
     const onDeletePress = (index) => () => {
