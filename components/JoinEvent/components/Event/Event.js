@@ -4,7 +4,7 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 import Field from './components/Field'
 import Submit from './components/Submit'
 
-const Event = ({fields, selected, onPress}) => {
+const Event = ({title, hostName, fields, selected, onPress}) => {
     const [inputs, setInputs] = useState(Object.assign(...Object.keys(fields).map((field) => (
         {[field]: ''}
     ))))
@@ -24,11 +24,11 @@ const Event = ({fields, selected, onPress}) => {
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
-                <Text style = {styles.title}>Event</Text>
+                <Text style = {styles.title}>{title}</Text>
             </View>
             
             <View style = {styles.body}>
-                <Text style = {styles.host}>Host</Text>
+                <Text style = {styles.host}>{hostName}</Text>
 
                 {selected && 
                     <>

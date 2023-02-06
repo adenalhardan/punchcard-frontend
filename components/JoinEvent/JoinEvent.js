@@ -4,36 +4,46 @@ import {View, StyleSheet, useWindowDimensions, FlatList} from 'react-native'
 import Event from './components/Event/Event'
 
 const testEvents = [
-    {fields:  {
-        "name": {
-            "data_type": "string",
-            "data_presence": "required"
+    {
+        title: "Event",
+        host_name: "Prof. BOb",
+        fields:  {
+            "name": {
+                "data_type": "string",
+                "data_presence": "required"
+            }
         }
-    }}, 
-    {fields:  {
-        "name": {
-            "data_type": "string",
-            "data_presence": "required"
+    }, 
+    {
+        title: "Event",
+        host_name: "Prof. BOb",
+        fields:  {
+            "name": {
+                "data_type": "string",
+                "data_presence": "required"
+            }
         }
-    }}, 
-    {fields:  {
-        "name": {
-            "data_type": "string",
-            "data_presence": "optional"
+    }, 
+    {
+        title: "Event",
+        host_name: "Prof. BOb",
+        fields:  {
+            "name": {
+                "data_type": "string",
+                "data_presence": "required"
+            }
         }
-    }}, 
-    {fields:  {
-        "name": {
-            "data_type": "string",
-            "data_presence": "required"
+    }, 
+    {
+        title: "Event",
+        host_name: "Prof. BOb",
+        fields:  {
+            "name": {
+                "data_type": "string",
+                "data_presence": "required"
+            }
         }
-    }}, 
-    {fields:  {
-        "name": {
-            "data_type": "string",
-            "data_presence": "required"
-        }
-    }}, 
+    }, 
 ]
 
 const JoinEvent = () => {
@@ -47,6 +57,8 @@ const JoinEvent = () => {
                 data = {testEvents} 
                 renderItem = {({item, index}) => (
                     <Event 
+                        title = {item.title}
+                        hostName = {item.host_name}
                         fields = {item.fields} 
                         selected = {selected === index} 
                         onPress = {() => setSelected(selected === index ? -1 : index)}
