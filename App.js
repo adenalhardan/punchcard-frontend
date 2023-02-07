@@ -14,16 +14,16 @@ const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 const App = () => {
 	const [page, setPage] = useState('joinEvent')
 	const ref = useRef(null)
-	
-	const pages = [
-		{key: 'joinEvent', render: () => <JoinEvent/>},
-		{key: 'hostEvent', render: () => <HostEvent/>}
-	]
-	
-	const [devices, setDevices] = useState(new Set())
 
 	const [prefix, setPrefix] = useState(null)
 	const [id, setId] = useState(null)
+	
+	const pages = [
+		{key: 'joinEvent', render: () => <JoinEvent/>},
+		{key: 'hostEvent', render: () => <HostEvent id = {id}/>}
+	]
+	
+	const [devices, setDevices] = useState(new Set())
 
 	useEffect(() => {
 		(async () => {

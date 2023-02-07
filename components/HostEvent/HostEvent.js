@@ -12,7 +12,7 @@ const testEvents = [
     {title: "Class"}, 
 ]
 
-const HostEvent = () => {
+const HostEvent = ({id}) => {
     const [offset, setOffset] = useState(0)
 
     const {width} = useWindowDimensions()
@@ -23,7 +23,7 @@ const HostEvent = () => {
                 contentContainerStyle = {styles.list}
                 showsVerticalScrollIndicator = {false}
             >
-                <CreateEvent key = 'createEventButton'/>
+                <CreateEvent key = 'createEvent' id = {id}/>
                 {testEvents.map((event, i) => <Event key = {i} title = {event.title}/>)}
             </ScrollView>
         </View>

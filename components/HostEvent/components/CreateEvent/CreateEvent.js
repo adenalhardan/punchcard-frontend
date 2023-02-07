@@ -4,7 +4,7 @@ import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
 import Fields from './components/Fields/Fields'
 import Create from './components/Create'
 
-const CreateEvent = () => {
+const CreateEvent = ({id}) => {
     const [selected, setSelected] = useState(false)
     const [complete, setComplete] = useState(false)
 
@@ -23,17 +23,25 @@ const CreateEvent = () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        host_id: "2ROXDR",
-                        title: "Class",
-                        host_name: "bob",
-                        fields: "%5B%7B%22name%22%3A+%22Name%22%2C+%22type%22%3A+%22string%22%2C+%22presence%22%3A+%22required%22%7D%5D"
+                        host_id: id,
+                        title: title,
+                        host_name: hostName,
+                        fields: JSON.stringify(fields.filter(({name}) => name !== ''))
                     })
                 })
 
                 const json = await response.json()
-                console.log(json)
+
                 if(json['status'] === 'error') {
                     throw Error(json['message'])
+                }
+
+                if(json['status'] === 'success') {
+                    setTitle('')
+                    setHostName('')
+                    setFields([{name: '', type: 'string', presence: 'required'}])
+                    setComplete(false)
+                    setSelected(false)
                 }
 
             } catch(error) {
