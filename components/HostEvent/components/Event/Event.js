@@ -1,17 +1,25 @@
 import React from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-const Event = ({title}) => (
-    <TouchableOpacity style = {styles.container}>
-        <View style = {styles.accent}>
-            <Text style = {styles.title}>{title}</Text>
-        </View>
-        
-        <View style = {styles.body}>
-            <Text>Details</Text>
-        </View>
-    </TouchableOpacity>
-)
+import Details from './components/Details'
+
+const Event = ({event, selected, onPress}) => {
+    const {title, hostName} = event
+
+    return (
+        <TouchableOpacity style = {styles.container} onPress = {onPress}>
+            <View style = {styles.accent}>
+                <Text style = {styles.title}>{title}</Text>
+            </View>
+            
+            <View style = {styles.body}>
+                <Text style = {styles.hostName}>{hostName}</Text>
+
+                {selected && <Details/>}
+            </View>
+        </TouchableOpacity>
+    )
+}
 
 export default Event
 
@@ -44,7 +52,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
 
-    host: {
+    hostName: {
         fontStyle: 'italic'
     },
 

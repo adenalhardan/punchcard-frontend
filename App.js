@@ -35,7 +35,6 @@ const App = () => {
 			setId(id)
 
 			Bluetooth.broadcast(prefix.concat(id))
-
 			Bluetooth.scan()
 		
 			BluetoothEvents.addListener('foundDevice', device => {

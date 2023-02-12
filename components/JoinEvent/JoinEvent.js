@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {View, StyleSheet, useWindowDimensions, FlatList} from 'react-native'
+import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 
 import Event from './components/Event/Event'
 
@@ -21,23 +21,17 @@ const JoinEvent = ({id}) => {
 
     return (
         <View style = {{...styles.container, width}}>
-            <FlatList 
-                data = {testEvents} 
-                renderItem = {({item, index}) => (
+            <ScrollView contentContainerStyle = {styles.list} showsVerticalScrollIndicator = {false}>
+                {testEvents.map((event, i) => (
                     <Event 
-                        title = {item.title}
+                        key = {i}
                         id = {id}
-                        hostId = {item.hostId}
-                        hostName = {item.hostName}
-                        fields = {item.fields} 
-                        selected = {selected === index} 
-                        onPress = {() => setSelected(selected === index ? -1 : index)}
+                        event = {event}
+                        selected = {selected === i} 
+                        onPress = {() => setSelected(selected === i ? -1 : i)}
                     />
-                )}
-
-                showsVerticalScrollIndicator = {false}
-                contentContainerStyle = {styles.list}
-            />
+                ))}
+            </ScrollView>
         </View>
     )
 }

@@ -6,7 +6,9 @@ import { postForm } from '../../../../api'
 import Field from './components/Field'
 import Submit from './components/Submit'
 
-const Event = ({title, id, hostName, hostId, fields, selected, onPress}) => {
+const Event = ({id, event, selected, onPress}) => {
+    const {title, hostName, hostId, fields} = event
+
     const [completed, setCompleted] = useState(false)
 
     const [inputs, setInputs] = useState(fields.map(({name}) => ({
@@ -18,6 +20,7 @@ const Event = ({title, id, hostName, hostId, fields, selected, onPress}) => {
         setCompleted(inputs.every(({value}, i) => (
             value !== '' || fields[i].presence === 'optional'
         )))
+        
     }, [inputs])
 
     const setInput = (i) => (text) => {
@@ -31,7 +34,7 @@ const Event = ({title, id, hostName, hostId, fields, selected, onPress}) => {
             },
 
             () => {
-
+                onPress()
             }
         )
     }
@@ -43,7 +46,7 @@ const Event = ({title, id, hostName, hostId, fields, selected, onPress}) => {
             </View>
             
             <View style = {styles.body}>
-                <Text style = {styles.host}>{hostName}</Text>
+                <Text style = {styles.hostName}>{hostName}</Text>
 
                 {selected && 
                     <>
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
 
-    host: {
+    hostName: {
         fontStyle: 'italic'
     },
 

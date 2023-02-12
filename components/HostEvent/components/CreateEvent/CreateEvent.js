@@ -6,8 +6,7 @@ import {postEvent} from '../../../../api'
 import Fields from './components/Fields/Fields'
 import Create from './components/Create'
 
-const CreateEvent = ({id}) => {
-    const [selected, setSelected] = useState(false)
+const CreateEvent = ({id, selected, onPress}) => {
     const [complete, setComplete] = useState(false)
 
     const [title, setTitle] = useState('')
@@ -15,7 +14,11 @@ const CreateEvent = ({id}) => {
     const [fields, setFields] = useState([{name: '', type: 'string', presence: 'required'}])
 
     useEffect(() => {
-        setComplete(title !== '' && hostName !== '' && fields.some(({name, presence}) => name !== '' && presence === 'required'))
+        setComplete(
+            title !== '' && 
+            hostName !== '' && 
+            fields.some(({name, presence}) => name !== '' && presence === 'required')
+        )
     }, [title, hostName, fields])
 
     const onSubmitPress = () => {
@@ -35,7 +38,7 @@ const CreateEvent = ({id}) => {
     }
 
     return (
-        <TouchableOpacity style = {styles.container} onPress = {() => setSelected(!selected)}>
+        <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
                 <Text>Create Event</Text>
             </View>

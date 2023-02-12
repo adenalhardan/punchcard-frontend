@@ -1,30 +1,40 @@
 import {useState} from 'react'
-import {View, FlatList, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 
-import Event from './components/Event'
+import Event from './components/Event/Event'
 import CreateEvent from './components/CreateEvent/CreateEvent'
 
 const testEvents = [
-    {title: "Class"}, 
-    {title: "Class"}, 
-    {title: "Class"}, 
-    {title: "Class"}, 
-    {title: "Class"}, 
+    {title: "Class", hostName: 'Yeww'}, 
+    {title: "Class", hostName: 'Yeww'}, 
+    {title: "Class", hostName: 'Yeww'}, 
+    {title: "Class", hostName: 'Yeww'}, 
+    {title: "Class", hostName: 'Yeww'}, 
 ]
 
 const HostEvent = ({id}) => {
-    const [offset, setOffset] = useState(0)
-
     const {width} = useWindowDimensions()
+
+    const [selected, setSelected] = useState(-1)
 
     return (
         <View style = {{...styles.container, width}}>
-            <ScrollView 
-                contentContainerStyle = {styles.list}
-                showsVerticalScrollIndicator = {false}
-            >
-                <CreateEvent key = 'createEvent' id = {id}/>
-                {testEvents.map((event, i) => <Event key = {i} title = {event.title}/>)}
+            <ScrollView contentContainerStyle = {styles.list} showsVerticalScrollIndicator = {false}>
+                <CreateEvent 
+                    key = 'create'
+                    id = {id} 
+                    selected = {selected === 0} 
+                    onPress = {() => setSelected(selected === 0 ? -1 : 0)}
+                />
+
+                {testEvents.map((event, i) => (
+                    <Event 
+                        key = {i} 
+                        event = {event}
+                        selected = {selected === i + 1}
+                        onPress = {() => setSelected((selected === i + 1) ? -1 : i + 1)}
+                    />
+                ))}
             </ScrollView>
         </View>
     )
