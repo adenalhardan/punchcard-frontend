@@ -1,9 +1,9 @@
 import React from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-const Submit = ({enabled}) => (
+const Submit = ({enabled, onPress}) => (
     <View style = {styles.container}>
-        <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled}>
+        <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled} onPress = {enabled ? onPress : () => {}}>
             <Text style = {styles.text}>Submit</Text>
         </TouchableOpacity>
     </View>

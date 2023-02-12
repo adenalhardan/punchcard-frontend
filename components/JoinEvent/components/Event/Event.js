@@ -1,24 +1,39 @@
 import {useState, useEffect} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
+import { postForm } from '../../../../api'
+
 import Field from './components/Field'
 import Submit from './components/Submit'
 
-const Event = ({title, hostName, fields, selected, onPress}) => {
-    const [inputs, setInputs] = useState(Object.assign(...Object.keys(fields).map((field) => (
-        {[field]: ''}
-    ))))
-
+const Event = ({title, id, hostName, hostId, fields, selected, onPress}) => {
     const [completed, setCompleted] = useState(false)
 
+    const [inputs, setInputs] = useState(fields.map(({name}) => ({
+        name: name,
+        value: ''
+    })))
+
     useEffect(() => {
-        setCompleted(Object.entries(fields).every(([field, {data_presence}]) => (
-            data_presence === 'optional' || inputs[field] !== ''
+        setCompleted(inputs.every(({value}, i) => (
+            value !== '' || fields[i].presence === 'optional'
         )))
     }, [inputs])
 
-    const setInput = ([field, _]) => (text) => {
-        setInputs({...inputs, [field]: text})
+    const setInput = (i) => (text) => {
+        setInputs(inputs.map((input, j) => (i === j ? {name: input.name, value: text} : input)))
+    }
+
+    const onSubmitPress = () => {
+        postForm(id, hostId, title, JSON.stringify(inputs), 
+            (message) => {
+                throw Error(message)
+            },
+
+            () => {
+
+            }
+        )
     }
 
     return (
@@ -33,12 +48,12 @@ const Event = ({title, hostName, fields, selected, onPress}) => {
                 {selected && 
                     <>
                         <View style = {styles.fields}>
-                            {Object.entries(fields).map((field, i) => (
-                                <Field key = {i} field = {field} setInput = {setInput(field)}/>
+                            {fields.map((field, i) => (
+                                <Field key = {i} field = {field} setInput = {setInput(i)}/>
                             ))}
                         </View>
                         
-                        <Submit enabled = {completed}/>
+                        <Submit enabled = {completed} onPress = {onSubmitPress}/>
                     </>
                 }
             </View>

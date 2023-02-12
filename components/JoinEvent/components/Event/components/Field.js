@@ -2,7 +2,7 @@ import React from 'react'
 import {TextInput, View, Text, StyleSheet} from 'react-native'
 
 const Field = ({field, setInput}) => {
-    const [name, {data_type, data_presence}] = field
+    const {name, type, presence} = field
 
     return (
         <View style = {styles.container}>

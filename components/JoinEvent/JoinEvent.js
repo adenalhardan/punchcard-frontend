@@ -5,48 +5,16 @@ import Event from './components/Event/Event'
 
 const testEvents = [
     {
-        title: "Event",
-        host_name: "Prof. BOb",
-        fields:  {
-            "name": {
-                "data_type": "string",
-                "data_presence": "required"
-            }
-        }
-    }, 
-    {
-        title: "Event",
-        host_name: "Prof. BOb",
-        fields:  {
-            "name": {
-                "data_type": "string",
-                "data_presence": "required"
-            }
-        }
-    }, 
-    {
-        title: "Event",
-        host_name: "Prof. BOb",
-        fields:  {
-            "name": {
-                "data_type": "string",
-                "data_presence": "required"
-            }
-        }
-    }, 
-    {
-        title: "Event",
-        host_name: "Prof. BOb",
-        fields:  {
-            "name": {
-                "data_type": "string",
-                "data_presence": "required"
-            }
-        }
+        title: "New Classs",
+        hostName: "Aden",
+        hostId: 'WHLAs',
+        fields: [
+            {name: 'Name', type: 'string', presence: 'required'}
+        ]
     }, 
 ]
 
-const JoinEvent = () => {
+const JoinEvent = ({id}) => {
     const {width} = useWindowDimensions()
     
     const [selected, setSelected] = useState(-1)
@@ -58,7 +26,9 @@ const JoinEvent = () => {
                 renderItem = {({item, index}) => (
                     <Event 
                         title = {item.title}
-                        hostName = {item.host_name}
+                        id = {id}
+                        hostId = {item.hostId}
+                        hostName = {item.hostName}
                         fields = {item.fields} 
                         selected = {selected === index} 
                         onPress = {() => setSelected(selected === index ? -1 : index)}

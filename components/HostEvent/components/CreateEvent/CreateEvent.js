@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react'
 import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
 
+import {postEvent} from '../../../../api'
+
 import Fields from './components/Fields/Fields'
 import Create from './components/Create'
 
@@ -17,37 +19,19 @@ const CreateEvent = ({id}) => {
     }, [title, hostName, fields])
 
     const onSubmitPress = () => {
-        (async () => {
-            try {
-                const response = await fetch('https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/post-event', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        host_id: id,
-                        title: title,
-                        host_name: hostName,
-                        fields: JSON.stringify(fields.filter(({name}) => name !== ''))
-                    })
-                })
+        postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')),
+            (message) => {
+                throw Error(message)
+            },
 
-                const json = await response.json()
-
-                if(json['status'] === 'error') {
-                    throw Error(json['message'])
-                }
-
-                if(json['status'] === 'success') {
-                    setTitle('')
-                    setHostName('')
-                    setFields([{name: '', type: 'string', presence: 'required'}])
-                    setComplete(false)
-                    setSelected(false)
-                }
-
-            } catch(error) {
-                console.log(error)
+            () => {
+                setTitle('')
+                setHostName('')
+                setFields([{name: '', type: 'string', presence: 'required'}])
+                setComplete(false)
+                setSelected(false)
             }
-        })()
+        )
     }
 
     return (

@@ -2,7 +2,8 @@ import {useEffect, useState, useRef} from 'react'
 import {FlatList, View, StyleSheet, SafeAreaView} from 'react-native'
 
 import {NativeModules, NativeEventEmitter} from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import {getPrefix, getId} from './api'
 
 import NavigationBar from './components/NavigationBar'
 import JoinEvent from './components/JoinEvent/JoinEvent'
@@ -19,7 +20,7 @@ const App = () => {
 	const [id, setId] = useState(null)
 	
 	const pages = [
-		{key: 'joinEvent', render: () => <JoinEvent/>},
+		{key: 'joinEvent', render: () => <JoinEvent id = {id}/>},
 		{key: 'hostEvent', render: () => <HostEvent id = {id}/>}
 	]
 	
@@ -29,6 +30,9 @@ const App = () => {
 		(async () => {
 			const prefix = await getPrefix()
 			const id = await getId()
+
+			setPrefix(prefix)
+			setId(id)
 
 			Bluetooth.broadcast(prefix.concat(id))
 
@@ -45,34 +49,6 @@ const App = () => {
 			BluetoothEvents.removeAllListeners('foundDevice')
 		}
 	}, [])
-
-	const getPrefix = async () => {
-		const url = 'https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-prefix'
-		const response = await fetch(url)
-		const {prefix} = await response.json()
-
-		setPrefix(prefix)
-		return prefix
-	}
-
-	const getId = async () => {
-		const url = 'https://ikdsbxpo4dc2dz2pvmtfng2sly0cxhfk.lambda-url.us-west-1.on.aws/get-id'
-		const key = 'id'
-
-		let id = await AsyncStorage.getItem(key)
-
-		if(id === null) {
-			const response = await fetch(url)
-			const json = await response.json()
-
-			id = json.id
-		}
-	
-		setId(id)
-		await AsyncStorage.setItem(key, id)
-
-		return id
-	}
 
 	const onPress = (page) => {
 		ref.current.scrollToIndex({index: page === 'joinEvent' ? 0 : 1})
