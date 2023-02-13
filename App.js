@@ -34,12 +34,12 @@ const App = () => {
 			setPrefix(prefix)
 			setId(id)
 
-			Bluetooth.broadcast(prefix.concat(id))
+			Bluetooth.broadcast(prefix + id)
 			Bluetooth.scan()
 		
 			BluetoothEvents.addListener('foundDevice', device => {
 				if(!devices.has(device) && device.startsWith(prefix)) {
-					setDevices(prev => new Set(prev.add(device)))
+					setDevices(devices => new Set(devices.add(device)))
 				}
 			})
 		})()
@@ -59,12 +59,13 @@ const App = () => {
 			setPage(viewableItems[0].item.key)
 		}
 	}
+	
 	const viewabilityConfig = {itemVisiblePercentThreshold: 75}
 	const viewabilityConfigCallbackPairs = useRef([{viewabilityConfig, onViewableItemsChanged}])
 	
 	return (
 		<>
-			<SafeAreaView style = {{}}/>
+			<SafeAreaView/>
 			<NavigationBar page = {page} onPress = {onPress}/>
 			<View style = {styles.container}>
 				<FlatList

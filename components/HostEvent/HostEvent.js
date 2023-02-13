@@ -1,21 +1,33 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+
+import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
 import CreateEvent from './components/CreateEvent/CreateEvent'
-
-const testEvents = [
-    {title: "Class", hostName: 'Yeww'}, 
-    {title: "Class", hostName: 'Yeww'}, 
-    {title: "Class", hostName: 'Yeww'}, 
-    {title: "Class", hostName: 'Yeww'}, 
-    {title: "Class", hostName: 'Yeww'}, 
-]
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
 
     const [selected, setSelected] = useState(-1)
+    const [events, setEvents] = useState([])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            (async () => {
+                const events = await getEvents(id, (message) => {
+                    throw Error(message)
+                })
+
+                setEvents(events.map(({title, host_name}) => ({
+                    title: title, 
+                    hostName: host_name
+                })))
+            })()
+        }, 30000)
+
+        return () => clearInterval(interval)
+    }, [])
 
     return (
         <View style = {{...styles.container, width}}>
@@ -27,7 +39,7 @@ const HostEvent = ({id}) => {
                     onPress = {() => setSelected(selected === 0 ? -1 : 0)}
                 />
 
-                {testEvents.map((event, i) => (
+                {events.map((event, i) => (
                     <Event 
                         key = {i} 
                         event = {event}

@@ -106,3 +106,17 @@ export const postForm = (id, hostId, eventTitle, fields, onError, onSuccess) => 
         }
     })()
 }
+
+export const getEvents = async (hostId, onError) => {
+    try {
+        const endpoint = url + '/get-events?host_id=' + hostId
+        
+        const response = await fetch(endpoint)
+        const json = await response.json()
+
+        return json
+
+    } catch(error) {
+        onError(error.message)
+    }
+}
