@@ -59,7 +59,7 @@ const App = () => {
 			setPage(viewableItems[0].item.key)
 		}
 	}
-	
+
 	const viewabilityConfig = {itemVisiblePercentThreshold: 75}
 	const viewabilityConfigCallbackPairs = useRef([{viewabilityConfig, onViewableItemsChanged}])
 	

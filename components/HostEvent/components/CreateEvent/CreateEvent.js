@@ -6,7 +6,7 @@ import {postEvent} from '../../../../api'
 import Fields from './components/Fields/Fields'
 import Create from './components/Create'
 
-const CreateEvent = ({id, selected, onPress}) => {
+const CreateEvent = ({id, selected, loadEvents, onPress}) => {
     const [complete, setComplete] = useState(false)
 
     const [title, setTitle] = useState('')
@@ -31,8 +31,11 @@ const CreateEvent = ({id, selected, onPress}) => {
                 setTitle('')
                 setHostName('')
                 setFields([{name: '', type: 'string', presence: 'required'}])
+
                 setComplete(false)
-                setSelected(false)
+                onPress()
+                
+                loadEvents()
             }
         )
     }

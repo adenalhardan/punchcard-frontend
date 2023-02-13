@@ -9,15 +9,16 @@ export const getId = async (onError) => {
     try {
         const storedId = await AsyncStorage.getItem(key)
 
-		if(storedId === null) {
+		if(!storedId) {
 			const response = await fetch(endpoint)
 			const {id} = await response.json()
             
-            if(id === null) {
-                onError("id not in response")
-            } else {
+            if(id) {
                 await AsyncStorage.setItem(key, id)
                 return id
+                
+            } else {
+                onError("id not in response")
             }
 
 		} else {
@@ -36,10 +37,11 @@ export const getPrefix = async (onError) => {
 		const response = await fetch(endpoint)
 		const {prefix} = await response.json()
 
-        if(prefix === null) {
-            onError("prefix not in response")
-        } else {
+        if(prefix) {
             return prefix
+            
+        } else {
+            onError("prefix not in response")
         }
 
     } catch(error) {
@@ -112,9 +114,13 @@ export const getEvents = async (hostId, onError) => {
         const endpoint = url + '/get-events?host_id=' + hostId
         
         const response = await fetch(endpoint)
-        const json = await response.json()
+        const {events} = await response.json()
 
-        return json
+        if(events) {
+            return events 
+        } else {
+            onError('events not in response')
+        }
 
     } catch(error) {
         onError(error.message)

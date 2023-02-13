@@ -12,19 +12,22 @@ const HostEvent = ({id}) => {
     const [selected, setSelected] = useState(-1)
     const [events, setEvents] = useState([])
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            (async () => {
-                const events = await getEvents(id, (message) => {
-                    throw Error(message)
-                })
+    const loadEvents = () => {
+        (async () => {
+            const events = await getEvents(id, (message) => {
+                console.error(message)
+            })
 
-                setEvents(events.map(({title, host_name}) => ({
-                    title: title, 
-                    hostName: host_name
-                })))
-            })()
-        }, 30000)
+            setEvents(events.map(({title, host_name}) => ({
+                title: title, 
+                hostName: host_name
+            })))
+        })()
+    }
+
+    useEffect(() => {
+        loadEvents()
+        const interval = setInterval(loadEvents, 30000)
 
         return () => clearInterval(interval)
     }, [])
@@ -36,6 +39,7 @@ const HostEvent = ({id}) => {
                     key = 'create'
                     id = {id} 
                     selected = {selected === 0} 
+                    loadEvents = {loadEvents}
                     onPress = {() => setSelected(selected === 0 ? -1 : 0)}
                 />
 

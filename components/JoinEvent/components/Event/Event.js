@@ -30,7 +30,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         postForm(id, hostId, title, JSON.stringify(inputs), 
             (message) => {
-                throw Error(message)
+                console.error(message)
             },
 
             () => {
