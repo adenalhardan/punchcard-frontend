@@ -1,10 +1,43 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
+
+import {getFormCount, deleteEvent} from '../../../../api'
 
 import Details from './components/Details'
 
-const Event = ({event, selected, onPress}) => {
-    const {title, hostName} = event
+const Event = ({event, selected, onPress, loadEvents}) => {
+    const {title, hostName, hostId} = event
+
+    const [formCount, setFormCount] = useState(0)
+
+    const loadFormCount = () => {
+        (async () => {
+            const formCount = await getFormCount(hostId, title, (message) => {
+                console.error(message)
+            })
+
+            setFormCount(formCount)
+        })()
+    }
+
+    const onEndPress = () => {
+        deleteEvent(hostId, title, 
+            (message) => {
+                console.error(message) 
+            }, 
+            
+            () => {
+                loadEvents()
+                onPress()
+            })
+    }
+
+    useEffect(() => {
+        loadFormCount()
+        const interval = setInterval(loadFormCount, 5000)
+
+        return () => clearInterval(interval)
+    }, [])
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
@@ -15,7 +48,7 @@ const Event = ({event, selected, onPress}) => {
             <View style = {styles.body}>
                 <Text style = {styles.hostName}>{hostName}</Text>
 
-                {selected && <Details/>}
+                {selected && <Details event = {event} formCount = {formCount} onEndPress = {onEndPress}/>}
             </View>
         </TouchableOpacity>
     )

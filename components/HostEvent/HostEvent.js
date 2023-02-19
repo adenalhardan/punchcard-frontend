@@ -18,9 +18,10 @@ const HostEvent = ({id}) => {
                 console.error(message)
             })
 
-            setEvents(events.map(({title, host_name}) => ({
+            setEvents(events.map(({title, host_name, host_id}) => ({
                 title: title, 
-                hostName: host_name
+                hostName: host_name,
+                hostId: host_id
             })))
         })()
     }
@@ -49,6 +50,7 @@ const HostEvent = ({id}) => {
                         event = {event}
                         selected = {selected === i + 1}
                         onPress = {() => setSelected((selected === i + 1) ? -1 : i + 1)}
+                        loadEvents = {loadEvents}
                     />
                 ))}
             </ScrollView>

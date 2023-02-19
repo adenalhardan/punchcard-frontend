@@ -1,11 +1,11 @@
 import React from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-const Details = () => (
+const Details = ({formCount, onEndPress}) => (
     <View style = {styles.container}>
         <View style = {styles.section}>
             <View style = {styles.submissions}>
-                <Text style = {styles.submissionsText}>39</Text>
+                <Text style = {styles.submissionsText}>{formCount}</Text>
             </View>
 
             <Text style = {styles.text}>Submissions</Text>
@@ -20,7 +20,7 @@ const Details = () => (
         </View>
 
         <View style = {styles.section}>
-            <TouchableOpacity style = {styles.end}>
+            <TouchableOpacity style = {styles.end} onPress = {onEndPress}>
 
             </TouchableOpacity>
 
