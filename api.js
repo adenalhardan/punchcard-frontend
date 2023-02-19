@@ -65,7 +65,7 @@ export const postEvent = (hostId, title, hostName, fields, onError, onSuccess) =
                 })
             })
 
-            const {status, message} = response
+            const {status, message} = await response.json()
 
             if(!status) {
                 onError('no status in response')
@@ -99,7 +99,7 @@ export const postForm = (id, hostId, eventTitle, fields, onError, onSuccess) => 
                 })
             })
 
-            const {status, message} = response
+            const {status, message} = await response.json()
 
             if(!status) {
                 onError('no status in response')

@@ -24,7 +24,7 @@ const CreateEvent = ({id, selected, loadEvents, onPress}) => {
     const onSubmitPress = () => {
         postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')),
             (message) => {
-                throw Error(message)
+                console.error(message)
             },
 
             () => {
