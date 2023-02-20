@@ -1,10 +1,11 @@
 import React from 'react'
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
 const Submit = ({enabled, onPress}) => (
     <View style = {styles.container}>
         <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled} onPress = {enabled ? onPress : () => {}}>
             <Text style = {enabled ? styles.textEnabled : styles.textDisabled}>Submit</Text>
+            <Image style = {styles.image} source = {require('./assets/submit.png')}/>
         </TouchableOpacity>
     </View>
 )
@@ -22,6 +23,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 12,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 
     disabled: {
@@ -29,17 +32,25 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 12,
-        opacity: 0.5
+        opacity: 0.5,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 
     textEnabled: {
         fontWeight: '700',
         fontSize: 14,
-        color: '#09361C'
     },
 
     textDisabled: {
         fontWeight: '700',
         fontSize: 14,
+    },
+
+    image: {
+        height: 20,
+        width: 20,
+        resizeMode: 'contain',
+        marginLeft: 4
     }
 })

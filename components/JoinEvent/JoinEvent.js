@@ -5,15 +5,14 @@ import Event from './components/Event/Event'
 
 const testEvents = [
     {
-        title: "New Classs",
+        title: "Class",
         hostName: "Aden",
         hostId: 'WHLAs',
         fields: [
             {name: 'Name', type: 'string', presence: 'required'},
-            {name: 'Age', type: 'integer'}
-
         ]
     }, 
+
 ]
 
 const JoinEvent = ({id}) => {

@@ -1,20 +1,35 @@
 import {useState, useEffect} from 'react'
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { postForm } from '../../../../api'
 
 import Field from './components/Field'
-import Submit from './components/Submit'
+import Submit from './components/Submit/Submit'
 
 const Event = ({id, event, selected, onPress}) => {
     const {title, hostName, hostId, fields} = event
 
+    const submittedKey = `submitted-form-hostId=${hostId}&eventTitle=${title}`
+
     const [completed, setCompleted] = useState(false)
+    const [submitted, setSubmitted] = useState(false)
 
     const [inputs, setInputs] = useState(fields.map(({name}) => ({
         name: name,
         value: ''
     })))
+
+    useEffect(() => {
+        (async () => {
+            const submitted = await AsyncStorage.getItem(submittedKey)
+    
+            if(submitted) {
+                setSubmitted(submitted)
+            }
+        })()
+    }, [])
 
     useEffect(() => {
         setCompleted(inputs.every(({value}, i) => (
@@ -34,7 +49,12 @@ const Event = ({id, event, selected, onPress}) => {
             },
 
             () => {
-                onPress()
+                (async () => {
+                    onPress()
+
+                    setSubmitted(true)
+                    await AsyncStorage.setItem(submittedKey, 'true')
+                })()
             }
         )
     }
@@ -43,6 +63,7 @@ const Event = ({id, event, selected, onPress}) => {
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
                 <Text style = {styles.title}>{title}</Text>
+                {submitted && <Image style = {styles.submitted} source = {require('./assets/submitted.png')}/>}
             </View>
             
             <View style = {styles.body}>
@@ -69,7 +90,7 @@ export default Event
 const styles = StyleSheet.create({
     container: {
         width: '94%',
-        marginBottom: 15,
+        marginBottom: 20,
         backgroundColor: 'white',
         borderRadius: 10,
         alignItems: 'center',
@@ -83,12 +104,14 @@ const styles = StyleSheet.create({
 
     accent: {
         width: '100%',
-        height: 40,
+        height: 35,
         backgroundColor: '#2D61F4',
-        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
     },
 
     body: {
@@ -109,5 +132,11 @@ const styles = StyleSheet.create({
 
     fields: {
         marginTop: 10,
+    },
+
+    submitted: {
+        height: 20,
+        width: 20,
+        resizeMode: 'contain'
     }
 })
