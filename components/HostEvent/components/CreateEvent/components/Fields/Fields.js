@@ -12,8 +12,12 @@ const Fields = ({fields, setFields}) => {
     }, [fields])
 
     useEffect(() => {
-        if(fields.length === 1 && fields[0].presence === 'optional') {
-            setFields()
+        if(fields.length <= 2 && fields[0].presence === 'optional') {
+            setFields(fields.map((field, i) => (i === 0 ? {
+                name: field.name,
+                type: field.type,
+                presence: 'required'
+            } : field)))
         }
     })
 
