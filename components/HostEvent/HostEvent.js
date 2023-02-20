@@ -63,8 +63,7 @@ export default HostEvent
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red',
-        paddingHorizontal: '3%'
+        backgroundColor: '#FFFFFF'
     },
 
     list: {

@@ -4,7 +4,7 @@ import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
 import {postEvent} from '../../../../api'
 
 import Fields from './components/Fields/Fields'
-import Create from './components/Create'
+import Create from './components/Create/Create'
 
 const NewEvent = ({id, selected, loadEvents, onPress}) => {
     const [complete, setComplete] = useState(false)
@@ -43,24 +43,24 @@ const NewEvent = ({id, selected, loadEvents, onPress}) => {
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
-                <Text>New Event</Text>
+                <Text style = {styles.buttonText}>New Event</Text>
             </View>
 
             {selected && 
                 <View style = {styles.body}>
-                    <View style = {{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-                        <Text>Title</Text>
+                    <View style = {styles.title}>
+                        <Text style = {styles.text}>Event Title</Text>
                         <TextInput style = {styles.input} value = {title} onChangeText = {setTitle}/>
                     </View>
 
-                    <View style = {{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text>Name</Text>
+                    <View style = {styles.name}>
+                        <Text style = {styles.text}>Host Name</Text>
                         <TextInput style = {styles.input} value = {hostName} onChangeText = {setHostName}/>
                     </View>
                     
                     <Fields fields = {fields} setFields = {setFields}/>
 
-                    <Create enabled = {complete} onPress = {onSubmitPress}/>
+                   <Create enabled = {complete} onPRess = {onSubmitPress}/>
                 </View>
             }
         </TouchableOpacity>
@@ -71,32 +71,53 @@ export default NewEvent
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        marginBottom: 15,
-        backgroundColor: 'orange',
+        width: '94%',
+        marginBottom: 20,
+        backgroundColor: '#DE124F',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden'
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.2,
+        shadowRadius: 10,  
+        elevation: 5,
+        alignSelf: 'center'
     },
 
     accent: {
-        height: 50,
+        height: 45,
         justifyContent: 'center'
     },
 
     body: {
         backgroundColor: 'white',
         width: '100%',
-        padding: 10
+        padding: 10,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
     },
 
     input: {
-        width: '60%',
-        marginLeft: 10,
+        width: '70%',
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: '#CACACA',
         borderRadius: 5,
         padding: 5,
+    },
+
+    buttonText: {
+        fontSize: 16,
+        fontWeight: '700'
+    },
+
+    text: {
+        fontWeight: '500'
+    },
+
+    title: {
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        marginBottom: 10
     }
 })

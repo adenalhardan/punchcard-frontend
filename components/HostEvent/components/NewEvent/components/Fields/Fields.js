@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 
-import Field from './components/Field'
+import Field from './components/Field/Field'
 
 const Fields = ({fields, setFields}) => {
     useEffect(() => {
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        marginBottom: 5
+        fontWeight: '500'
     }
 })

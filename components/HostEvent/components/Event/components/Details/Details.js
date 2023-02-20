@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 
 const Details = ({formCount, onEndPress}) => (
     <View style = {styles.container}>
@@ -13,7 +13,7 @@ const Details = ({formCount, onEndPress}) => (
 
         <View style = {styles.section}>
             <TouchableOpacity style = {styles.download}>
-
+                <Image style = {styles.image} source = {require('./assets/download.png')}/>
             </TouchableOpacity>
 
             <Text style = {styles.text}>Download</Text>
@@ -21,7 +21,7 @@ const Details = ({formCount, onEndPress}) => (
 
         <View style = {styles.section}>
             <TouchableOpacity style = {styles.end} onPress = {onEndPress}>
-
+                <Image style = {styles.image} source = {require('./assets/end.png')}/>
             </TouchableOpacity>
 
             <Text style = {styles.text}>End Event</Text>
@@ -45,14 +45,15 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        marginTop: 5
+        marginTop: 5,
+        fontWeight: '500'
     },
 
     submissions: {
         height: 50,
         width: 50,
-        borderRadius: 10,
-        backgroundColor: 'brown',
+        borderRadius: 12,
+        backgroundColor: '#5CBF2A',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -64,18 +65,34 @@ const styles = StyleSheet.create({
     download: {
         height: 50,
         width: 50,
-        borderRadius: 10,
-        backgroundColor: 'blue',
+        borderRadius: 12,
+        backgroundColor: '#A221A3',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,  
+        elevation: 2,
     },
 
     end: {
         height: 50,
         width: 50,
-        borderRadius: 10,
-        backgroundColor: 'yellow',
+        borderRadius: 12,
+        backgroundColor: '#FF4C44',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,  
+        elevation: 2,
+    },
+
+    image: {
+        height: 30,
+        width: 30,
+        resizeMode: 'contain'
     }
 })

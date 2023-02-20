@@ -3,7 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
 import {getFormCount, deleteEvent} from '../../../../api'
 
-import Details from './components/Details'
+import Details from './components/Details/Details'
 
 const Event = ({event, selected, onPress, loadEvents}) => {
     const {title, hostName, hostId} = event
@@ -58,20 +58,29 @@ export default Event
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        marginBottom: 15,
+        width: '94%',
+        marginBottom: 20,
         backgroundColor: 'white',
         borderRadius: 10,
         alignItems: 'center',
-        overflow: 'hidden'
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.2,
+        shadowRadius: 10,  
+        elevation: 5,
+        alignSelf: 'center'
     },
 
     accent: {
         width: '100%',
-        height: 30,
-        backgroundColor: 'purple',
-        justifyContent: 'center',
-        paddingHorizontal: 10
+        height: 35,
+        backgroundColor: '#1E55EB',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
     },
 
     body: {
@@ -82,11 +91,12 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 18,
-        fontWeight: '500'
+        fontWeight: '600'
     },
 
     hostName: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontSize: 16
     },
 
     fields: {

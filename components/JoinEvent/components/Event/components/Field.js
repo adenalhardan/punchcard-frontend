@@ -11,7 +11,7 @@ const Field = ({field, setInput}) => {
 
                 {presence === 'required' &&
                     <View style = {styles.required}>
-                        <Text style = {styles.requiredText}>required</Text>
+                        <Text style = {styles.requiredText}>Required</Text>
                     </View>
                 }
             </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginLeft: 0,
         borderWidth: 1,
-        borderColor: '#000000',
+        borderColor: '#CACACA',
         borderRadius: 5,
         padding: 5,
     },
