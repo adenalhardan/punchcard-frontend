@@ -19,11 +19,11 @@ export default NavigationBar
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '6%',
+        height: 50,
         alignItems: 'center',
         justifyContent: 'space-around',
         flexDirection: 'row',
-        backgroundColor: 'green'
+        backgroundColor: 'green',
     },
 
     button: {

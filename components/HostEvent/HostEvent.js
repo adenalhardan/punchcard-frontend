@@ -4,7 +4,7 @@ import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
-import CreateEvent from './components/CreateEvent/CreateEvent'
+import NewEvent from './components/NewEvent/NewEvent'
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
@@ -36,8 +36,8 @@ const HostEvent = ({id}) => {
     return (
         <View style = {{...styles.container, width}}>
             <ScrollView contentContainerStyle = {styles.list} showsVerticalScrollIndicator = {false}>
-                <CreateEvent 
-                    key = 'create'
+                <NewEvent 
+                    key = 'new'
                     id = {id} 
                     selected = {selected === 0} 
                     loadEvents = {loadEvents}

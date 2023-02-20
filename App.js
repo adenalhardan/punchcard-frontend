@@ -16,6 +16,8 @@ const App = () => {
 	const [page, setPage] = useState('joinEvent')
 	const ref = useRef(null)
 
+	const [loading, setLoading] = useState(true)
+
 	const [prefix, setPrefix] = useState(null)
 	const [id, setId] = useState(null)
 	
@@ -42,6 +44,8 @@ const App = () => {
 					setDevices(devices => new Set(devices.add(device)))
 				}
 			})
+
+			setLoading(false)
 		})()
 
 		return () => {
@@ -62,6 +66,10 @@ const App = () => {
 
 	const viewabilityConfig = {itemVisiblePercentThreshold: 75}
 	const viewabilityConfigCallbackPairs = useRef([{viewabilityConfig, onViewableItemsChanged}])
+	
+	if(loading) {
+		return <View></View>
+	}
 	
 	return (
 		<>

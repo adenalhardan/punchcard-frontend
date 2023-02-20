@@ -6,7 +6,7 @@ const Field = ({field, setInput}) => {
 
     return (
         <View style = {styles.container}>
-            <Text>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+            <Text style = {styles.text}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
             <TextInput style = {styles.input} onChangeText = {setInput}/>
         </View>
     )
@@ -17,16 +17,20 @@ export default Field
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center'
+        flexDirection: 'column',
+        alignItems: 'flex-start'
     },
 
     input: {
-        width: '60%',
-        marginLeft: 10,
+        width: '70%',
+        marginLeft: 0,
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: '#000000',
         borderRadius: 5,
-        padding: 5
+        padding: 5,
+    },
+
+    text: {
+        fontWeight: '500'
     }
 })

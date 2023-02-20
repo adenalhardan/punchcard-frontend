@@ -6,7 +6,7 @@ import {postEvent} from '../../../../api'
 import Fields from './components/Fields/Fields'
 import Create from './components/Create'
 
-const CreateEvent = ({id, selected, loadEvents, onPress}) => {
+const NewEvent = ({id, selected, loadEvents, onPress}) => {
     const [complete, setComplete] = useState(false)
 
     const [title, setTitle] = useState('')
@@ -43,7 +43,7 @@ const CreateEvent = ({id, selected, loadEvents, onPress}) => {
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
             <View style = {styles.accent}>
-                <Text>Create Event</Text>
+                <Text>New Event</Text>
             </View>
 
             {selected && 
@@ -67,7 +67,7 @@ const CreateEvent = ({id, selected, loadEvents, onPress}) => {
     )
 }
 
-export default CreateEvent
+export default NewEvent
 
 const styles = StyleSheet.create({
     container: {

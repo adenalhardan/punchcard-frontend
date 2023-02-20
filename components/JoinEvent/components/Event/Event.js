@@ -68,20 +68,27 @@ export default Event
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: '94%',
         marginBottom: 15,
         backgroundColor: 'white',
         borderRadius: 10,
         alignItems: 'center',
-        overflow: 'hidden'
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.2,
+        shadowRadius: 10,  
+        elevation: 5,
+        alignSelf: 'center'
     },
 
     accent: {
         width: '100%',
-        height: 30,
-        backgroundColor: 'yellow',
+        height: 40,
+        backgroundColor: '#2D61F4',
         justifyContent: 'center',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
 
     body: {
@@ -92,15 +99,15 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 18,
-        fontWeight: '500'
+        fontWeight: '600'
     },
 
     hostName: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontSize: 16
     },
 
     fields: {
         marginTop: 10,
-        marginLeft: 10
     }
 })

@@ -41,8 +41,7 @@ export default JoinEvent
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'blue',
-        paddingHorizontal: '3%'
+        backgroundColor: '#FFFFFF',
     },
 
     list: {
