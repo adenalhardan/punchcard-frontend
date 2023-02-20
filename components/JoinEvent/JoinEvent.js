@@ -9,7 +9,9 @@ const testEvents = [
         hostName: "Aden",
         hostId: 'WHLAs',
         fields: [
-            {name: 'Name', type: 'string', presence: 'required'}
+            {name: 'Name', type: 'string', presence: 'required'},
+            {name: 'Age', type: 'integer'}
+
         ]
     }, 
 ]

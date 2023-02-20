@@ -6,7 +6,16 @@ const Field = ({field, setInput}) => {
 
     return (
         <View style = {styles.container}>
-            <Text style = {styles.text}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+            <View style = {styles.banner}>
+                <Text style = {styles.text}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+
+                {presence === 'required' &&
+                    <View style = {styles.required}>
+                        <Text style = {styles.requiredText}>required</Text>
+                    </View>
+                }
+            </View>
+
             <TextInput style = {styles.input} onChangeText = {setInput}/>
         </View>
     )
@@ -16,13 +25,22 @@ export default Field
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: '70%',
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginBottom: 12
+    },
+
+    banner: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginBottom: 3, 
+        justifyContent: 'space-between', 
+        width: '100%'
     },
 
     input: {
-        width: '70%',
+        width: '100%',
         marginLeft: 0,
         borderWidth: 1,
         borderColor: '#000000',
@@ -31,6 +49,22 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontWeight: '500'
+        fontWeight: '500',
+        marginBottom: -2
+    },
+
+    required: {
+        paddingVertical: 2,
+        paddingHorizontal: 6,
+        borderRadius: 12,
+        backgroundColor: '#FC4138',
+        marginLeft: 4,
+        opacity: 0.95
+    },
+
+    requiredText: {
+        fontSize: 12,
+        color: '#750D07',
+        fontWeight: '700'
     }
 })
