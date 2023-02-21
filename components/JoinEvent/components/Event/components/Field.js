@@ -25,7 +25,7 @@ export default Field
 
 const styles = StyleSheet.create({
     container: {
-        width: '70%',
+        width: '80%',
         flexDirection: 'column',
         alignItems: 'flex-start',
         marginBottom: 12
@@ -45,12 +45,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,
-        padding: 5,
+        paddingVertical: 6,
+        paddingHorizontal: 7,
+        fontSize: 16
     },
 
     text: {
         fontWeight: '500',
-        marginBottom: -2
+        marginBottom: -2,
+        fontSize: 16
     },
 
     required: {

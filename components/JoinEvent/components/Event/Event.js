@@ -61,26 +61,26 @@ const Event = ({id, event, selected, onPress}) => {
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.accent}>
-                <Text style = {styles.title}>{title}</Text>
+            <View style = {styles.head}>
+                <View>
+                    <Text style = {styles.title}>{title}</Text>
+                    <Text style = {styles.hostName}>{hostName}</Text>
+                </View>
+
                 {submitted && <Image style = {styles.submitted} source = {require('./assets/submitted.png')}/>}
             </View>
             
-            <View style = {styles.body}>
-                <Text style = {styles.hostName}>{hostName}</Text>
-
-                {selected && 
-                    <>
-                        <View style = {styles.fields}>
-                            {fields.map((field, i) => (
-                                <Field key = {i} field = {field} setInput = {setInput(i)}/>
-                            ))}
-                        </View>
-                        
-                        <Submit enabled = {completed} onPress = {onSubmitPress}/>
-                    </>
-                }
-            </View>
+            {selected && 
+                <View style = {styles.body}>
+                    <View style = {styles.fields}>
+                        {fields.map((field, i) => (
+                            <Field key = {i} field = {field} setInput = {setInput(i)}/>
+                        ))}
+                    </View>
+                    
+                    <Submit enabled = {completed} onPress = {onSubmitPress}/>
+                </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -102,26 +102,25 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    accent: {
-        width: '100%',
-        height: 35,
-        backgroundColor: '#2D61F4',
+    head: {
+        width: '90%',
+        height: 60,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderTopRightRadius: 10
     },
 
     body: {
-        paddingHorizontal: 10,
+        borderTopColor: '#CACACA',
+        borderTopWidth: 1,
         paddingVertical: 10,
-        width: '100%'
+        width: '90%',
     },
 
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: '600'
     },
 
@@ -135,8 +134,9 @@ const styles = StyleSheet.create({
     },
 
     submitted: {
-        height: 20,
-        width: 20,
-        resizeMode: 'contain'
+        height: 25,
+        width: 25,
+        resizeMode: 'contain',
+        tintColor: 'green'
     }
 })

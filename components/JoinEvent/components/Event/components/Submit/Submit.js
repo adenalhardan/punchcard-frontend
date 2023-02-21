@@ -15,42 +15,43 @@ export default Submit
 const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-end', 
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 5
     },
 
     enabled: {
-        backgroundColor: '#1A964E',
-        paddingVertical: 5,
+        backgroundColor: '#B6D0FF',
+        paddingVertical: 8,
         paddingHorizontal: 10,
         borderRadius: 12,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     disabled: {
-        backgroundColor: '#CACACA',
-        paddingVertical: 5,
+        paddingVertical: 8,
         paddingHorizontal: 10,
         borderRadius: 12,
         opacity: 0.5,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#CACACA'
     },
 
     textEnabled: {
         fontWeight: '700',
-        fontSize: 14,
+        fontSize: 16
     },
 
     textDisabled: {
         fontWeight: '700',
-        fontSize: 14,
+        fontSize: 16,
     },
 
     image: {
-        height: 20,
-        width: 20,
+        height: 22,
+        width: 22,
         resizeMode: 'contain',
-        marginLeft: 4
+        marginLeft: 4,
     }
 })

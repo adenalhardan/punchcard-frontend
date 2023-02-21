@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     },
 
     submissionsText: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: '600'
     },
 
     download: {
