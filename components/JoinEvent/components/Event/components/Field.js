@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
 
     input: {
         width: '100%',
-        marginLeft: 0,
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,
@@ -62,12 +61,11 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: '#FC4138',
         marginLeft: 4,
-        opacity: 0.95
     },
 
     requiredText: {
         fontSize: 12,
-        color: '#750D07',
-        fontWeight: '700'
+        color: '#000000',
+        fontWeight: '500'
     }
 })

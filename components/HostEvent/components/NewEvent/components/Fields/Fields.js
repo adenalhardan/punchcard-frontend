@@ -82,10 +82,10 @@ export default Fields
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10
     },
 
     title: {
-        fontWeight: '500'
+        fontWeight: '500',
+        fontSize: 16
     }
 })

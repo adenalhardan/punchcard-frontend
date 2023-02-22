@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
+import {TouchableOpacity, Image, Text, View, TextInput, StyleSheet} from 'react-native'
 
 import {postEvent} from '../../../../api'
 
@@ -42,8 +42,9 @@ const NewEvent = ({id, selected, loadEvents, onPress}) => {
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.accent}>
+            <View style = {styles.head}>
                 <Text style = {styles.buttonText}>New Event</Text>
+                <Image style = {styles.image} source = {require('./assets/create.png')}/>
             </View>
 
             {selected && 
@@ -53,7 +54,7 @@ const NewEvent = ({id, selected, loadEvents, onPress}) => {
                         <TextInput style = {styles.input} value = {title} onChangeText = {setTitle}/>
                     </View>
 
-                    <View style = {styles.name}>
+                    <View style = {styles.hostName}>
                         <Text style = {styles.text}>Host Name</Text>
                         <TextInput style = {styles.input} value = {hostName} onChangeText = {setHostName}/>
                     </View>
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     container: {
         width: '94%',
         marginBottom: 20,
-        backgroundColor: '#DE124F',
         borderRadius: 10,
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000000',
@@ -85,39 +86,57 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    accent: {
-        height: 45,
-        justifyContent: 'center'
+    head: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
 
     body: {
-        backgroundColor: 'white',
-        width: '100%',
-        padding: 10,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderTopColor: '#CACACA',
+        borderTopWidth: 1,
+        paddingVertical: 10,
+        width: '90%',
     },
 
     input: {
-        width: '70%',
+        width: '80%',
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,
-        padding: 5,
+        paddingVertical: 6,
+        paddingHorizontal: 7,
+        fontSize: 16
     },
 
     buttonText: {
-        fontSize: 16,
-        fontWeight: '700'
+        fontSize: 20,
+        fontWeight: '600',
+        fontStyle: 'italic'
     },
 
     text: {
-        fontWeight: '500'
+        fontWeight: '500',
+        fontSize: 16
     },
 
     title: {
         flexDirection: 'column', 
         justifyContent: 'center', 
-        marginBottom: 10
+        marginBottom: 15
+    },
+
+    hostName: {
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        marginBottom: 15
+    },
+
+    image: {
+        height: 25,
+        width: 25,
+        resizeMode: 'contain',
+        marginLeft: 10
     }
 })

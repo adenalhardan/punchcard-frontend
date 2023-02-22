@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
 
     textDisabled: {
         fontWeight: '700',
-        fontSize: 16,
+        fontSize: 16
     },
 
     image: {
         height: 22,
         width: 22,
         resizeMode: 'contain',
-        marginLeft: 4,
+        marginLeft: 4
     }
 })

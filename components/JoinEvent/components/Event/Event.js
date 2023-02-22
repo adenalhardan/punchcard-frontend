@@ -109,13 +109,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
     },
 
     body: {
         borderTopColor: '#CACACA',
         borderTopWidth: 1,
-        paddingVertical: 10,
+        paddingVertical: 5,
+        marginTop: 5,
         width: '90%',
     },
 

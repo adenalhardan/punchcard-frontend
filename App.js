@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from 'react'
 import {FlatList, View, StyleSheet, SafeAreaView} from 'react-native'
 
 import {NativeModules, NativeEventEmitter} from 'react-native'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 import {getPrefix, getId} from './api'
 
@@ -72,8 +73,7 @@ const App = () => {
 	}
 	
 	return (
-		<>
-			<SafeAreaView/>
+		<SafeAreaProvider>
 			<NavigationBar page = {page} onPress = {onPress}/>
 			<View style = {styles.container}>
 				<FlatList
@@ -89,7 +89,7 @@ const App = () => {
 					viewabilityConfigCallbackPairs = {viewabilityConfigCallbackPairs.current}
 				/>
 			</View>
-		</>
+		</SafeAreaProvider>
 	)
 }
 

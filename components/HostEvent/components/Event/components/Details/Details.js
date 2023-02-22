@@ -50,10 +50,12 @@ const styles = StyleSheet.create({
     },
 
     submissions: {
-        height: 50,
-        width: 50,
+        height: 55,
+        width: 55,
         borderRadius: 12,
-        backgroundColor: '#5CBF2A',
+        backgroundColor: '#2F9BF7',
+        borderWidth: 1,
+        borderColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -64,10 +66,12 @@ const styles = StyleSheet.create({
     },
 
     download: {
-        height: 50,
-        width: 50,
+        height: 55,
+        width: 55,
         borderRadius: 12,
-        backgroundColor: '#A221A3',
+        backgroundColor: '#11AD1E',
+        borderWidth: 1,
+        borderColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000000',
@@ -78,10 +82,12 @@ const styles = StyleSheet.create({
     },
 
     end: {
-        height: 50,
-        width: 50,
+        height: 55,
+        width: 55,
         borderRadius: 12,
-        backgroundColor: '#FF4C44',
+        backgroundColor: '#FA2019',
+        borderWidth: 1,
+        borderColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000000',

@@ -24,8 +24,9 @@ export default Field
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginBottom: 7,
-        alignItems: 'center'
+        marginBottom: 12,
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
 
     required: {
@@ -33,15 +34,15 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 6,
         borderRadius: 12,
-        marginLeft: 5,
+        marginLeft: 6,
         justifyContent: 'center',
         alignItems: 'center',
     },
 
     requiredText: {
-        fontSize: 13,
-        color: '#750D07',
-        fontWeight: '700'
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '500'
     },
 
     optional: {
@@ -49,15 +50,15 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 6,
         borderRadius: 12,
-        marginLeft: 5,
+        marginLeft: 6,
         justifyContent: 'center',
         alignItems: 'center'
     },
 
     optionalText: {
-        fontSize: 13,
-        color: '#366620',
-        fontWeight: '700'
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '500'
     },
 
     string: {
@@ -65,15 +66,15 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 6,
         borderRadius: 12,
-        marginLeft: 5,
+        marginLeft: 6,
         justifyContent: 'center',
         alignItems: 'center'
     }, 
 
     stringText: {
-        fontSize: 13,
-        color: '#A18120',
-        fontWeight: '700'
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '500'
     },
 
     integer: {
@@ -87,9 +88,9 @@ const styles = StyleSheet.create({
     },
 
     integerText: {
-        fontSize: 13,
-        color: '#24395B',
-        fontWeight: '700'
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '500'
     },
 
     input: {
@@ -97,12 +98,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,
-        padding: 5,
+        paddingVertical: 6,
+        paddingHorizontal: 7,
+        fontSize: 16
     },
 
     delete: {
-        height: 22,
-        width: 22,
+        height: 24,
+        width: 24,
         tintColor: '#E01C10',
         resizeMode: 'contain',
         marginLeft: 'auto',

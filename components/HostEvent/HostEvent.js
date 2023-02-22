@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
 
@@ -8,6 +9,7 @@ import NewEvent from './components/NewEvent/NewEvent'
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
+    const {top} = useSafeAreaInsets()
 
     const [selected, setSelected] = useState(-1)
     const [events, setEvents] = useState([])
@@ -35,7 +37,10 @@ const HostEvent = ({id}) => {
 
     return (
         <View style = {{...styles.container, width}}>
-            <ScrollView contentContainerStyle = {styles.list} showsVerticalScrollIndicator = {false}>
+            <ScrollView 
+                contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
+                showsVerticalScrollIndicator = {false}
+            >
                 <NewEvent 
                     key = 'new'
                     id = {id} 
@@ -67,7 +72,6 @@ const styles = StyleSheet.create({
     },
 
     list: {
-        paddingTop: 10,
         paddingBottom: 60
     }
 })

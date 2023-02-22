@@ -41,15 +41,18 @@ const Event = ({event, selected, onPress, loadEvents}) => {
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.accent}>
-                <Text style = {styles.title}>{title}</Text>
+            <View style = {styles.head}>
+                <View>
+                    <Text style = {styles.title}>{title}</Text>
+                    <Text style = {styles.hostName}>{hostName}</Text>
+                </View>
             </View>
             
-            <View style = {styles.body}>
-                <Text style = {styles.hostName}>{hostName}</Text>
-
-                {selected && <Details event = {event} formCount = {formCount} onEndPress = {onEndPress}/>}
-            </View>
+            {selected && 
+                <View style = {styles.body}>
+                    {selected && <Details event = {event} formCount = {formCount} onEndPress = {onEndPress}/>}
+                </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -71,36 +74,32 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    accent: {
-        width: '100%',
-        height: 35,
-        backgroundColor: '#1E55EB',
+    head: {
+        width: '90%',
+        height: 60,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
     },
 
     body: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        width: '100%'
+        borderTopColor: '#CACACA',
+        borderTopWidth: 1,
+        paddingTop: 5,
+        marginTop: 2,
+        paddingBottom: 10,
+        width: '90%',
     },
 
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: '600'
     },
 
     hostName: {
         fontStyle: 'italic',
         fontSize: 16
-    },
-
-    fields: {
-        marginTop: 10,
-        marginLeft: 10
     }
 })
