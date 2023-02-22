@@ -8,13 +8,20 @@ const NavigationBar = ({page, onPress}) => {
 
     return (
         <View style = {{...styles.container, height: top + 40}}>
+            <View style = {{...styles.background, height: top + 40}}/>
 
-            <TouchableOpacity style = {styles.button} onPress = {() => onPress('joinEvent')}>
-                <Text style = {page === 'joinEvent' ? styles.selected : styles.unselected}>Join Event</Text>
+            <TouchableOpacity 
+                style = {page === 'joinEvent' ? styles.selected : styles.unselected} 
+                onPress = {() => onPress('joinEvent')}
+            >
+                <Text style = {page === 'joinEvent' ? styles.selectedText : styles.unselectedText}>Join Event</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style = {styles.button} onPress = {() => onPress('hostEvent')}>
-                <Text style = {page === 'hostEvent' ? styles.selected : styles.unselected}>Host Event</Text>
+            <TouchableOpacity 
+                style = {page === 'hostEvent' ? styles.selected : styles.unselected} 
+                onPress = {() => onPress('hostEvent')}
+            >
+                <Text style = {page === 'hostEvent' ? styles.selectedText : styles.unselectedText}>Host Event</Text>
             </TouchableOpacity>
         </View>
     )
@@ -26,7 +33,7 @@ export default NavigationBar
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'space-around',
         flexDirection: 'row',
         position: 'absolute',
@@ -37,21 +44,38 @@ const styles = StyleSheet.create({
         position: 'absolute', 
         resizeMode: 'stretch', 
         top: 0, 
-        opacity: 0.9, 
-        width: '100%'
-    },
-
-    button: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        opacity: 0.95, 
+        left: 0,
+        right: 0,
+        backgroundColor: '#FFFFFF'
     },
 
     selected: {
-        fontWeight: 'bold'
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: 10,
+        height: '80%',
+        width: '30%',
+        borderBottomWidth: 3,
+        borderBottomColor: '#2F9BF7'
     },
 
     unselected: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: 10,
+        height: '80%',
+        width: '30%',
+    },
 
+    selectedText: {
+        fontWeight: '600',
+        fontSize: 16,
+    },
+
+    unselectedText: {
+        fontSize: 16,
+        opacity: 0.5,
+        fontWeight: '500'
     }
 })
