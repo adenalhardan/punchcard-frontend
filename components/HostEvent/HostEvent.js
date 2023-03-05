@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react'
-import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {View, StyleSheet, useWindowDimensions, Image, Text, ScrollView} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
+import Disconnected from './components/Disconnected/Disconnected'
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
@@ -14,17 +15,24 @@ const HostEvent = ({id}) => {
     const [selected, setSelected] = useState(-1)
     const [events, setEvents] = useState([])
 
+    const [connected, setConnected] = useState(false)
+
     const loadEvents = () => {
         (async () => {
             const events = await getEvents(id, (message) => {
                 console.error(message)
+                setConnected(false)
             })
 
-            setEvents(events.map(({title, host_name, host_id}) => ({
-                title: title, 
-                hostName: host_name,
-                hostId: host_id
-            })))
+            if(events) {
+                setConnected(true)
+
+                setEvents(events.map(({title, host_name, host_id}) => ({
+                    title: title, 
+                    hostName: host_name,
+                    hostId: host_id
+                })))
+            }
         })()
     }
 
@@ -49,7 +57,9 @@ const HostEvent = ({id}) => {
                     onPress = {() => setSelected(selected === 0 ? -1 : 0)}
                 />
 
-                {events.map((event, i) => (
+                {!connected && <Disconnected/>}
+
+                {connected && events.map((event, i) => (
                     <Event 
                         key = {i} 
                         event = {event}
@@ -73,5 +83,5 @@ const styles = StyleSheet.create({
 
     list: {
         paddingBottom: 60
-    }
+    },
 })

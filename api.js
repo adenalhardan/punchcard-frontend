@@ -117,14 +117,14 @@ export const postForm = (id, hostId, eventTitle, fields, onError, onSuccess) => 
     })()
 }
 
-export const getEvents = async (hostId, onError) => {
+export const getEvents = async (hostId, onSuccess, onError) => {
     try {
         const endpoint = url + '/get-events?host_id=' + hostId
         
         const response = await fetch(endpoint)
         const {events} = await response.json()
         
-        if(events) {
+        if(events !== undefined) {
             return events 
         } else {
             onError('events not in response')

@@ -18,7 +18,7 @@ export default Create
 const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-end', 
-        marginTop: 10,
+        marginTop: 15,
         marginBottom: 5
     },
 
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '35%',
-        aspectRatio: 2.8
+        width: '100%',
+        aspectRatio: 7.8
     },
 
     text: {
