@@ -3,8 +3,8 @@ import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 
 const Create = ({enabled, onPress}) => (
     <View style = {styles.container}>
-        <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled} onPress = {enabled ? onPress : () => {}}>
-            <Text style = {enabled ? styles.textEnabled : styles.textDisabled}>Create</Text>
+        <TouchableOpacity style = {[enabled ? styles.enabled : styles.disabled, styles.button]} onPress = {enabled ? onPress : () => {}}>
+            <Text style = {[enabled ? styles.enabledText : styles.disabledText, styles.text]}>Create</Text>
             <Image style = {styles.image} source = {require('./assets/create.png')}/>
         </TouchableOpacity>
     </View>
@@ -19,33 +19,34 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
 
-    enabled: {
-        backgroundColor: '#54BF71',
+    button: {
         paddingVertical: 8,
         paddingHorizontal: 10,
         borderRadius: 12,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+
+    text: {
+        fontWeight: '600',
+        fontSize: 16,
+        
+    },
+
+    enabled: {
+        backgroundColor: '#009A4B',
     },
 
     disabled: {
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        borderRadius: 12,
         opacity: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: '#CACACA'
     },
 
-    textEnabled: {
-        fontWeight: '700',
-        fontSize: 16
+    enabledText: {
+        
     },
 
-    textDisabled: {
-        fontWeight: '700',
-        fontSize: 16,
+    disabledText: {
     },
 
     image: {

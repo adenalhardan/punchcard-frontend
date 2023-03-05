@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         paddingHorizontal: 6,
         borderRadius: 12,
-        backgroundColor: '#FC4138',
+        backgroundColor: '#fedbd6',
         marginLeft: 4,
     },
 
     requiredText: {
         fontSize: 12,
-        color: '#000000',
-        fontWeight: '500'
+        color: '#cf1c00',
+        fontWeight: '600'
     }
 })

@@ -6,7 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 import {getPrefix, getId} from './api'
 
-import NavigationBar from './components/NavigationBar'
+import NavigationBar from './components/NavigationBar/NavigationBar'
 import JoinEvent from './components/JoinEvent/JoinEvent'
 import HostEvent from './components/HostEvent/HostEvent'
 

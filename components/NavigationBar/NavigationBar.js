@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native'
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
@@ -11,17 +11,19 @@ const NavigationBar = ({page, onPress}) => {
             <View style = {{...styles.background, height: top + 40}}/>
 
             <TouchableOpacity 
-                style = {page === 'joinEvent' ? styles.selected : styles.unselected} 
+                style = {[page === 'joinEvent' ? styles.selected : styles.unselected, styles.tab]} 
                 onPress = {() => onPress('joinEvent')}
             >
-                <Text style = {page === 'joinEvent' ? styles.selectedText : styles.unselectedText}>Join Event</Text>
+                <Text style = {page === 'joinEvent' ? styles.selectedText : styles.unselectedText}>Join</Text>
+                <Image style = {page === 'joinEvent' ? styles.joinImage : {...styles.joinImage, opacity: 0.5}} source = {require('./assets/join.png')}/>
             </TouchableOpacity>
             
             <TouchableOpacity 
-                style = {page === 'hostEvent' ? styles.selected : styles.unselected} 
+                style = {[page === 'hostEvent' ? styles.selected : styles.unselected, styles.tab]} 
                 onPress = {() => onPress('hostEvent')}
             >
-                <Text style = {page === 'hostEvent' ? styles.selectedText : styles.unselectedText}>Host Event</Text>
+                <Text style = {page === 'hostEvent' ? styles.selectedText : styles.unselectedText}>Host</Text>
+                <Image style = {page === 'hostEvent' ? styles.hostImage : {...styles.hostImage, opacity: 0.5}} source = {require('./assets/host.png')}/>
             </TouchableOpacity>
         </View>
     )
@@ -50,22 +52,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF'
     },
 
-    selected: {
-        justifyContent: 'flex-end',
+    tab: {
+        justifyContent: 'center',
         alignItems: 'center',
         paddingBottom: 10,
-        height: '80%',
+        height: '40%',
         width: '30%',
+        flexDirection: 'row'
+    },
+
+    selected: {
         borderBottomWidth: 3,
         borderBottomColor: '#2F9BF7'
     },
 
     unselected: {
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        paddingBottom: 10,
-        height: '80%',
-        width: '30%',
+
     },
 
     selectedText: {
@@ -77,5 +79,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         opacity: 0.5,
         fontWeight: '500'
+    },
+
+    joinImage: {
+        height: 28,
+        width: 28,
+        marginLeft: 5,
+        resizeMode: 'contain',
+    },
+
+    hostImage: {
+        height: 35,
+        width: 35,
+        marginLeft: 8,
+        resizeMode: 'contain',
     }
 })

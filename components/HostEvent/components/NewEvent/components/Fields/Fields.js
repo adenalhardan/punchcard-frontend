@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 16,
+        marginBottom: 2
     }
 })
