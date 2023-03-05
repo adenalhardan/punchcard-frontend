@@ -1,11 +1,14 @@
 import React from 'react'
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 const Submit = ({enabled, onPress}) => (
     <View style = {styles.container}>
-        <TouchableOpacity style = {enabled ? styles.enabled : styles.disabled} onPress = {enabled ? onPress : () => {}}>
-            <Text style = {enabled ? styles.textEnabled : styles.textDisabled}>Submit</Text>
+        <TouchableOpacity style = {enabled ? {} : {opacity: 0.5}} onPress = {enabled ? onPress : () => {}}>
+            <LinearGradient colors={['#6a65a6', '#3c33a6', '#382b8c']} style={styles.button}>
+            <Text style = {styles.text}>Submit</Text>
             <Image style = {styles.image} source = {require('./assets/submit.png')}/>
+            </LinearGradient>
         </TouchableOpacity>
     </View>
 )
@@ -15,43 +18,30 @@ export default Submit
 const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-end', 
-        marginTop: 10,
+        marginTop: 20,
         marginBottom: 5
     },
 
-    enabled: {
-        backgroundColor: '#B6D0FF',
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        borderRadius: 12,
+    button: {
+        borderRadius: 10,
+        justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
+        width: '100%',
+        aspectRatio: 7.8
     },
 
-    disabled: {
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        borderRadius: 12,
-        opacity: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#CACACA'
-    },
-
-    textEnabled: {
-        fontWeight: '700',
-        fontSize: 16
-    },
-
-    textDisabled: {
-        fontWeight: '700',
-        fontSize: 16
+    text: {
+        fontWeight: '600',
+        fontSize: 16,
+        color: '#FFFFFF'
     },
 
     image: {
-        height: 22,
-        width: 22,
+        height: 25,
+        width: 25,
         resizeMode: 'contain',
-        marginLeft: 4
+        marginLeft: 6,
+        tintColor: '#FFFFFF'
     }
 })

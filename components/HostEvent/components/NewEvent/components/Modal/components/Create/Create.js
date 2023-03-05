@@ -18,7 +18,7 @@ export default Create
 const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-end', 
-        marginTop: 15,
+        marginTop: 20,
         marginBottom: 5
     },
 
