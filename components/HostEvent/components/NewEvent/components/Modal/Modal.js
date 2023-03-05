@@ -22,12 +22,10 @@ const Modal = ({id, loadEvents, onPress}) => {
     }, [title, hostName, fields])
 
     const onSubmitPress = () => {
-        postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')),
-            (message) => {
-                console.error(message)
-            },
+        (async () => {
+            try {
+                await postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')))
 
-            () => {
                 setTitle('')
                 setHostName('')
                 setFields([{name: '', type: 'string', presence: 'required'}])
@@ -36,8 +34,11 @@ const Modal = ({id, loadEvents, onPress}) => {
                 onPress()
                 
                 loadEvents()
+
+            } catch(error) {
+                console.error(error)
             }
-        )
+        })()
     }
 
     return (
@@ -59,7 +60,7 @@ const Modal = ({id, loadEvents, onPress}) => {
                 
                 <Fields fields = {fields} setFields = {setFields}/>
 
-                <Create enabled = {complete} onPRess = {onSubmitPress}/>
+                <Create enabled = {complete} onPress = {onSubmitPress}/>
             </View>
         </TouchableOpacity>
     )

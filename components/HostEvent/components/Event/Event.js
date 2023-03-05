@@ -1,40 +1,39 @@
 import {useState, useEffect} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-import {getFormCount, deleteEvent} from '../../../../api'
+import {getForms} from '../../../../api'
 
-import Details from './components/Details/Details'
+import FormCount from './components/FormCount/FormCount'
+
+import Download from './components/Download/Download'
+import EndEvent from './components/EndEvent/EndEvent'
+import Forms from './components/Forms'
 
 const Event = ({event, selected, onPress, loadEvents}) => {
-    const {title, hostName, hostId} = event
+    const {title, hostName, hostId, fields} = event
+    
+    const [forms, setForms] = useState([])
 
-    const [formCount, setFormCount] = useState(0)
-
-    const loadFormCount = () => {
+    const loadForms = () => {
         (async () => {
-            const formCount = await getFormCount(hostId, title, (message) => {
-                console.error(message)
-            })
+            try {
+                const forms = await getForms(hostId, title)
+                setForms(forms)
 
-            setFormCount(formCount)
+            } catch(error) {
+                console.error(error)
+            }
         })()
     }
 
-    const onEndPress = () => {
-        deleteEvent(hostId, title, 
-            (message) => {
-                console.error(message) 
-            }, 
-            
-            () => {
-                loadEvents()
-                onPress()
-            })
+    const onDelete = () => {
+        loadEvents()
+        onPress()
     }
-
+    
     useEffect(() => {
-        loadFormCount()
-        const interval = setInterval(loadFormCount, 5000)
+        loadForms()
+        const interval = setInterval(loadForms, 5000)
 
         return () => clearInterval(interval)
     }, [])
@@ -46,11 +45,18 @@ const Event = ({event, selected, onPress, loadEvents}) => {
                     <Text style = {styles.title}>{title}</Text>
                     <Text style = {styles.hostName}>{hostName}</Text>
                 </View>
+
+                <FormCount count = {forms.length}/>
             </View>
             
             {selected && 
                 <View style = {styles.body}>
-                    {selected && <Details event = {event} formCount = {formCount} onEndPress = {onEndPress}/>}
+                    <View style = {styles.buttons}>
+                        <Download forms = {forms}/>
+                        <EndEvent event = {event} onDelete = {onDelete}/>
+                    </View>
+
+                    <Forms forms = {forms}/>
                 </View>
             }
         </TouchableOpacity>
@@ -101,5 +107,13 @@ const styles = StyleSheet.create({
     hostName: {
         fontStyle: 'italic',
         fontSize: 16
+    },
+
+    buttons: {
+        flexDirection: 'row', 
+        width: '100%', 
+        justifyContent: 'space-between',
+        marginBottom: 15,
+        marginTop: 5
     }
 })

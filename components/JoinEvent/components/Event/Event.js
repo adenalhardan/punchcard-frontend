@@ -43,20 +43,18 @@ const Event = ({id, event, selected, onPress}) => {
     }
 
     const onSubmitPress = () => {
-        postForm(id, hostId, title, JSON.stringify(inputs), 
-            (message) => {
-                console.error(message)
-            },
+        (async () => {
+            try {
+                await postForm(id, hostId, title, JSON.stringify(inputs))
 
-            () => {
-                (async () => {
-                    onPress()
+                onPress()
+                setSubmitted(true)
+                await AsyncStorage.setItem(submittedKey, 'true')
 
-                    setSubmitted(true)
-                    await AsyncStorage.setItem(submittedKey, 'true')
-                })()
+            } catch(error) {
+                console.error(error)
             }
-        )
+        })()
     }
 
     return (
@@ -115,7 +113,8 @@ const styles = StyleSheet.create({
     body: {
         borderTopColor: '#CACACA',
         borderTopWidth: 1,
-        paddingVertical: 5,
+        paddingTop: 5,
+        paddingBottom: 10,
         marginTop: 5,
         width: '90%',
     },

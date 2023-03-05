@@ -19,19 +19,20 @@ const HostEvent = ({id}) => {
 
     const loadEvents = () => {
         (async () => {
-            const events = await getEvents(id, (message) => {
-                console.error(message)
-                setConnected(false)
-            })
+            try {
+                const events = await getEvents(id)
 
-            if(events) {
                 setConnected(true)
 
-                setEvents(events.map(({title, host_name, host_id}) => ({
+                setEvents(events.map(({title, host_name, host_id, fields}) => ({
                     title: title, 
                     hostName: host_name,
-                    hostId: host_id
+                    hostId: host_id,
+                    fields: fields
                 })))
+
+            } catch(error) {
+                setConnected(false)
             }
         })()
     }

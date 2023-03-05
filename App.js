@@ -18,6 +18,7 @@ const App = () => {
 	const ref = useRef(null)
 
 	const [loading, setLoading] = useState(true)
+	const [connected, setConnected] = useState(false)
 
 	const [prefix, setPrefix] = useState(null)
 	const [id, setId] = useState(null)
@@ -31,22 +32,28 @@ const App = () => {
 
 	useEffect(() => {
 		(async () => {
-			const prefix = await getPrefix()
-			const id = await getId()
+			try {
+				const prefix = await getPrefix()
+				const id = await getId()
 
-			setPrefix(prefix)
-			setId(id)
+				setPrefix(prefix)
+				setId(id)
 
-			Bluetooth.broadcast(prefix + id)
-			Bluetooth.scan()
-		
-			BluetoothEvents.addListener('foundDevice', device => {
-				if(!devices.has(device) && device.startsWith(prefix)) {
-					setDevices(devices => new Set(devices.add(device)))
-				}
-			})
+				Bluetooth.broadcast(prefix + id)
+				Bluetooth.scan()
+			
+				BluetoothEvents.addListener('foundDevice', device => {
+					if(!devices.has(device) && device.startsWith(prefix)) {
+						setDevices(devices => new Set(devices.add(device)))
+					}
+				})
 
-			setLoading(false)
+				setLoading(false)
+				setConnected(true)
+
+			} catch(error) {
+				setConnected(false)
+			}
 		})()
 
 		return () => {

@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient'
 const Create = ({enabled, onPress}) => (
     <View style = {styles.container}>
         <TouchableOpacity onPress = {enabled ? onPress : () => {}} style = {enabled ? {} : {opacity: 0.5}}>
-            <LinearGradient colors={['#65A66F', '#33A645', '#2B8C44']} style={styles.button}>
+            <LinearGradient colors = {['#65A66F', '#33A645', '#2B8C44']} style={styles.button}>
                 <Text style = {styles.text}>Create</Text>
                 <Image style = {styles.image} source = {require('./assets/create.png')}/>
             </LinearGradient>
