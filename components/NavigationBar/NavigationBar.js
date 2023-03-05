@@ -29,7 +29,6 @@ const NavigationBar = ({page, onPress}) => {
     )
 }
 
-
 export default NavigationBar
 
 const styles = StyleSheet.create({
