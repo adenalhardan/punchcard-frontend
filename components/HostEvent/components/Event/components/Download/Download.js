@@ -7,7 +7,7 @@ const Download = () => {
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <LinearGradient colors = {['#5940ff', '#3c33a6', '#1701a1']} style = {styles.background}>
+            <LinearGradient colors = {['#5C9DF2', '#1E6FD9', '#0D65D9']} style = {styles.background}>
                 <Text style = {styles.text}>Download</Text>
                 <Image style = {styles.image} source = {require('./assets/download.png')}/>
             </LinearGradient>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontWeight: '600',
-        fontSize: 15,
+        fontSize: 16,
         color: '#FFFFFF'
     },
     

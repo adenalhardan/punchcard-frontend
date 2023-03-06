@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontSize: 14,
-        fontWeight: '600'
+        fontWeight: '600',
     },
 
     button: {

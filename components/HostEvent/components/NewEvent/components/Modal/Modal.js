@@ -107,17 +107,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 7,
-        fontSize: 16
+        fontSize: 16,
+        color: '#212427'
     },
 
     title: {
         fontSize: 20,
         fontWeight: '600',
+        color: '#212427'
     },
 
     text: {
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 16,
+        color: '#212427'
     },
 
     eventTitle: {

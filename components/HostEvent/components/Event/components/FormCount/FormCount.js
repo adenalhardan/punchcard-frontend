@@ -20,12 +20,14 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         fontWeight: '600',
-        marginRight: 8
+        marginRight: 8,
+        color: '#212427'
     },
 
     image: {
         height: 30,
         width: 30,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor: '#212427'
     }
 })

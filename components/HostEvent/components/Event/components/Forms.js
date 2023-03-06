@@ -1,21 +1,44 @@
 import {useState} from 'react'
-import {ScrollView, View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {ScrollView, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet} from 'react-native'
 
-const Forms = ({forms}) => {
+const Forms = ({keys, values}) => {
     const [expanded, setExpanded] = useState(false)
     
-    return (
-        <View style = {styles.container}>
-            <Text style = {styles.title}>Submissions</Text>
-            <ScrollView style = {styles.list}>
+    if(values.length > 0) {
+        return (
+            <TouchableWithoutFeedback style = {styles.container}>
+                <View style = {{alignItems: 'center'}}>
+                    <Text style = {styles.title}>Submissions</Text>
+                    <ScrollView style = {styles.list} horizontal showsHorizontalScrollIndicator = {false}>
+                        {keys.map((key, i) => (
+                            <View key = {key} onStartShouldSetResponder={() => true} style = {i !== (keys.length - 1) ? styles.column : {...styles.column, marginRight: 40}}>
+                                <View style = {styles.key}>
+                                    <Text style = {styles.keyText}>{key}</Text>
+                                </View>
 
-            </ScrollView>
+                                {values.slice(0, expanded ? values.length : 3).map((value, j) => (
+                                    <>
+                                        <Text style = {i !== (keys.length - 1) ? {...styles.value, paddingRight: 60} : styles.value}>{value[i]}</Text>
+                                        {j !== (expanded ? (values.length - 1) : 2) && <View style = {styles.break}/>}
+                                    </>
+                                ))}
+                            </View>
+                        ))}
+                    </ScrollView>
 
-            <TouchableOpacity style = {styles.button} onPress = {() => setExpanded(!expanded)}>
-                <Text style = {styles.buttonText}>{expanded ? 'Show Less' : 'Show More'}</Text>
-            </TouchableOpacity>
-        </View>
-    )
+                    <TouchableOpacity style = {styles.button} onPress = {() => setExpanded(!expanded)}>
+                        <Text style = {styles.buttonText}>{expanded ? 'Show Less' : 'Show All'}</Text>
+                    </TouchableOpacity>
+                </View>
+            </TouchableWithoutFeedback>
+        )
+    } else {
+        return (
+            <TouchableWithoutFeedback style = {styles.container}>
+                <Text style = {styles.title}>No Submissions</Text>
+            </TouchableWithoutFeedback>
+        )
+    }
 }
 
 export default Forms
@@ -28,18 +51,21 @@ const styles = StyleSheet.create({
 
     list: {
         width: '100%',
-        height: 50,
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 10,
-        padding: 5
+        paddingTop: 8,
+        paddingBottom: 12,
+        paddingLeft: 12,
+        paddingRight: 30
     },
 
     title: {
         fontWeight: '500',
         alignSelf: 'flex-start',
         marginBottom: 2,
-        fontSize: 15
+        fontSize: 15,
+        color: '#212427'
     },
 
     button: {
@@ -50,5 +76,38 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 14,
         color: '#2F9BF7'
+    },
+
+    column: {
+
+    },
+
+    key: {
+        alignSelf: 'flex-start',
+        paddingHorizontal: 9,
+        paddingVertical: 2,
+        borderRadius: 12,
+        backgroundColor: '#F7F8F9',
+        marginBottom: 5,
+        borderWidth: 1,
+        borderColor: '#DDE4E8'
+    },
+
+    keyText: {
+        fontWeight: '600',
+        fontSize: 15,
+        color: '#64707C'
+    },
+
+    break: {
+        width: '100%',
+        borderBottomColor: '#CACACA',
+        borderBottomWidth: 1,
+        marginVertical: 4
+    },
+
+    value: {
+        fontSize: 16,
+        color: '#212427',
     }
 })

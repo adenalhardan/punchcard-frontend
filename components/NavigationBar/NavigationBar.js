@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     selectedText: {
         fontWeight: '600',
         fontSize: 16,
+        color: '#212427'
     },
 
     unselectedText: {
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
         width: 28,
         marginLeft: 5,
         resizeMode: 'contain',
+        tintColor: '#212427'
     },
 
     hostImage: {
@@ -92,5 +94,6 @@ const styles = StyleSheet.create({
         width: 35,
         marginLeft: 8,
         resizeMode: 'contain',
+        tintColor: '#212427'
     }
 })

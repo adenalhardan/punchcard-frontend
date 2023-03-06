@@ -6,7 +6,7 @@ import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
-import Disconnected from './components/Disconnected/Disconnected'
+import Disconnected from '../Disconnected/Disconnected'
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
@@ -50,15 +50,17 @@ const HostEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                <NewEvent 
+                {!connected && <Disconnected/>}
+
+                {connected && <NewEvent 
                     key = 'new'
                     id = {id} 
                     selected = {selected === 0} 
                     loadEvents = {loadEvents}
                     onPress = {() => setSelected(selected === 0 ? -1 : 0)}
-                />
+                />}
 
-                {!connected && <Disconnected/>}
+                
 
                 {connected && events.map((event, i) => (
                     <Event 

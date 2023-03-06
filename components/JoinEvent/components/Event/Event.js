@@ -45,7 +45,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm(id, hostId, title, JSON.stringify(inputs))
+                await postForm('WHCCs', hostId, title, JSON.stringify(inputs))
 
                 onPress()
                 setSubmitted(true)
@@ -115,18 +115,21 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         paddingTop: 5,
         paddingBottom: 10,
-        marginTop: 5,
+        marginTop: 2,
         width: '90%',
     },
 
     title: {
         fontSize: 20,
-        fontWeight: '600'
+        fontWeight: '600',
+        color: '#212427',
+        marginBottom: 3
     },
 
     hostName: {
         fontStyle: 'italic',
-        fontSize: 16
+        fontSize: 16,
+        color: '#212427'
     },
 
     fields: {

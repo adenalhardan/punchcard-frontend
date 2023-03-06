@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: '500',
         marginBottom: -2,
-        fontSize: 16
+        fontSize: 16,
+        color: '#212427'
     },
 
     required: {

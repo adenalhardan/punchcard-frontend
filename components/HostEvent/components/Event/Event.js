@@ -13,7 +13,7 @@ const Event = ({event, selected, onPress, loadEvents}) => {
     const {title, hostName, hostId, fields} = event
     
     const [forms, setForms] = useState([])
-
+    
     const loadForms = () => {
         (async () => {
             try {
@@ -56,7 +56,7 @@ const Event = ({event, selected, onPress, loadEvents}) => {
                         <EndEvent event = {event} onDelete = {onDelete}/>
                     </View>
 
-                    <Forms forms = {forms}/>
+                    <Forms keys = {fields.map(({name}) => name)} values = {forms.map(({fields}) => fields.map(({value}) => value))}/>
                 </View>
             }
         </TouchableOpacity>
@@ -101,12 +101,15 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 20,
-        fontWeight: '600'
+        fontWeight: '600',
+        color: '#212427',
+        marginBottom: 3
     },
 
     hostName: {
         fontStyle: 'italic',
-        fontSize: 16
+        fontSize: 16,
+        color: '#212427'
     },
 
     buttons: {
