@@ -12,7 +12,7 @@ const JoinEvent = ({id}) => {
     const {top} = useSafeAreaInsets()
     
     const [selected, setSelected] = useState(-1)
-    const [events, setEvents] = useState(false)
+    const [events, setEvents] = useState([])
 
     const [connected, setConnected] = useState(false)
 

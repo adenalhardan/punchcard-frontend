@@ -17,10 +17,10 @@ const Forms = ({keys, values}) => {
                                 </View>
 
                                 {values.slice(0, expanded ? values.length : 3).map((value, j) => (
-                                    <>
+                                    <View key = {j}>
                                         <Text style = {i !== (keys.length - 1) ? {...styles.value, paddingRight: 60} : styles.value}>{value[i]}</Text>
                                         {j !== (expanded ? (values.length - 1) : 2) && <View style = {styles.break}/>}
-                                    </>
+                                    </View>
                                 ))}
                             </View>
                         ))}
