@@ -11,15 +11,22 @@ const Forms = ({keys, values}) => {
                     <Text style = {styles.title}>Submissions</Text>
                     <ScrollView style = {styles.list} horizontal showsHorizontalScrollIndicator = {false}>
                         {keys.map((key, i) => (
-                            <View key = {key} onStartShouldSetResponder={() => true} style = {i !== (keys.length - 1) ? styles.column : {...styles.column, marginRight: 40}}>
+                            <View 
+                                key = {key} 
+                                onStartShouldSetResponder={() => true} 
+                                style = {i !== (keys.length - 1) ? styles.column : {...styles.column, marginRight: 40}}
+                            >
                                 <View style = {styles.key}>
                                     <Text style = {styles.keyText}>{key}</Text>
                                 </View>
 
                                 {values.slice(0, expanded ? values.length : 3).map((value, j) => (
                                     <View key = {j}>
-                                        <Text style = {i !== (keys.length - 1) ? {...styles.value, paddingRight: 60} : styles.value}>{value[i]}</Text>
-                                        {j !== (expanded ? (values.length - 1) : 2) && <View style = {styles.break}/>}
+                                        <Text style = {i !== (keys.length - 1) ? {...styles.value, paddingRight: 60} : styles.value}>
+                                            {value[i]}
+                                        </Text>
+
+                                        {j !== (expanded ? (values.length - 1) : Math.min((values.length - 1), 2)) && <View style = {styles.break}/>}
                                     </View>
                                 ))}
                             </View>
@@ -69,7 +76,8 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        marginTop: 5
+        marginTop: 5,
+        paddingHorizontal: 12
     },
 
     buttonText: {
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     keyText: {
         fontWeight: '600',
         fontSize: 15,
-        color: '#64707C'
+        color: '#566370'
     },
 
     break: {

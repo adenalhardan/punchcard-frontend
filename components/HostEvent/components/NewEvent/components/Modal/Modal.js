@@ -5,9 +5,11 @@ import {postEvent} from '../../../../../../api'
 
 import Fields from './components/Fields/Fields'
 import Create from './components/Create/Create'
+import Error from './components/Error/Error'
 
 const Modal = ({id, loadEvents, onPress}) => {
     const [complete, setComplete] = useState(false)
+    const [error, setError] = useState('')
 
     const [title, setTitle] = useState('')
     const [hostName, setHostName] = useState('')
@@ -26,17 +28,11 @@ const Modal = ({id, loadEvents, onPress}) => {
             try {
                 await postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')))
 
-                setTitle('')
-                setHostName('')
-                setFields([{name: '', type: 'string', presence: 'required'}])
-
-                setComplete(false)
-                onPress()
-                
                 loadEvents()
+                onPress()
 
             } catch(error) {
-                console.error(error)
+                setError(error)
             }
         })()
     }
@@ -59,6 +55,8 @@ const Modal = ({id, loadEvents, onPress}) => {
                 </View>
                 
                 <Fields fields = {fields} setFields = {setFields}/>
+
+                {error && <Error message = {error}/>}
 
                 <Create enabled = {complete} onPress = {onSubmitPress}/>
             </View>

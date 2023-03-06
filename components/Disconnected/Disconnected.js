@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     container: {
         alignSelf: 'center',
         alignItems: 'center',
-        marginTop: 80
+        marginTop: 120
     },
 
     text: {
