@@ -45,7 +45,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WHCCs', hostId, title, JSON.stringify(inputs))
+                await postForm('WHBCs', hostId, title, JSON.stringify(inputs))
 
                 onPress()
                 setSubmitted(true)

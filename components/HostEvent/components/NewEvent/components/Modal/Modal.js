@@ -23,7 +23,7 @@ const Modal = ({id, loadEvents, onPress}) => {
         )
     }, [title, hostName, fields])
 
-    const onSubmitPress = () => {
+    const onCreatePress = () => {
         (async () => {
             try {
                 await postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')))
@@ -32,7 +32,7 @@ const Modal = ({id, loadEvents, onPress}) => {
                 onPress()
 
             } catch(error) {
-                setError(error)
+                setError(error.message)
             }
         })()
     }
@@ -58,7 +58,7 @@ const Modal = ({id, loadEvents, onPress}) => {
 
                 {error && <Error message = {error}/>}
 
-                <Create enabled = {complete} onPress = {onSubmitPress}/>
+                <Create enabled = {complete} onPress = {onCreatePress}/>
             </View>
         </TouchableOpacity>
     )

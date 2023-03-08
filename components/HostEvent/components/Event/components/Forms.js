@@ -33,9 +33,13 @@ const Forms = ({keys, values}) => {
                         ))}
                     </ScrollView>
 
-                    <TouchableOpacity style = {styles.button} onPress = {() => setExpanded(!expanded)}>
-                        <Text style = {styles.buttonText}>{expanded ? 'Show Less' : 'Show All'}</Text>
-                    </TouchableOpacity>
+                    {values.length > 3 ? 
+                        <TouchableOpacity style = {styles.button} onPress = {() => setExpanded(!expanded)}>
+                            <Text style = {styles.buttonText}>{expanded ? 'Show Less' : 'Show All'}</Text>
+                        </TouchableOpacity>
+                    :
+                        <View style = {{height: 6}}/>
+                    }
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -53,7 +57,7 @@ export default Forms
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     list: {
