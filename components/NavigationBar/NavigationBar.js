@@ -14,7 +14,7 @@ const NavigationBar = ({page, onPress}) => {
                 style = {[page === 'joinEvent' ? styles.selected : styles.unselected, styles.tab]} 
                 onPress = {() => onPress('joinEvent')}
             >
-                <Text style = {page === 'joinEvent' ? styles.selectedText : styles.unselectedText}>Join</Text>
+                <Text style = {[page === 'joinEvent' ? styles.selectedText : styles.unselectedText, styles.text]}>Join</Text>
                 <Image style = {page === 'joinEvent' ? styles.joinImage : {...styles.joinImage, opacity: 0.5}} source = {require('./assets/join.png')}/>
             </TouchableOpacity>
             
@@ -22,7 +22,7 @@ const NavigationBar = ({page, onPress}) => {
                 style = {[page === 'hostEvent' ? styles.selected : styles.unselected, styles.tab]} 
                 onPress = {() => onPress('hostEvent')}
             >
-                <Text style = {page === 'hostEvent' ? styles.selectedText : styles.unselectedText}>Host</Text>
+                <Text style = {[page === 'hostEvent' ? styles.selectedText : styles.unselectedText, styles.text]}>Host</Text>
                 <Image style = {page === 'hostEvent' ? styles.hostImage : {...styles.hostImage, opacity: 0.5}} source = {require('./assets/host.png')}/>
             </TouchableOpacity>
         </View>
@@ -70,15 +70,17 @@ const styles = StyleSheet.create({
     },
 
     selectedText: {
-        fontWeight: '600',
-        fontSize: 16,
-        color: '#212427'
+
     },
 
     unselectedText: {
-        fontSize: 16,
         opacity: 0.5,
-        fontWeight: '500'
+    },
+
+    text: {
+        color: '#212427',
+        fontWeight: '500',
+        fontSize: 16
     },
 
     joinImage: {
