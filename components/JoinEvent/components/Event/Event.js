@@ -7,14 +7,17 @@ import { postForm } from '../../../../api'
 
 import Field from './components/Field'
 import Submit from './components/Submit/Submit'
+import Error from './components/Error/Error'
 
 const Event = ({id, event, selected, onPress}) => {
-    const {title, hostName, hostId, fields} = event
+    const {title, hostName, hostId, fields, expiration} = event
 
-    const submittedKey = `submitted-form-hostId=${hostId}&eventTitle=${title}`
+    const submittedKey = `submitted-form?hostId=${hostId}&eventTitle=${title}&expiration=${expiration}`
 
     const [completed, setCompleted] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+
+    const [error, setError] = useState('')
 
     const [inputs, setInputs] = useState(fields.map(({name}) => ({
         name: name,
@@ -45,14 +48,15 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WHBCs', hostId, title, JSON.stringify(inputs))
+                await postForm('WHXCs', hostId, title, JSON.stringify(inputs)) // replace with id
 
                 onPress()
                 setSubmitted(true)
+                setError('')
                 await AsyncStorage.setItem(submittedKey, 'true')
 
             } catch(error) {
-                console.error(error)
+                setError(error)
             }
         })()
     }
@@ -75,6 +79,8 @@ const Event = ({id, event, selected, onPress}) => {
                             <Field key = {i} field = {field} setInput = {setInput(i)}/>
                         ))}
                     </View>
+
+                    {error && <Error message = {error}/>}
                     
                     <Submit enabled = {completed} onPress = {onSubmitPress}/>
                 </View>

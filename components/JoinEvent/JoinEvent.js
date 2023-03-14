@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react'
-import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {View, StyleSheet, Text, useWindowDimensions, ScrollView} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
-import Disconnected from '../Disconnected/Disconnected'
+import Message from '../Message/Message'
 
 const JoinEvent = ({id}) => {
     const {width} = useWindowDimensions()
@@ -23,11 +23,12 @@ const JoinEvent = ({id}) => {
 
                 setConnected(true)
 
-                setEvents(events.map(({title, host_name, host_id, fields}) => ({
+                setEvents(events.map(({title, host_name, host_id, fields, expiration}) => ({
                     title: title, 
                     hostName: host_name,
                     hostId: host_id,
-                    fields: fields
+                    fields: fields,
+                    expiration: expiration
                 })))
 
             } catch(error) {
@@ -38,7 +39,7 @@ const JoinEvent = ({id}) => {
 
     useEffect(() => {
         loadEvents()
-        const interval = setInterval(loadEvents, 30000)
+        const interval = setInterval(loadEvents, 5000)
 
         return () => clearInterval(interval)
     }, [])
@@ -49,7 +50,8 @@ const JoinEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Disconnected/>}
+                {!connected && <Message disconnected/>}
+                {connected && events.length === 0 && <Message noEvents/>}
 
                 {connected && events.map((event, i) => (
                     <Event 

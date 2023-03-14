@@ -6,7 +6,7 @@ import {getEvents} from '../../api'
 
 import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
-import Disconnected from '../Disconnected/Disconnected'
+import Message from '../Message/Message'
 
 const HostEvent = ({id}) => {
     const {width} = useWindowDimensions()
@@ -39,7 +39,7 @@ const HostEvent = ({id}) => {
 
     useEffect(() => {
         loadEvents()
-        const interval = setInterval(loadEvents, 30000)
+        const interval = setInterval(loadEvents, 5000)
 
         return () => clearInterval(interval)
     }, [])
@@ -50,7 +50,7 @@ const HostEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Disconnected/>}
+                {!connected && <Message disconnected/>}
 
                 {connected && <NewEvent 
                     key = 'new'
