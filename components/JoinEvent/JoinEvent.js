@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {View, StyleSheet, Text, useWindowDimensions, ScrollView} from 'react-native'
+import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'

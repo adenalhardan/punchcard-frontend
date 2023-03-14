@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {TouchableOpacity, Image, Text, View, TextInput, StyleSheet} from 'react-native'
+import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
 
 import {postEvent} from '../../../../../../api'
 

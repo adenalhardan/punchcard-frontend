@@ -48,13 +48,15 @@ const Fields = ({fields, setFields}) => {
     }
 
     const onDeletePress = (index) => () => {
-        let newFields = fields.filter((_, i) => i !== index)
+        if(fields.length > 1) {
+            let newFields = fields.filter((_, i) => i !== index)
 
-        if(newFields.every(({name, presence}) => name === '' || presence === 'optional')) {
-            newFields[0].presence = 'required'
+            if(newFields.every(({name, presence}) => name === '' || presence === 'optional')) {
+                newFields[0].presence = 'required'
+            }
+                
+            setFields(newFields)
         }
-            
-        setFields(newFields)
     }
 
     return (
