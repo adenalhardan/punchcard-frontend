@@ -7,7 +7,7 @@ import {getEvents} from '../../api'
 import Event from './components/Event/Event'
 import Message from '../Message/Message'
 
-const JoinEvent = ({id}) => {
+const JoinEvent = ({id, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
     
@@ -50,10 +50,11 @@ const JoinEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Message message = 'disconnected'/>}
-                {connected && events.length === 0 && <Message message = 'noEvents'/>}
+                {!bluetooth && <Message message = 'bluetooth'/>}
+                {!connected && bluetooth && <Message message = 'disconnected'/>}
+                {connected && bluetooth && events.length === 0 && <Message message = 'noEvents'/>}
 
-                {connected && events.map((event, i) => (
+                {connected && bluetooth && events.map((event, i) => (
                     <Event 
                         key = {i}
                         id = {id}

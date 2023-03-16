@@ -7,6 +7,8 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	private var peripheralManager: CBPeripheralManager!
 	
 	let foundDevice = "foundDevice"
+	let enabled = "enabled"
+	let disabled = "disabled"
 	
 	override init() {
 		super.init()
@@ -18,19 +20,32 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
 		switch central.state {
 			case .poweredOn:
-				return
+				sendEvent(withName: enabled, body: nil)
+				break
+			
 			case .poweredOff:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .resetting:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unauthorized:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unsupported:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unknown:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			@unknown default:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
 		}
 	}
 	
@@ -43,19 +58,32 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
 		switch peripheral.state {
 			case .poweredOn:
-				return
+				sendEvent(withName: enabled, body: nil)
+				break
+			
 			case .poweredOff:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .resetting:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unauthorized:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unsupported:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			case .unknown:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
+			
 			@unknown default:
-				return
+				sendEvent(withName: disabled, body: nil)
+				break
 		}
 	}
 	
@@ -89,6 +117,6 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	}
 	
 	override func supportedEvents() -> [String]! {
-		return [foundDevice]
+		return [foundDevice, enabled, disabled]
 	}
 }

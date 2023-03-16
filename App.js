@@ -19,13 +19,14 @@ const App = () => {
 
 	const [loading, setLoading] = useState(true)
 	const [connected, setConnected] = useState(false)
+	const [bluetooth, setBluetooth] = useState(true)
 
 	const [prefix, setPrefix] = useState(null)
 	const [id, setId] = useState(null)
 	
 	const pages = [
-		{key: 'joinEvent', render: () => <JoinEvent id = {id}/>},
-		{key: 'hostEvent', render: () => <HostEvent id = {id}/>}
+		{key: 'joinEvent', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
+		{key: 'hostEvent', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
 	]
 	
 	const [devices, setDevices] = useState(new Set())
@@ -46,6 +47,14 @@ const App = () => {
 					if(!devices.has(device) && device.startsWith(prefix)) {
 						setDevices(devices => new Set(devices.add(device)))
 					}
+				})
+
+				BluetoothEvents.addListener('enabled', () => {
+					setBluetooth(true)
+				})
+
+				BluetoothEvents.addListener('disabled', () => {
+					setBluetooth(false)
 				})
 
 				setLoading(false)

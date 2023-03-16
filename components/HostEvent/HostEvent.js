@@ -8,7 +8,7 @@ import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
 import Message from '../Message/Message'
 
-const HostEvent = ({id}) => {
+const HostEvent = ({id, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
 
@@ -50,9 +50,10 @@ const HostEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Message message = 'disconnected'/>}
+                {!bluetooth && <Message message = 'bluetooth'/>}
+                {bluetooth && !connected && <Message message = 'disconnected'/>}
 
-                {connected && <NewEvent 
+                {bluetooth && connected && <NewEvent 
                     key = 'new'
                     id = {id} 
                     selected = {selected === 0} 
@@ -62,7 +63,7 @@ const HostEvent = ({id}) => {
 
                 
 
-                {connected && events.map((event, i) => (
+                {bluetooth && connected && events.map((event, i) => (
                     <Event 
                         key = {i} 
                         event = {event}
@@ -72,7 +73,7 @@ const HostEvent = ({id}) => {
                     />
                 ))}
 
-                {events.length === 0 && <Text style = {styles.text}>No Events</Text>}
+                {bluetooth && connected && events.length === 0 && <Text style = {styles.text}>No Events</Text>}
             </ScrollView>
         </View>
     )
