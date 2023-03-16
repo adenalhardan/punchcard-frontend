@@ -1,30 +1,42 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, Image, StyleSheet, useWindowDimensions, Animated} from 'react-native'
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
-const NavigationBar = ({page, onPress}) => {
+const underlineWidth = 100
+
+const NavigationBar = ({page, onPress, offset}) => {
+    const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
+
+    const underlineMin = (width / 4) - (underlineWidth / 2)
+    const underlineMax = (width * 3 / 4) - (underlineWidth / 2)
 
     return (
         <View style = {{...styles.container, height: top + 40}}>
             <View style = {{...styles.background, height: top + 40}}/>
 
             <TouchableOpacity 
-                style = {[page === 'joinEvent' ? styles.selected : styles.unselected, styles.tab]} 
-                onPress = {() => onPress('joinEvent')}
+                style = {{...styles.tab, opacity: page === 'join' ? 1 : 0.5}} 
+                onPress = {() => onPress('join')}
             >
-                <Text style = {[page === 'joinEvent' ? styles.selectedText : styles.unselectedText, styles.text]}>Join</Text>
-                <Image style = {page === 'joinEvent' ? styles.joinImage : {...styles.joinImage, opacity: 0.5}} source = {require('./assets/join.png')}/>
+                <Text style = {styles.text}>Join</Text>
+                <Image style = {styles.joinImage} source = {require('./assets/join.png')}/>
             </TouchableOpacity>
             
             <TouchableOpacity 
-                style = {[page === 'hostEvent' ? styles.selected : styles.unselected, styles.tab]} 
-                onPress = {() => onPress('hostEvent')}
+                style = {{...styles.tab, opacity: page === 'host' ? 1 : 0.5}} 
+                onPress = {() => onPress('host')}
             >
-                <Text style = {[page === 'hostEvent' ? styles.selectedText : styles.unselectedText, styles.text]}>Host</Text>
-                <Image style = {page === 'hostEvent' ? styles.hostImage : {...styles.hostImage, opacity: 0.5}} source = {require('./assets/host.png')}/>
+                <Text style = {styles.text}>Host</Text>
+                <Image style = {styles.hostImage} source = {require('./assets/host.png')}/>
             </TouchableOpacity>
+
+            <Animated.View style = {{...styles.underline, left: offset.interpolate({
+                inputRange: [0, width], 
+                outputRange: [underlineMin, underlineMax],
+                extrapolate: 'clamp'
+            })}}/>
         </View>
     )
 }
@@ -56,25 +68,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 10,
         height: '40%',
-        width: '30%',
+        width: '50%',
         flexDirection: 'row'
-    },
-
-    selected: {
-        borderBottomWidth: 3,
-        borderBottomColor: '#2F9BF7'
-    },
-
-    unselected: {
-
-    },
-
-    selectedText: {
-
-    },
-
-    unselectedText: {
-        opacity: 0.5,
     },
 
     text: {
@@ -97,5 +92,14 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         resizeMode: 'contain',
         tintColor: '#212427'
+    },
+
+    underline: {
+        backgroundColor: '#2F9BF7',
+        height: 3,
+        width: underlineWidth,
+        position: 'absolute',
+        bottom: 0,
+        borderRadius: 5
     }
 })

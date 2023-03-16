@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef} from 'react'
-import {FlatList, View, StyleSheet, SafeAreaView} from 'react-native'
+import {FlatList, View, StyleSheet, SafeAreaView, Animated} from 'react-native'
 
 import {NativeModules, NativeEventEmitter} from 'react-native'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
@@ -25,11 +25,13 @@ const App = () => {
 	const [id, setId] = useState(null)
 	
 	const pages = [
-		{key: 'joinEvent', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
-		{key: 'hostEvent', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
+		{key: 'join', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
+		{key: 'host', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
 	]
 	
 	const [devices, setDevices] = useState(new Set())
+
+	const offset = useRef(new Animated.Value(0)).current
 
 	useEffect(() => {
 		(async () => {
@@ -71,7 +73,7 @@ const App = () => {
 	}, [])
 
 	const onPress = (page) => {
-		ref.current.scrollToIndex({index: page === 'joinEvent' ? 0 : 1})
+		ref.current.scrollToIndex({index: page === 'join' ? 0 : 1})
 		setPage(page)
 	}
 
@@ -81,32 +83,37 @@ const App = () => {
 		}
 	}
 
-	const viewabilityConfig = {itemVisiblePercentThreshold: 75}
+	const viewabilityConfig = {itemVisiblePercentThreshold: 50}
 	const viewabilityConfigCallbackPairs = useRef([{viewabilityConfig, onViewableItemsChanged}])
 	
 	if(loading) {
 		return <View></View>
-	}
-	
-	return (
-		<SafeAreaProvider>
-			<NavigationBar page = {page} onPress = {onPress}/>
-			<View style = {styles.container}>
-				<FlatList
-					horizontal
-					pagingEnabled
-					showsHorizontalScrollIndicator = {false}
-					
-					ref = {ref}
-					data = {pages}
-					keyExtractor = {(item, _) => item.key}
-					renderItem = {({item}) => item.render()}
+	} else {
+		return (
+			<SafeAreaProvider>
+				<NavigationBar page = {page} onPress = {onPress} offset = {offset}/>
+				<View style = {styles.container}>
+					<FlatList
+						horizontal
+						pagingEnabled
+						showsHorizontalScrollIndicator = {false}
+						
+						ref = {ref}
+						data = {pages}
+						keyExtractor = {(item, _) => item.key}
+						renderItem = {({item}) => item.render()}
 
-					viewabilityConfigCallbackPairs = {viewabilityConfigCallbackPairs.current}
-				/>
-			</View>
-		</SafeAreaProvider>
-	)
+						viewabilityConfigCallbackPairs = {viewabilityConfigCallbackPairs.current}
+
+						onScroll = {Animated.event(
+							[{nativeEvent: {contentOffset: {x: offset}}}], 
+							{useNativeDriver: false}
+						)}
+					/>
+				</View>
+			</SafeAreaProvider>
+		)
+	}
 }
 
 export default App
@@ -115,6 +122,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#EEEEEE',
-		alignItems: 'center',
-	},
+		alignItems: 'center'
+	}
 })
