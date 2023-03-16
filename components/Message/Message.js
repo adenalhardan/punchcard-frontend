@@ -1,16 +1,30 @@
 import React from 'react'
 import {View, Text, Image, StyleSheet} from 'react-native'
 
-const Message = ({disconnected, noEvents}) => (
-    <View style = {styles.container}>
-        <Image 
-            style = {styles.image} 
-            source = {disconnected ? require('./assets/disconnected.png') : require('./assets/noEvents.png')}
-        />
+const Message = ({message}) => {
+    const image = {
+        'noEvents': require('./assets/noEvents.png'),
+        'disconnected': require('./assets/disconnected.png'),
+        'bluetooth': require('./assets/bluetooth.png')
+    }
 
-        <Text style = {styles.text}>{disconnected ? 'No Internet Connection' : 'No Events Near You'}</Text>
-    </View>
-)
+    const text = {
+        'noEvents': 'No Events Near You',
+        'disconnected': 'No Internet Connection',
+        'bluetooth': 'Please Enable Bluetooth'
+    }
+
+    return (
+        <View style = {styles.container}>
+            <Image 
+                style = {styles.image} 
+                source = {image[message]}
+            />
+
+            <Text style = {styles.text}>{text[message]}</Text>
+        </View>
+    )
+}
 
 export default Message
 

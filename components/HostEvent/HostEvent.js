@@ -50,7 +50,7 @@ const HostEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Message disconnected/>}
+                {!connected && <Message message = 'disconnected'/>}
 
                 {connected && <NewEvent 
                     key = 'new'
@@ -71,6 +71,8 @@ const HostEvent = ({id}) => {
                         loadEvents = {loadEvents}
                     />
                 ))}
+
+                {events.length === 0 && <Text style = {styles.text}>No Events</Text>}
             </ScrollView>
         </View>
     )
@@ -87,4 +89,12 @@ const styles = StyleSheet.create({
     list: {
         paddingBottom: 60
     },
+
+    text: {
+        fontSize: 16,
+        color: '#CACACA',
+        fontWeight: '600',
+        alignSelf: 'center',
+        marginTop: 20
+    }
 })

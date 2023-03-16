@@ -48,7 +48,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WHXCs', hostId, title, JSON.stringify(inputs)) // replace with id
+                await postForm('WXXCT', hostId, title, JSON.stringify(inputs)) // replace with id
 
                 onPress()
                 setSubmitted(true)

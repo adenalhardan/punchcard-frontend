@@ -1,9 +1,27 @@
 import React from 'react'
 import {TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import Share from 'react-native-share'
+import {Buffer} from 'buffer'
 
-const Download = () => {
-    const onPress = () => {}
+const Download = ({title, keys, values}) => {
+    const data =  keys.join(',') + '\n' + values.map(row => row.join(',')).join('\n')
+
+    const onPress = () => {
+        (async () => {
+            const options = {
+            	title: title + ' submissions',
+                failOnCancel: false,
+                url: 'data:application/csv;base64,' + Buffer.from(data).toString('base64')
+            }
+
+            try {
+                await Share.open(options)
+            } catch(error) {
+                console.error(error)
+            }
+        })()
+    }
 
     return (
         <TouchableOpacity style = {styles.container} onPress = {onPress}>

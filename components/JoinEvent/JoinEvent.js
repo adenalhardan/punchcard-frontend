@@ -50,8 +50,8 @@ const JoinEvent = ({id}) => {
                 contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
                 showsVerticalScrollIndicator = {false}
             >
-                {!connected && <Message disconnected/>}
-                {connected && events.length === 0 && <Message noEvents/>}
+                {!connected && <Message message = 'disconnected'/>}
+                {connected && events.length === 0 && <Message message = 'noEvents'/>}
 
                 {connected && events.map((event, i) => (
                     <Event 

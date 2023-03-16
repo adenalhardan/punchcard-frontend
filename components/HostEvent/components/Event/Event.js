@@ -52,11 +52,19 @@ const Event = ({event, selected, onPress, loadEvents}) => {
             {selected && 
                 <View style = {styles.body}>
                     <View style = {styles.buttons}>
-                        <Download forms = {forms}/>
+                        <Download 
+                            title = {title} 
+                            keys = {fields.map(({name}) => name)} 
+                            values = {forms.map(({fields}) => fields.map(({value}) => value))}
+                        />
+
                         <EndEvent event = {event} onDelete = {onDelete}/>
                     </View>
 
-                    <Forms keys = {fields.map(({name}) => name)} values = {forms.map(({fields}) => fields.map(({value}) => value))}/>
+                    <Forms 
+                        keys = {fields.map(({name}) => name)} 
+                        values = {forms.map(({fields}) => fields.map(({value}) => value))}
+                    />
                 </View>
             }
         </TouchableOpacity>
