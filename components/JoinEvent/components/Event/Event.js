@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react'
-import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
+import {useState, useEffect, useRef} from 'react'
+import {View, TouchableOpacity, Text, Image, StyleSheet, Animated, Easing} from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { postForm } from '../../../../api'
+import {postForm} from '../../../../api'
 
 import Field from './components/Field'
 import Submit from './components/Submit/Submit'
@@ -41,6 +41,25 @@ const Event = ({id, event, selected, onPress}) => {
         
     }, [inputs])
 
+    const maxHeight = useRef(new Animated.Value(0)).current
+    const paddingTop = useRef(new Animated.Value(0)).current
+    const paddingBottom = useRef(new Animated.Value(0)).current
+    const borderTopWidth = useRef(new Animated.Value(0)).current
+
+    useEffect(() => {
+        const duration = 200
+        const useNativeDriver = false
+        const easing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
+
+        Animated.parallel([
+            Animated.timing(maxHeight, {toValue: selected ? 100 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(paddingTop, {toValue: selected ? 5 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(paddingBottom, {toValue: selected ? 10 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(borderTopWidth, {toValue: selected ? 1 : 0, duration, useNativeDriver, easing})
+        ]).start()
+
+    }, [selected])
+
     const setInput = (i) => (text) => {
         setInputs(inputs.map((input, j) => (i === j ? {name: input.name, value: text} : input)))
     }
@@ -48,7 +67,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WXXCT', hostId, title, JSON.stringify(inputs)) // replace with id
+                await postForm('WXACA', hostId, title, JSON.stringify(inputs)) // replace with id
 
                 onPress()
                 setSubmitted(true)
@@ -62,18 +81,18 @@ const Event = ({id, event, selected, onPress}) => {
     }
 
     return (
-        <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.head}>
-                <View>
-                    <Text style = {styles.title}>{title}</Text>
-                    <Text style = {styles.hostName}>{hostName}</Text>
-                </View>
+        <View style = {styles.shadow}>
+            <TouchableOpacity style = {styles.container} onPress = {onPress}>
+                <View style = {styles.head}>
+                    <View>
+                        <Text style = {styles.title}>{title}</Text>
+                        <Text style = {styles.hostName}>{hostName}</Text>
+                    </View>
 
-                {submitted && <Image style = {styles.submitted} source = {require('./assets/submitted.png')}/>}
-            </View>
-            
-            {selected && 
-                <View style = {styles.body}>
+                    {submitted && <Image style = {styles.submitted} source = {require('./assets/submitted.png')}/>}
+                </View>
+                
+                <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
                     <View style = {styles.fields}>
                         {fields.map((field, i) => (
                             <Field key = {i} field = {field} setInput = {setInput(i)}/>
@@ -83,45 +102,46 @@ const Event = ({id, event, selected, onPress}) => {
                     {error && <Error message = {error}/>}
                     
                     <Submit enabled = {completed} onPress = {onSubmitPress}/>
-                </View>
-            }
-        </TouchableOpacity>
+                </Animated.View>
+                
+            </TouchableOpacity>
+        </View>
     )
 }
 
 export default Event
 
 const styles = StyleSheet.create({
-    container: {
-        width: '94%',
-        marginBottom: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        alignItems: 'center',
+    shadow: {
         shadowColor: '#000000',
         shadowOffset: { width: 2, height: 5 },
         shadowOpacity: 0.2,
         shadowRadius: 10,  
         elevation: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        width: '100%',
+        alignItems: 'center'
+    },
+
+    container: {
+        width: '94%',
+        marginBottom: 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        alignItems: 'center',
+        overflow: 'hidden',
     },
 
     head: {
         width: '90%',
-        height: 60,
+        height: 70,
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        justifyContent: 'space-between'
     },
 
     body: {
         borderTopColor: '#CACACA',
-        borderTopWidth: 1,
-        paddingTop: 5,
-        paddingBottom: 10,
-        marginTop: 2,
         width: '90%',
     },
 
@@ -129,7 +149,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '600',
         color: '#212427',
-        marginBottom: 3
+        marginBottom: 4
     },
 
     hostName: {

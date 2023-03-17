@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react'
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {useState, useEffect, useRef} from 'react'
+import {View, TouchableOpacity, Text, Animated, StyleSheet, Easing} from 'react-native'
 
 import {getForms} from '../../../../api'
 
@@ -38,19 +38,37 @@ const Event = ({event, selected, onPress, loadEvents}) => {
         return () => clearInterval(interval)
     }, [])
 
+    const maxHeight = useRef(new Animated.Value(0)).current
+    const paddingTop = useRef(new Animated.Value(0)).current
+    const paddingBottom = useRef(new Animated.Value(0)).current
+    const borderTopWidth = useRef(new Animated.Value(0)).current
+
+    useEffect(() => {
+        const duration = 200
+        const useNativeDriver = false
+        const easing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
+
+        Animated.parallel([
+            Animated.timing(maxHeight, {toValue: selected ? 100 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(paddingTop, {toValue: selected ? 8 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(paddingBottom, {toValue: selected ? 10 : 0, duration, useNativeDriver, easing}),
+            Animated.timing(borderTopWidth, {toValue: selected ? 1 : 0, duration, useNativeDriver, easing})
+        ]).start()
+    }, [selected])
+
     return (
-        <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.head}>
-                <View>
-                    <Text style = {styles.title}>{title}</Text>
-                    <Text style = {styles.hostName}>{hostName}</Text>
+        <View style = {styles.shadow}>
+            <TouchableOpacity style = {styles.container} onPress = {onPress}>
+                <View style = {styles.head}>
+                    <View>
+                        <Text style = {styles.title}>{title}</Text>
+                        <Text style = {styles.hostName}>{hostName}</Text>
+                    </View>
+
+                    <FormCount count = {forms.length}/>
                 </View>
 
-                <FormCount count = {forms.length}/>
-            </View>
-            
-            {selected && 
-                <View style = {styles.body}>
+                <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
                     <View style = {styles.buttons}>
                         <Download 
                             title = {title} 
@@ -65,53 +83,56 @@ const Event = ({event, selected, onPress, loadEvents}) => {
                         keys = {fields.map(({name}) => name)} 
                         values = {forms.map(({fields}) => fields.map(({value}) => value))}
                     />
-                </View>
-            }
-        </TouchableOpacity>
+                </Animated.View>
+            </TouchableOpacity>
+        </View>
     )
 }
 
 export default Event
 
 const styles = StyleSheet.create({
-    container: {
-        width: '94%',
-        marginBottom: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        alignItems: 'center',
+    shadow: {
         shadowColor: '#000000',
         shadowOffset: { width: 2, height: 5 },
         shadowOpacity: 0.2,
         shadowRadius: 10,  
         elevation: 5,
         alignSelf: 'center',
+        width: '100%',
+        alignItems: 'center'
+    },
+
+    container: {
+        width: '94%',
+        marginBottom: 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        alignItems: 'center',
+        overflow: 'hidden',
     },
 
     head: {
         width: '90%',
-        height: 60,
+        height: 70,
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        justifyContent: 'space-between'
     },
 
     body: {
         borderTopColor: '#CACACA',
-        borderTopWidth: 1,
-        paddingTop: 5,
-        marginTop: 2,
-        paddingBottom: 10,
         width: '90%',
+        borderTopWidth: 1,
+        paddingTop: 8,
+        paddingBottom: 10,
     },
 
     title: {
         fontSize: 20,
         fontWeight: '600',
         color: '#212427',
-        marginBottom: 3
+        marginBottom: 4
     },
 
     hostName: {

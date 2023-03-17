@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
         color: '#CACACA',
         fontWeight: '600',
         alignSelf: 'center',
-        marginTop: 20
+        marginTop: 5
     }
 })
