@@ -84,6 +84,7 @@ export default Fields
 
 const styles = StyleSheet.create({
     container: {
+
     },
 
     title: {

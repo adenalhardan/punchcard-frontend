@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {TouchableOpacity, Text, View, TextInput, StyleSheet} from 'react-native'
+import {TouchableOpacity, Text, View, TextInput, Animated, StyleSheet} from 'react-native'
 
 import {postEvent} from '../../../../../../api'
 
@@ -7,7 +7,7 @@ import Fields from './components/Fields/Fields'
 import Create from './components/Create/Create'
 import Error from './components/Error/Error'
 
-const Modal = ({id, loadEvents, onPress}) => {
+const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) => {
     const [complete, setComplete] = useState(false)
     const [error, setError] = useState('')
 
@@ -38,18 +38,19 @@ const Modal = ({id, loadEvents, onPress}) => {
     }
 
     return (
-        <TouchableOpacity style = {styles.container} onPress = {onPress}>
-            <View style = {styles.head}>
-                <Text style = {styles.title}>New Event</Text>
-            </View>
-
-            <View style = {styles.body}>
-                <View style = {styles.eventTitle}>
+        <TouchableOpacity style = {styles.shadow} onPress = {onPress}>
+            <Animated.View style = {{
+                ...styles.container,
+                paddingTop, 
+                paddingBottom,  
+                maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%'],
+            })}}>
+                <View style = {{flexDirection: 'column', justifyContent: 'center', marginBottom: 15}}>
                     <Text style = {styles.text}>Event Title</Text>
                     <TextInput style = {styles.input} value = {title} onChangeText = {setTitle}/>
                 </View>
 
-                <View style = {styles.hostName}>
+                <View style = {{flexDirection: 'column', justifyContent: 'center', marginBottom: 15}}>
                     <Text style = {styles.text}>Host Name</Text>
                     <TextInput style = {styles.input} value = {hostName} onChangeText = {setHostName}/>
                 </View>
@@ -59,7 +60,7 @@ const Modal = ({id, loadEvents, onPress}) => {
                 {error && <Error message = {error}/>}
 
                 <Create enabled = {complete} onPress = {onCreatePress}/>
-            </View>
+            </Animated.View>
         </TouchableOpacity>
     )
 }
@@ -69,33 +70,19 @@ export default Modal
 const styles = StyleSheet.create({
     container: {
         width: '94%',
-        marginBottom: 20,
         borderRadius: 10,
         backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignSelf: 'center',
+        paddingHorizontal: '5%',
+        overflow: 'hidden'
+    },
+
+    shadow: {
         shadowColor: '#000000',
-        shadowOffset: { width: 2, height: 5 },
+        shadowOffset: {width: 2, height: 5},
         shadowOpacity: 0.2,
         shadowRadius: 10,  
         elevation: 5,
-        alignSelf: 'center'
-    },
-
-    head: {
-        height: 40,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'row',
-        width: '100%',
-        paddingHorizontal: '5%'
-    },
-
-    body: {
-        borderTopColor: '#CACACA',
-        borderTopWidth: 1,
-        paddingVertical: 10,
-        width: '90%',
     },
 
     input: {
@@ -109,34 +96,9 @@ const styles = StyleSheet.create({
         color: '#212427'
     },
 
-    title: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: '#212427'
-    },
-
     text: {
         fontWeight: '500',
         fontSize: 16,
         color: '#212427'
     },
-
-    eventTitle: {
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        marginBottom: 15
-    },
-
-    hostName: {
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        marginBottom: 15
-    },
-
-    image: {
-        height: 25,
-        width: 25,
-        resizeMode: 'contain',
-        marginLeft: 10
-    }
 })
