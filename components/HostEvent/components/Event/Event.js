@@ -11,6 +11,8 @@ import Forms from './components/Forms'
 
 const Event = ({event, selected, onPress, loadEvents}) => {
     const {title, hostName, hostId, fields} = event
+
+    const [expanded, setExpanded] = useState(false)
     
     const [forms, setForms] = useState([])
     
@@ -44,6 +46,10 @@ const Event = ({event, selected, onPress, loadEvents}) => {
     const borderTopWidth = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
+        if(selected) {
+            setExpanded(true)
+        }
+
         const duration = 200
         const useNativeDriver = false
         const easing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
@@ -53,7 +59,7 @@ const Event = ({event, selected, onPress, loadEvents}) => {
             Animated.timing(paddingTop, {toValue: selected ? 8 : 0, duration, useNativeDriver, easing}),
             Animated.timing(paddingBottom, {toValue: selected ? 10 : 0, duration, useNativeDriver, easing}),
             Animated.timing(borderTopWidth, {toValue: selected ? 1 : 0, duration, useNativeDriver, easing})
-        ]).start()
+        ]).start(!selected ? () => setExpanded(false) : () => {})
     }, [selected])
 
     return (
@@ -68,22 +74,24 @@ const Event = ({event, selected, onPress, loadEvents}) => {
                     <FormCount count = {forms.length}/>
                 </View>
 
-                <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
-                    <View style = {styles.buttons}>
-                        <Download 
-                            title = {title} 
+                {expanded &&
+                    <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
+                        <View style = {styles.buttons}>
+                            <Download 
+                                title = {title} 
+                                keys = {fields.map(({name}) => name)} 
+                                values = {forms.map(({fields}) => fields.map(({value}) => value))}
+                            />
+
+                            <EndEvent event = {event} onDelete = {onDelete}/>
+                        </View>
+
+                        <Forms 
                             keys = {fields.map(({name}) => name)} 
                             values = {forms.map(({fields}) => fields.map(({value}) => value))}
                         />
-
-                        <EndEvent event = {event} onDelete = {onDelete}/>
-                    </View>
-
-                    <Forms 
-                        keys = {fields.map(({name}) => name)} 
-                        values = {forms.map(({fields}) => fields.map(({value}) => value))}
-                    />
-                </Animated.View>
+                    </Animated.View>
+                }
             </TouchableOpacity>
         </View>
     )

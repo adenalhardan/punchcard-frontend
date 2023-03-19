@@ -1,10 +1,12 @@
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState} from 'react'
 import {Animated, View, Easing, StyleSheet} from 'react-native'
 
 import Button from './components/Button/Button'
 import Modal from './components/Modal/Modal'
 
 const NewEvent = ({selected, id, loadEvents, onPress}) => {
+    const [expanded, setExpanded] = useState(false)
+
     const buttonMaxHeight = useRef(new Animated.Value(100)).current
 
     const modalMaxHeight = useRef(new Animated.Value(0)).current
@@ -12,10 +14,14 @@ const NewEvent = ({selected, id, loadEvents, onPress}) => {
     const modalPaddingBottom = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
+        if(selected) {
+            setExpanded(true)
+        }
+
         const useNativeDriver = false
 
         const buttonDuration = 0
-        const modalDuration = 150
+        const modalDuration = 200
 
         const buttonEasing = selected ? Easing.out(Easing.ease) : Easing.in(Easing.ease)
         const modalEasing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
@@ -31,21 +37,25 @@ const NewEvent = ({selected, id, loadEvents, onPress}) => {
             Animated.timing(modalPaddingBottom, {toValue: selected ? 10 : 0, duration: modalDuration, useNativeDriver, easing: modalEasing})
         ])
 
-        Animated.sequence(selected ? [buttonAnimation, modalAnimation] : [modalAnimation, buttonAnimation]).start()
+        Animated.sequence(selected ? 
+            [buttonAnimation, modalAnimation] : 
+            [modalAnimation, buttonAnimation]
+        ).start(!selected ? () => setExpanded(false) : () => {})
 
     }, [selected])
 
     return (
         <View style = {styles.container}>
             <Button maxHeight = {buttonMaxHeight}  onPress = {onPress}/>
-            <Modal 
+
+            {expanded && <Modal 
                 id = {id} 
                 loadEvents = {loadEvents} 
                 onPress = {onPress}
                 maxHeight = {modalMaxHeight} 
                 paddingTop = {modalPaddingTop}
                 paddingBottom = {modalPaddingBottom}
-            />
+            />}
         </View>
     )
 }

@@ -32,7 +32,9 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
     const onCreatePress = () => {
         (async () => {
             try {
-                await postEvent(id, title, hostName, JSON.stringify(fields.filter(({name}) => name !== '')))
+                await postEvent(id, title, hostName, 
+                    JSON.stringify(fields.filter(({name}) => name !== '').map(({name, presence, type}) => ({name, presence, type})))
+                )
 
                 loadEvents()
                 onPress()

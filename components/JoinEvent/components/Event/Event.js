@@ -14,6 +14,7 @@ const Event = ({id, event, selected, onPress}) => {
 
     const submittedKey = `submitted-form?hostId=${hostId}&eventTitle=${title}&expiration=${expiration}`
 
+    const [expanded, setExpanded] = useState(false)
     const [completed, setCompleted] = useState(false)
     const [submitted, setSubmitted] = useState(false)
 
@@ -47,6 +48,10 @@ const Event = ({id, event, selected, onPress}) => {
     const borderTopWidth = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
+        if(selected) {
+            setExpanded(true)
+        }
+        
         const duration = 200
         const useNativeDriver = false
         const easing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
@@ -56,7 +61,7 @@ const Event = ({id, event, selected, onPress}) => {
             Animated.timing(paddingTop, {toValue: selected ? 5 : 0, duration, useNativeDriver, easing}),
             Animated.timing(paddingBottom, {toValue: selected ? 10 : 0, duration, useNativeDriver, easing}),
             Animated.timing(borderTopWidth, {toValue: selected ? 1 : 0, duration, useNativeDriver, easing})
-        ]).start()
+        ]).start(!selected ? () => setExpanded(false) : () => {})
 
     }, [selected])
 
@@ -92,17 +97,19 @@ const Event = ({id, event, selected, onPress}) => {
                     {submitted && <Image style = {styles.submitted} source = {require('./assets/submitted.png')}/>}
                 </View>
                 
-                <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
-                    <View style = {styles.fields}>
-                        {fields.map((field, i) => (
-                            <Field key = {i} field = {field} setInput = {setInput(i)}/>
-                        ))}
-                    </View>
+                {expanded &&
+                    <Animated.View style = {{...styles.body, maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']}), paddingTop, paddingBottom, borderTopWidth}}>
+                        <View style = {styles.fields}>
+                            {fields.map((field, i) => (
+                                <Field key = {i} field = {field} setInput = {setInput(i)}/>
+                            ))}
+                        </View>
 
-                    {error && <Error message = {error}/>}
-                    
-                    <Submit enabled = {completed} onPress = {onSubmitPress}/>
-                </Animated.View>
+                        {error && <Error message = {error}/>}
+                        
+                        <Submit enabled = {completed} onPress = {onSubmitPress}/>
+                    </Animated.View>
+                }
                 
             </TouchableOpacity>
         </View>
@@ -120,12 +127,12 @@ const styles = StyleSheet.create({
         elevation: 5,
         alignSelf: 'center',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 20,
     },
 
     container: {
         width: '94%',
-        marginBottom: 20,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
         alignItems: 'center',

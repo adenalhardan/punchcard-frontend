@@ -24,6 +24,7 @@ const Fields = ({fields, setFields}) => {
                 presence: 'required'
             } : field))))
         }
+
     }, [fields])
 
     const setName = (index) => (text) => {

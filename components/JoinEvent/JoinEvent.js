@@ -47,7 +47,7 @@ const JoinEvent = ({id, bluetooth}) => {
     return (
         <View style = {{...styles.container, width}}>
             <ScrollView 
-                contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
+                contentContainerStyle = {{...styles.list, paddingTop: top}} 
                 showsVerticalScrollIndicator = {false}
             >
                 {!bluetooth && <Message message = 'bluetooth'/>}
@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
     },
 
     list: {
-        paddingBottom: 60
+        paddingBottom: 60,
     }
 })
