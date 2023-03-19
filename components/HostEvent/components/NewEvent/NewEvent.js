@@ -12,21 +12,23 @@ const NewEvent = ({selected, id, loadEvents, onPress}) => {
     const modalPaddingBottom = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
-        const duration = 100
         const useNativeDriver = false
-        
+
+        const buttonDuration = 0
+        const modalDuration = 150
+
         const buttonEasing = selected ? Easing.out(Easing.ease) : Easing.in(Easing.ease)
         const modalEasing = selected ? Easing.in(Easing.ease) : Easing.out(Easing.ease)
 
         const buttonAnimation = Animated.timing(
             buttonMaxHeight, 
-            {toValue: selected ? 0 : 100, duration, useNativeDriver, easing: buttonEasing}
+            {toValue: selected ? 0 : 100, duration: buttonDuration, useNativeDriver, easing: buttonEasing}
         )
 
         const modalAnimation = Animated.parallel([
-            Animated.timing(modalMaxHeight, {toValue: selected ? 100 : 0, duration, useNativeDriver, easing: modalEasing}),
-            Animated.timing(modalPaddingTop, {toValue: selected ? 12 : 0, duration, useNativeDriver, easing: modalEasing}),
-            Animated.timing(modalPaddingBottom, {toValue: selected ? 10 : 0, duration, useNativeDriver, easing: modalEasing})
+            Animated.timing(modalMaxHeight, {toValue: selected ? 100 : 0, duration: modalDuration, useNativeDriver, easing: modalEasing}),
+            Animated.timing(modalPaddingTop, {toValue: selected ? 12 : 0, duration: modalDuration, useNativeDriver, easing: modalEasing}),
+            Animated.timing(modalPaddingBottom, {toValue: selected ? 10 : 0, duration: modalDuration, useNativeDriver, easing: modalEasing})
         ])
 
         Animated.sequence(selected ? [buttonAnimation, modalAnimation] : [modalAnimation, buttonAnimation]).start()

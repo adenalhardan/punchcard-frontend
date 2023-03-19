@@ -50,7 +50,7 @@ const App = () => {
 						setDevices(devices => new Set(devices.add(device)))
 					}
 				})
-
+				
 				BluetoothEvents.addListener('enabled', () => {
 					setBluetooth(true)
 				})

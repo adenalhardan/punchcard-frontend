@@ -1,62 +1,73 @@
-import {useEffect} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {useEffect, useState} from 'react'
+import {View, Text, FlatList, StyleSheet} from 'react-native'
 
 import Field from './components/Field/Field'
 
 const Fields = ({fields, setFields}) => {
     useEffect(() => {
         if(fields.length === 0 || fields[fields.length - 1].name !== '') {
-            setFields([...fields, {name: '', type: 'string', presence: 'required'}])
+            setFields(fields => [...fields, {
+                name: '', 
+                type: 'string', 
+                presence: 'required', 
+                id: parseInt(Date.now() * Math.random()),
+                isNew: true
+            }])
         }
 
     }, [fields])
 
     useEffect(() => {
         if(fields.length <= 2 && fields[0].presence === 'optional') {
-            setFields(fields.map((field, i) => (i === 0 ? {
-                name: field.name,
-                type: field.type,
+            setFields(fields => (fields.map((field, i) => (i === 0 ? {
+                ...field,
                 presence: 'required'
-            } : field)))
+            } : field))))
         }
-    })
+    }, [fields])
 
     const setName = (index) => (text) => {
-        setFields(fields.map((field, i) => (i === index ? {
-            name: text, 
-            type: field.type,
-            presence: field.presence
+        setFields(fields => fields.map((field, i) => (i === index ? {
+            ...field,
+            name: text
         } : field)))
     }
 
     const onTypePress = (index) => () => {
-        setFields(fields.map((field, i) => (i === index ? {
-            name: field.name,
+        setFields(fields => fields.map((field, i) => (i === index ? {
+            ...field,
             type: field.type === 'string' ? 'integer' : 'string',
-            presence: field.presence
         } : field)))
     }
 
     const onPresencePress = (index) => () => {
-        if(fields.length > 2 || (index === 0 && fields[0].presence === 'optional')) {
-            setFields(fields.map((field, i) => (i === index ? {
-                name: field.name,
-                type: field.type,
-                presence: field.presence === 'required' ? 'optional' : 'required'
+        if(fields.filter((_, i) => i !== index).some(({name, presence}) => name !== '' && presence === 'required')) {
+            setFields(fields => fields.map((field, i) => (i === index ? {
+                ...field,
+                presence: field.presence === 'required' ? 'optional' : 'required',
             } : field)))
         }
     }
 
-    const onDeletePress = (index) => () => {
-        if(fields.length > 1) {
-            let newFields = fields.filter((_, i) => i !== index)
+    const onDeletePress = (index) => (id, animation) => () => {
+        if(fields.length > 1 && index < fields.length - 1) {
+            animation(() => {
+                let newFields = fields.filter(field => field.id !== id)
 
-            if(newFields.every(({name, presence}) => name === '' || presence === 'optional')) {
-                newFields[0].presence = 'required'
-            }
+                if(newFields.every(({name, presence}) => name === '' || presence === 'optional')) {
+                    newFields[0].presence = 'required'
+                }
                 
-            setFields(newFields)
+                setFields(newFields)
+            })
         }
+    }
+
+    const onInsert = (index) => () => {
+        setFields(fields.map((field, i) => (i == index ? {
+            ...field,
+            isNew: false
+        } : field)))
     }
 
     return (
@@ -65,17 +76,19 @@ const Fields = ({fields, setFields}) => {
 
             {fields.map((field, index) => (
                 <Field 
-                    key = {index} 
-                    name = {field.name} 
-                    type = {field.type} 
-                    presence = {field.presence}
+                    key = {field.id}
+                    field = {field} 
 
                     setName = {setName(index)}
                     onTypePress = {onTypePress(index)} 
                     onPresencePress = {onPresencePress(index)}
                     onDeletePress = {onDeletePress(index)}
+
+                    onInsert = {onInsert(index)}
                 />
             ))}
+
+
         </View>
     )
 }

@@ -60,9 +60,7 @@ const HostEvent = ({id, bluetooth}) => {
                     loadEvents = {loadEvents}
                     onPress = {() => setSelected(selected === 0 ? -1 : 0)}
                 />}
-
                 
-
                 {bluetooth && connected && events.map((event, i) => (
                     <Event 
                         key = {i} 

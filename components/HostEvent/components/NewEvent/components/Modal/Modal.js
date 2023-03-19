@@ -13,7 +13,13 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
 
     const [title, setTitle] = useState('')
     const [hostName, setHostName] = useState('')
-    const [fields, setFields] = useState([{name: '', type: 'string', presence: 'required'}])
+    const [fields, setFields] = useState([{
+        name: '', 
+        type: 'string', 
+        presence: 'required', 
+        id: parseInt(Date.now() * Math.random()),
+        isNew: false
+    }])
 
     useEffect(() => {
         setComplete(
@@ -30,6 +36,10 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
 
                 loadEvents()
                 onPress()
+                
+                setTitle('')
+                setHostName('')
+                setFields([{name: '', type: 'string', presence: 'required'}])
 
             } catch(error) {
                 setError(error.message)
