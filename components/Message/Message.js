@@ -32,18 +32,18 @@ const styles = StyleSheet.create({
     container: {
         alignSelf: 'center',
         alignItems: 'center',
-        marginTop: 100
+        marginTop: '35%'
     },
 
     text: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#CACACA',
         fontWeight: '600'
     },
 
     image: {
-        height: 60,
-        width: 60,
+        height: 75,
+        width: 75,
         resizeMode: 'contain',
         tintColor: '#CACACA',
         marginBottom: 6

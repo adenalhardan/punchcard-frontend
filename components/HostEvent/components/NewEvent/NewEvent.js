@@ -20,7 +20,7 @@ const NewEvent = ({selected, id, loadEvents, onPress}) => {
 
         const useNativeDriver = false
 
-        const buttonDuration = 0
+        const buttonDuration = 50
         const modalDuration = 200
 
         const buttonEasing = selected ? Easing.out(Easing.ease) : Easing.in(Easing.ease)

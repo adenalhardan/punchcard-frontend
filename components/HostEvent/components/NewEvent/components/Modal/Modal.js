@@ -50,7 +50,7 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
     }
 
     return (
-        <TouchableOpacity style = {styles.shadow} onPress = {onPress}>
+        <TouchableOpacity style = {styles.shadow} onPress = {onPress} activeOpacity = {0.75}>
             <Animated.View style = {{
                 ...styles.container,
                 paddingTop, 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 5},
         shadowOpacity: 0.2,
         shadowRadius: 10,  
-        elevation: 5,
+        elevation: 5
     },
 
     input: {

@@ -47,7 +47,7 @@ const JoinEvent = ({id, bluetooth}) => {
     return (
         <View style = {{...styles.container, width}}>
             <ScrollView 
-                contentContainerStyle = {{...styles.list, paddingTop: top}} 
+                contentContainerStyle = {{...styles.list, paddingTop: top + 70}} 
                 showsVerticalScrollIndicator = {false}
             >
                 {!bluetooth && <Message message = 'bluetooth'/>}
@@ -56,7 +56,7 @@ const JoinEvent = ({id, bluetooth}) => {
 
                 {connected && bluetooth && events.map((event, i) => (
                     <Event 
-                        key = {i}
+                        key = {event.title + event.hostId}
                         id = {id}
                         event = {event}
                         selected = {selected === i} 

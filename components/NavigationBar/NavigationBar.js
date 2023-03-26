@@ -13,8 +13,8 @@ const NavigationBar = ({page, onPress, offset}) => {
     const underlineMax = (width * 3 / 4) - (underlineWidth / 2)
 
     return (
-        <View style = {{...styles.container, height: top + 40}}>
-            <View style = {{...styles.background, height: top + 40}}/>
+        <View style = {{...styles.container, height: top + 50}}>
+            <View style = {{...styles.background, height: top + 50}}/>
 
             <TouchableOpacity 
                 style = {{...styles.tab, opacity: page === 'join' ? 1 : 0.5}} 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     tab: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingBottom: 10,
+        paddingBottom: 15,
         height: '40%',
         width: '50%',
         flexDirection: 'row'
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     text: {
         color: '#212427',
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 18
     },
 
     joinImage: {

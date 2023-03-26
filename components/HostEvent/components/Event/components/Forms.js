@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7F8F9',
         marginBottom: 5,
         borderWidth: 1,
-        borderColor: '#DDE4E8'
+        borderColor: '#DDE4E8',
+        marginRight: 10, 
+        marginLeft: -4
     },
 
     keyText: {

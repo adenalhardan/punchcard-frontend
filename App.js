@@ -17,6 +17,7 @@ const App = () => {
 	const [page, setPage] = useState('joinEvent')
 	const ref = useRef(null)
 
+	const [mounted, setMounted] = useState(false)
 	const [loading, setLoading] = useState(true)
 	const [connected, setConnected] = useState(false)
 	const [bluetooth, setBluetooth] = useState(true)
@@ -33,7 +34,7 @@ const App = () => {
 
 	const offset = useRef(new Animated.Value(0)).current
 
-	useEffect(() => {
+	const loadName = () => {
 		(async () => {
 			try {
 				const prefix = await getPrefix()
@@ -44,31 +45,38 @@ const App = () => {
 
 				Bluetooth.broadcast(prefix + id)
 				Bluetooth.scan()
-			
-				BluetoothEvents.addListener('foundDevice', device => {
-					if(!devices.has(device) && device.startsWith(prefix)) {
-						setDevices(devices => new Set(devices.add(device)))
-					}
-				})
-				
-				BluetoothEvents.addListener('enabled', () => {
-					setBluetooth(true)
-				})
-
-				BluetoothEvents.addListener('disabled', () => {
-					setBluetooth(false)
-				})
 
 				setLoading(false)
 				setConnected(true)
 
 			} catch(error) {
 				setConnected(false)
+				setTimeout(loadName, 100)
 			}
 		})()
+	}
+
+	useEffect(() => {
+		BluetoothEvents.addListener('foundDevice', device => {
+			if(!devices.has(device) && device.startsWith(prefix)) {
+				setDevices(devices => new Set(devices.add(device)))
+			}
+		})
+		
+		BluetoothEvents.addListener('enabled', () => {
+			setBluetooth(true)
+		})
+
+		BluetoothEvents.addListener('disabled', () => {
+			setBluetooth(false)
+		})
+
+		loadName()
 
 		return () => {
 			BluetoothEvents.removeAllListeners('foundDevice')
+			BluetoothEvents.removeAllListeners('enabled')
+			BluetoothEvents.removeAllListeners('disabled')
 		}
 	}, [])
 

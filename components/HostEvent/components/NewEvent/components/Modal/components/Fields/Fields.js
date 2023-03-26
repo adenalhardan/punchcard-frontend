@@ -77,7 +77,7 @@ const Fields = ({fields, setFields}) => {
 
             {fields.map((field, index) => (
                 <Field 
-                    key = {field.id}
+                    key = {field.id + index}
                     field = {field} 
 
                     setName = {setName(index)}
@@ -88,8 +88,6 @@ const Fields = ({fields, setFields}) => {
                     onInsert = {onInsert(index)}
                 />
             ))}
-
-
         </View>
     )
 }

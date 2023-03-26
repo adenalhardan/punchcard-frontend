@@ -1,7 +1,6 @@
 ## To do
 * Check download button functionality with my phone
 * Check bluetooth disabled functionality with my phone
-* Add alert for bluetooth if its disabled?
-* Add animation for NewEvent
-* Add animation for Submissions
-* Separate event body into separate component?
+* Make Navigation bar bigger, bigger fonts
+* Make messages bigger and closer to center
+* Messages on Host screen are offset 

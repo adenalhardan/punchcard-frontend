@@ -47,7 +47,7 @@ const HostEvent = ({id, bluetooth}) => {
     return (
         <View style = {{...styles.container, width}}>
             <ScrollView 
-                contentContainerStyle = {{...styles.list, paddingTop: top + 60}} 
+                contentContainerStyle = {{...styles.list, paddingTop: top + 70}} 
                 showsVerticalScrollIndicator = {false}
             >
                 {!bluetooth && <Message message = 'bluetooth'/>}
@@ -63,7 +63,7 @@ const HostEvent = ({id, bluetooth}) => {
                 
                 {bluetooth && connected && events.map((event, i) => (
                     <Event 
-                        key = {i} 
+                        key = {event.title + event.hostId} 
                         event = {event}
                         selected = {selected === i + 1}
                         onPress = {() => setSelected((selected === i + 1) ? -1 : i + 1)}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#CACACA',
         fontWeight: '600',
         alignSelf: 'center',
