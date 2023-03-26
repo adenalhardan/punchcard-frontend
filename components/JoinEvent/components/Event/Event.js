@@ -72,7 +72,7 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WXACA', hostId, title, JSON.stringify(inputs)) // replace with id
+                await postForm('WXAEA', hostId, title, JSON.stringify(inputs)) // replace with id
 
                 onPress()
                 setSubmitted(true)
@@ -87,7 +87,7 @@ const Event = ({id, event, selected, onPress}) => {
 
     return (
         <View style = {styles.shadow}>
-            <TouchableOpacity style = {styles.container} onPress = {onPress}>
+            <TouchableOpacity style = {styles.container} onPress = {onPress} activeOpacity = {0.75}>
                 <View style = {styles.head}>
                     <View>
                         <Text style = {styles.title}>{title}</Text>
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
 
     head: {
         width: '90%',
-        height: 70,
+        height: 74,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -153,15 +153,15 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: '600',
         color: '#212427',
-        marginBottom: 4
+        marginBottom: 3
     },
 
     hostName: {
         fontStyle: 'italic',
-        fontSize: 16,
+        fontSize: 18,
         color: '#212427'
     },
 

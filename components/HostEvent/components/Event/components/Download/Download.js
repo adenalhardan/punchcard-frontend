@@ -38,7 +38,7 @@ export default Download
 const styles = StyleSheet.create({
     container: {
         width: '48%',
-        aspectRatio: 3.8
+        aspectRatio: 3.7
     },
 
     background: {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontWeight: '600',
-        fontSize: 16,
+        fontSize: 18,
         color: '#FFFFFF'
     },
     

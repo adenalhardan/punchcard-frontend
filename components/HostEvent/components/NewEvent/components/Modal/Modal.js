@@ -98,19 +98,20 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width: '80%',
+        width: '85%',
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 7,
-        fontSize: 16,
+        fontSize: 18,
         color: '#212427'
     },
 
     text: {
         fontWeight: '500',
-        fontSize: 16,
-        color: '#212427'
+        fontSize: 18,
+        color: '#212427',
+        marginBottom: 1
     },
 })

@@ -74,19 +74,20 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: '500',
         alignSelf: 'flex-start',
-        marginBottom: 2,
-        fontSize: 15,
-        color: '#212427'
+        marginBottom: 4,
+        fontSize: 18,
+        color: '#212427',
+        marginLeft: 2
     },
 
     button: {
-        marginTop: 5,
+        marginTop: 8,
         paddingHorizontal: 12
     },
 
     buttonText: {
         fontWeight: '600',
-        fontSize: 14,
+        fontSize: 16,
         color: '#2F9BF7'
     },
 
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
 
     keyText: {
         fontWeight: '600',
-        fontSize: 15,
+        fontSize: 16,
         color: '#566370'
     },
 

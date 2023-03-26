@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        aspectRatio: 7.8
+        aspectRatio: 7.4
     },
 
     text: {
         fontWeight: '600',
-        fontSize: 16,
+        fontSize: 18,
         color: '#FFFFFF'
     },
 

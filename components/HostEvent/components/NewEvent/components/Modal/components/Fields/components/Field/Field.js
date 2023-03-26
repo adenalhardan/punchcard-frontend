@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '600',
     },
 
     button: {
         paddingVertical: 4,
-        paddingHorizontal: 8,
+        paddingHorizontal: 9,
         borderRadius: 12,
         marginLeft: 6,
         justifyContent: 'center',
@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 7,
-        fontSize: 16
+        fontSize: 18
     },
 
     delete: {
-        height: 24,
-        width: 24,
+        height: 28,
+        width: 28,
         tintColor: '#E01C10',
         resizeMode: 'contain',
     }

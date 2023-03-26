@@ -32,18 +32,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        aspectRatio: 7.8
+        aspectRatio: 7.4
     },
 
     text: {
         fontWeight: '600',
-        fontSize: 16,
+        fontSize: 18,
         color: '#FFFFFF'
     },
 
     image: {
-        height: 25,
-        width: 25,
+        height: 28,
+        width: 28,
         resizeMode: 'contain',
         marginLeft: 6,
         tintColor: '#FFFFFF'

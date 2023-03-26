@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 7,
-        fontSize: 16
+        fontSize: 18
     },
 
     text: {
         fontWeight: '500',
         marginBottom: -2,
-        fontSize: 16,
+        fontSize: 18,
         color: '#212427'
     },
 
