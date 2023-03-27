@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        height: 55,
+        height: 60,
     },
 
     text: {
         fontWeight: '600',
-        fontSize: 18,
+        fontSize: 20,
         color: '#FFFFFF'
     },
 

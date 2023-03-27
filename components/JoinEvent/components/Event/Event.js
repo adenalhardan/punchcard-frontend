@@ -72,11 +72,16 @@ const Event = ({id, event, selected, onPress}) => {
     const onSubmitPress = () => {
         (async () => {
             try {
-                await postForm('WXAEA', hostId, title, JSON.stringify(inputs)) // replace with id
+                await postForm('XXATX', hostId, title, JSON.stringify(inputs)) // replace with id
 
                 onPress()
                 setSubmitted(true)
                 setError('')
+                setInputs(fields.map(({name}) => ({
+                    name: name,
+                    value: ''
+                })))
+
                 await AsyncStorage.setItem(submittedKey, 'true')
 
             } catch(error) {
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
 
     head: {
         width: '90%',
-        height: 74,
+        height: 72,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: '600',
         color: '#212427',
         marginBottom: 3

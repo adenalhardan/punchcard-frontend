@@ -16,7 +16,11 @@ const Field = ({field, setInput}) => {
                 }
             </View>
 
-            <TextInput style = {styles.input} onChangeText = {setInput}/>
+            <TextInput 
+                style = {styles.input} 
+                onChangeText = {setInput} 
+                keyboardType = {type === 'string' ? 'default' : 'numeric'}
+            />
         </View>
     )
 }

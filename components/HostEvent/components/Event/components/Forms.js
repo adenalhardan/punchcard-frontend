@@ -46,7 +46,7 @@ const Forms = ({keys, values}) => {
     } else {
         return (
             <TouchableWithoutFeedback style = {styles.container}>
-                <Text style = {styles.title}>No Submissions</Text>
+                <Text style = {{...styles.title, opacity: 0.5}}>No Submissions</Text>
             </TouchableWithoutFeedback>
         )
     }
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         alignSelf: 'flex-start',
         marginBottom: 4,
-        fontSize: 18,
+        fontSize: 16,
         color: '#212427',
         marginLeft: 2
     },

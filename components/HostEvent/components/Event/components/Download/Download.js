@@ -1,25 +1,29 @@
 import React from 'react'
 import {TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+
 import Share from 'react-native-share'
 import {Buffer} from 'buffer'
+import RNFetchBlob from 'rn-fetch-blob'
 
 const Download = ({title, keys, values}) => {
-    const data =  keys.join(',') + '\n' + values.map(row => row.join(',')).join('\n')
-
     const onPress = () => {
         (async () => {
-            const options = {
-            	title: title + ' submissions',
-                failOnCancel: false,
-                url: 'data:application/csv;base64,' + Buffer.from(data).toString('base64')
-            }
-
             try {
-                await Share.open(options)
+                const data =  keys.join(',') + '\n' + values.map(row => row.join(',')).join('\n')
+
+                const filename = `${title}.csv`
+                const path = RNFetchBlob.fs.dirs.DocumentDir + '/' + filename
+
+                await RNFetchBlob.fs.writeFile(path, data)
+                await Share.open({url: `file://${path}`, failOnCancel: false})
+
+                await RNFetchBlob.fs.unlink(path)
+
             } catch(error) {
                 console.error(error)
             }
+            
         })()
     }
 
