@@ -4,7 +4,11 @@ import LinearGradient from 'react-native-linear-gradient'
 
 const Submit = ({enabled, onPress}) => (
     <View style = {styles.container}>
-        <TouchableOpacity style = {enabled ? {} : {opacity: 0.5}} onPress = {enabled ? onPress : () => {}}>
+        <TouchableOpacity 
+            style = {enabled ? {} : {opacity: 0.5}} 
+            onPress = {enabled ? onPress : () => {}}
+            activeOpacity = {0.5}
+        >
             <LinearGradient colors = {['#5C9DF2', '#1E6FD9', '#0D65D9']} style={styles.button}>
             <Text style = {styles.text}>Submit</Text>
             <Image style = {styles.image} source = {require('./assets/submit.png')}/>

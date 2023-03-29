@@ -19,7 +19,7 @@ const EndEvent = ({event, onDelete}) => {
     }
 
     return (
-        <TouchableOpacity style = {styles.container} onPress = {onPress}>
+        <TouchableOpacity style = {styles.container} onPress = {onPress} activeOpacity = {0.5}>
             <LinearGradient colors = {['#FF4C40', '#EE3124', '#A10B01']} style = {styles.background}>
                 <Text style = {styles.text}>End Event</Text>
                 <Image style = {styles.image} source = {require('./assets/endEvent.png')}/>

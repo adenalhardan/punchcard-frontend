@@ -10,7 +10,9 @@ const Download = ({title, keys, values}) => {
     const onPress = () => {
         (async () => {
             try {
-                const data =  keys.join(',') + '\n' + values.map(row => row.join(',')).join('\n')
+                const data =  keys.map(key => `"${key}"`).join(',') 
+                    + '\n' 
+                    + values.map(row => row.map(value => `"${value}"`).join(',')).join('\n')
 
                 const filename = `${title}.csv`
                 const path = RNFetchBlob.fs.dirs.DocumentDir + '/' + filename
@@ -28,7 +30,7 @@ const Download = ({title, keys, values}) => {
     }
 
     return (
-        <TouchableOpacity style = {styles.container} onPress = {onPress}>
+        <TouchableOpacity style = {styles.container} onPress = {onPress} activeOpacity = {0.5}>
             <LinearGradient colors = {['#5C9DF2', '#1E6FD9', '#0D65D9']} style = {styles.background}>
                 <Text style = {styles.text}>Download</Text>
                 <Image style = {styles.image} source = {require('./assets/download.png')}/>

@@ -7,7 +7,7 @@ const Create = ({enabled, onPress}) => (
         <TouchableOpacity 
             onPress = {enabled ? onPress : () => {}} 
             style = {enabled ? {} : {opacity: 0.5}}
-            activeOpacity = {enabled ? 0.75 : 0.5}
+            activeOpacity = {0.5}
         >
             <LinearGradient colors = {['#65A66F', '#33A645', '#2B8C44']} style={styles.button}>
                 <Text style = {styles.text}>Create</Text>

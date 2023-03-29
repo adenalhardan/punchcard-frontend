@@ -3,7 +3,7 @@ import {TouchableOpacity, Text, Image, View, Animated, StyleSheet} from 'react-n
 import LinearGradient from 'react-native-linear-gradient'
 
 const Button = ({maxHeight, onPress}) => (
-    <TouchableOpacity style = {styles.shadow} onPress = {onPress} activeOpacity = {0.75}>
+    <TouchableOpacity style = {styles.shadow} onPress = {onPress} activeOpacity = {0.5}>
         <Animated.View style = {{
             ...styles.container,  
             maxHeight: maxHeight.interpolate({inputRange: [0, 100], outputRange: ['0%', '100%']})

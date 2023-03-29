@@ -63,7 +63,7 @@ const Field = ({field, setName, onTypePress, onPresencePress, onDeletePress, onI
             <View style = {{flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
                 <TextInput style = {styles.input} placeholder = "Field Name" value = {name} onChangeText = {setName}/>
 
-                <TouchableOpacity style = {styles.delete} onPress = {onDeletePress(id, deleteAnimation)} activeOpacity = {name !== '' ? 0.75 : 0.45}>
+                <TouchableOpacity style = {styles.delete} onPress = {onDeletePress(id, deleteAnimation)} activeOpacity = {name !== '' ? 0.5 : 1}>
                     <Image style = {styles.delete} source = {require('./assets/delete.png')}/>
                 </TouchableOpacity>
             </View>
