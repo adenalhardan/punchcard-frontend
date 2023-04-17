@@ -20,6 +20,7 @@ const Field = ({field, setInput}) => {
                 style = {styles.input} 
                 onChangeText = {setInput} 
                 keyboardType = {type === 'string' ? 'default' : 'numeric'}
+                returnKeyType = 'done'
             />
         </View>
     )
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: '500',
         marginBottom: -2,
-        fontSize: 18,
+        fontSize: 16,
         color: '#212427'
     },
 

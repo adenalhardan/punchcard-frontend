@@ -59,12 +59,12 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
             })}}>
                 <View style = {{flexDirection: 'column', justifyContent: 'center', marginBottom: 15}}>
                     <Text style = {styles.text}>Event Title</Text>
-                    <TextInput style = {styles.input} value = {title} onChangeText = {setTitle}/>
+                    <TextInput style = {styles.input} value = {title} onChangeText = {setTitle} returnKeyType = 'done'/>
                 </View>
 
                 <View style = {{flexDirection: 'column', justifyContent: 'center', marginBottom: 15}}>
                     <Text style = {styles.text}>Host Name</Text>
-                    <TextInput style = {styles.input} value = {hostName} onChangeText = {setHostName}/>
+                    <TextInput style = {styles.input} value = {hostName} onChangeText = {setHostName} returnKeyType = 'done'/>
                 </View>
                 
                 <Fields fields = {fields} setFields = {setFields}/>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontWeight: '500',
-        fontSize: 18,
+        fontSize: 16,
         color: '#212427',
         marginBottom: 1
     },

@@ -61,7 +61,7 @@ const Field = ({field, setName, onTypePress, onPresencePress, onDeletePress, onI
                 </TouchableOpacity>
             </View>
             <View style = {{flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
-                <TextInput style = {styles.input} placeholder = "Field Name" value = {name} onChangeText = {setName}/>
+                <TextInput style = {styles.input} placeholder = "Field Name" value = {name} onChangeText = {setName} returnKeyType = 'done'/>
 
                 <TouchableOpacity style = {styles.delete} onPress = {onDeletePress(id, deleteAnimation)} activeOpacity = {name !== '' ? 0.5 : 1}>
                     <Image style = {styles.delete} source = {require('./assets/delete.png')}/>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     button: {
         paddingVertical: 4,
         paddingHorizontal: 9,
-        borderRadius: 12,
+        borderRadius: 14,
         marginLeft: 6,
         justifyContent: 'center',
         alignItems: 'center'
