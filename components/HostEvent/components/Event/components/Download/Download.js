@@ -58,15 +58,15 @@ const styles = StyleSheet.create({
 
     text: {
         fontWeight: '600',
-        fontSize: 18,
+        fontSize: 16,
         color: '#FFFFFF'
     },
     
     image: {
-        height: 25,
-        width: 25,
+        height: 23,
+        width: 23,
         resizeMode: 'contain',
-        marginLeft: 10,
+        marginLeft: 8,
         tintColor: '#FFFFFF'
     }
 })
