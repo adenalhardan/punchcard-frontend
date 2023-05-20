@@ -1,4 +1,5 @@
 ## To do
-* Add splash screen
-* Add alert when bluetooth is turned off
-* Think about font sizes
+* Add loading screen
+* Think about create event modal
+* Add alert when bluetooth is disabled maybe
+* Finally, in Join Events implement loadEvents correctly

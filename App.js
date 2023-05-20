@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 import {getPrefix, getId} from './api'
 
+import Loading from './components/Loading/Loading'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import JoinEvent from './components/JoinEvent/JoinEvent'
 import HostEvent from './components/HostEvent/HostEvent'
@@ -93,9 +94,9 @@ const App = () => {
 
 	const viewabilityConfig = {itemVisiblePercentThreshold: 50}
 	const viewabilityConfigCallbackPairs = useRef([{viewabilityConfig, onViewableItemsChanged}])
-	
+
 	if(loading) {
-		return <View></View>
+		return <Loading/>
 	} else {
 		return (
 			<SafeAreaProvider>
