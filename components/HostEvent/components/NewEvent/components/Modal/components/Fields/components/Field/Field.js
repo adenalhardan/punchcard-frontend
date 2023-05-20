@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
 
     text: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '500',
     },
 
     button: {
-        paddingVertical: 4,
+        paddingVertical: 2,
         paddingHorizontal: 9,
         borderRadius: 14,
         marginLeft: 6,
@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
     },
 
     delete: {
-        height: 28,
-        width: 28,
+        height: 25,
+        width: 25,
         tintColor: '#E01C10',
         resizeMode: 'contain',
     }

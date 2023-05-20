@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width: '85%',
+        width: '90%',
         borderWidth: 1,
         borderColor: '#CACACA',
         borderRadius: 5,

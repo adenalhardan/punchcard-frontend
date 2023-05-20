@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '600',
         color: '#212427',
         marginBottom: 3
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 
     hostName: {
         fontStyle: 'italic',
-        fontSize: 18,
+        fontSize: 16,
         color: '#212427'
     },
 

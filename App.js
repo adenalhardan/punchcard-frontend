@@ -102,7 +102,7 @@ const App = () => {
 			<SafeAreaProvider>
 				<NavigationBar page = {page} onPress = {onPress} offset = {offset}/>
 				<View style = {styles.container}>
-					<FlatList
+					<Animated.FlatList
 						horizontal
 						pagingEnabled
 						showsHorizontalScrollIndicator = {false}
@@ -116,7 +116,7 @@ const App = () => {
 
 						onScroll = {Animated.event(
 							[{nativeEvent: {contentOffset: {x: offset}}}], 
-							{useNativeDriver: false}
+							{useNativeDriver: true}
 						)}
 					/>
 				</View>

@@ -32,11 +32,13 @@ const NavigationBar = ({page, onPress, offset}) => {
                 <Image style = {styles.hostImage} source = {require('./assets/host.png')}/>
             </TouchableOpacity>
 
-            <Animated.View style = {{...styles.underline, left: offset.interpolate({
-                inputRange: [0, width], 
-                outputRange: [underlineMin, underlineMax],
-                extrapolate: 'clamp'
-            })}}/>
+            <Animated.View style = {{...styles.underline, transform: [{translateX:
+                offset.interpolate({
+                    inputRange: [0, width], 
+                    outputRange: [underlineMin, underlineMax],
+                    extrapolate: 'clamp'
+                })
+            }]}}/>
         </View>
     )
 }
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
     text: {
         color: '#212427',
         fontWeight: '500',
-        fontSize: 18
+        fontSize: 16
     },
 
     joinImage: {
