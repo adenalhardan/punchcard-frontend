@@ -11,7 +11,7 @@ const Message = ({message}) => {
     const text = {
         'noEvents': 'No Events Near You',
         'disconnected': 'No Internet Connection',
-        'bluetooth': 'Please Enable Bluetooth'
+        'bluetooth': 'Bluetooth Disabled'
     }
 
     return (

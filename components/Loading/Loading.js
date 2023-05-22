@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {View, Image, StyleSheet, Animated, Easing} from 'react-native'
+import {SafeAreaView, Image, StyleSheet, Animated, Easing} from 'react-native'
 
 const Loading = () => {
 	const rotate = new Animated.Value(0)
@@ -16,7 +16,7 @@ const Loading = () => {
 	}, [])
 
 	return (
-		<View style = {styles.container}>
+		<SafeAreaView style = {styles.container}>
 			<Image source = {require('./assets/appIcon.png')} style = {styles.appIcon}/>
 			<Animated.Image 
 				source = {require('./assets/loading.png')} 
@@ -27,7 +27,7 @@ const Loading = () => {
 					})
 				}]}}
 			/>	
-		</View>
+		</SafeAreaView>
 	)
 }
 

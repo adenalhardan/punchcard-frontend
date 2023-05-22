@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        paddingVertical: 2,
+        paddingVertical: 3,
         paddingHorizontal: 9,
         borderRadius: 14,
         marginLeft: 6,

@@ -6,84 +6,89 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	private var centralManager: CBCentralManager!
 	private var peripheralManager: CBPeripheralManager!
 	
-	let foundDevice = "foundDevice"
 	let enabled = "enabled"
 	let disabled = "disabled"
+	let discovered = "discovered"
+	
+	var state: String
+	var listening: Bool
 	
 	override init() {
+		state = disabled
+		listening = false
+		
 		super.init()
 		
 		centralManager = CBCentralManager(delegate: self, queue: nil)
 		peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
 	}
 	
+	override func startObserving() {
+		super.startObserving()
+		
+		listening = true
+		sendEvent(withName: state, body: nil)
+	}
+	
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
 		switch central.state {
 			case .poweredOn:
-				sendEvent(withName: enabled, body: nil)
+				if(listening) {
+					sendEvent(withName: enabled, body: nil)
+				}
+			
+				state = enabled
 				break
 			
-			case .poweredOff:
-				sendEvent(withName: disabled, body: nil)
-				break
+			case .poweredOff, .resetting, .unauthorized, .unsupported, .unknown:
+				if(listening) {
+					sendEvent(withName: disabled, body: nil)
+				}
 			
-			case .resetting:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unauthorized:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unsupported:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unknown:
-				sendEvent(withName: disabled, body: nil)
+				state = disabled
 				break
 			
 			@unknown default:
-				sendEvent(withName: disabled, body: nil)
+				if(listening) {
+					sendEvent(withName: disabled, body: nil)
+				}
+			
+				state = disabled
 				break
-		}
-	}
-	
-	func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-		if peripheral.name != nil {
-			sendEvent(withName: foundDevice, body: peripheral.name!)
 		}
 	}
 	
 	func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
 		switch peripheral.state {
 			case .poweredOn:
-				sendEvent(withName: enabled, body: nil)
+				if(listening) {
+					sendEvent(withName: enabled, body: nil)
+				}
+			
+				state = enabled
 				break
 			
-			case .poweredOff:
-				sendEvent(withName: disabled, body: nil)
-				break
+			case .poweredOff, .resetting, .unauthorized, .unsupported, .unknown:
+				if(listening) {
+					sendEvent(withName: disabled, body: nil)
+				}
 			
-			case .resetting:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unauthorized:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unsupported:
-				sendEvent(withName: disabled, body: nil)
-				break
-			
-			case .unknown:
-				sendEvent(withName: disabled, body: nil)
+				state = disabled
 				break
 			
 			@unknown default:
-				sendEvent(withName: disabled, body: nil)
+				if(listening) {
+					sendEvent(withName: disabled, body: nil)
+				}
+			
+				state = disabled
 				break
+		}
+	}
+	
+	func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+		if peripheral.name != nil {
+			sendEvent(withName: discovered, body: peripheral.name!)
 		}
 	}
 	
@@ -117,6 +122,6 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	}
 	
 	override func supportedEvents() -> [String]! {
-		return [foundDevice, enabled, disabled]
+		return [enabled, disabled, discovered]
 	}
 }

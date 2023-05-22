@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef} from 'react'
-import {FlatList, View, StyleSheet, SafeAreaView, Animated} from 'react-native'
+import {FlatList, View, StyleSheet, Animated} from 'react-native'
 
 import {NativeModules, NativeEventEmitter} from 'react-native'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
@@ -27,11 +27,11 @@ const App = () => {
 	const [id, setId] = useState(null)
 	
 	const pages = [
-		{key: 'join', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
+		{key: 'join', render: () => <JoinEvent id = {id} ids = {ids} bluetooth = {bluetooth}/>},
 		{key: 'host', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
 	]
 	
-	const [devices, setDevices] = useState(new Set())
+	const [ids, setIds] = useState(new Set())
 
 	const offset = useRef(new Animated.Value(0)).current
 
@@ -58,12 +58,6 @@ const App = () => {
 	}
 
 	useEffect(() => {
-		BluetoothEvents.addListener('foundDevice', device => {
-			if(!devices.has(device) && device.startsWith(prefix)) {
-				setDevices(devices => new Set(devices.add(device)))
-			}
-		})
-		
 		BluetoothEvents.addListener('enabled', () => {
 			setBluetooth(true)
 		})
@@ -72,10 +66,16 @@ const App = () => {
 			setBluetooth(false)
 		})
 
+		BluetoothEvents.addListener('discovered', name => {
+			if(name.startsWith(prefix) && !ids.has(name.slice(prefix.length))) {
+				setIds(ids => new Set(ids.add(name.slice(prefix.length))))
+			}
+		})
+
 		loadName()
 
 		return () => {
-			BluetoothEvents.removeAllListeners('foundDevice')
+			BluetoothEvents.removeAllListeners('discovered')
 			BluetoothEvents.removeAllListeners('enabled')
 			BluetoothEvents.removeAllListeners('disabled')
 		}

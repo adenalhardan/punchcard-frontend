@@ -7,7 +7,7 @@ import {getEvents} from '../../api'
 import Event from './components/Event/Event'
 import Message from '../Message/Message'
 
-const JoinEvent = ({id, bluetooth}) => {
+const JoinEvent = ({id, ids, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
     
@@ -19,6 +19,29 @@ const JoinEvent = ({id, bluetooth}) => {
     const loadEvents = () => {
         (async () => {
             try {
+                let events = []
+
+                ids.forEach(id => {
+                    (async () => {
+                        const response = await getEvents(id)
+
+                        if(!connected) {
+                            setConnected(true)
+                        }
+
+                        events.push(...response.map(({title, host_name, host_id, fields, expiration}) => ({
+                            title: title, 
+                            hostName: host_name,
+                            hostId: host_id,
+                            fields: fields,
+                            expiration: expiration
+                        })))
+                    })()
+                })
+    
+                setEvents(events)
+                
+                /*
                 const events = await getEvents(id) 
 
                 setConnected(true)
@@ -30,6 +53,7 @@ const JoinEvent = ({id, bluetooth}) => {
                     fields: fields,
                     expiration: expiration
                 })))
+                */
 
             } catch(error) {
                 setConnected(false)
