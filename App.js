@@ -1,7 +1,5 @@
 import {useEffect, useState, useRef} from 'react'
-import {FlatList, View, StyleSheet, Animated} from 'react-native'
-
-import {NativeModules, NativeEventEmitter} from 'react-native'
+import {FlatList, View, StyleSheet, Animated, NativeModules, NativeEventEmitter} from 'react-native'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 import {getPrefix, getId} from './api'
@@ -15,44 +13,34 @@ const {Bluetooth} = NativeModules
 const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
 const App = () => {
-	const [page, setPage] = useState('joinEvent')
+	const [page, setPage] = useState('join')
 	const ref = useRef(null)
 
-	const [mounted, setMounted] = useState(false)
 	const [loading, setLoading] = useState(true)
-	const [connected, setConnected] = useState(false)
 	const [bluetooth, setBluetooth] = useState(true)
-
-	const [prefix, setPrefix] = useState(null)
-	const [id, setId] = useState(null)
 	
 	const pages = [
-		{key: 'join', render: () => <JoinEvent id = {id} ids = {ids} bluetooth = {bluetooth}/>},
+		{key: 'join', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
 		{key: 'host', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
 	]
-	
-	const [ids, setIds] = useState(new Set())
 
 	const offset = useRef(new Animated.Value(0)).current
 
-	const loadName = () => {
+	const [id, setId] = useState(null)
+
+	const loadId = () => {
 		(async () => {
 			try {
-				const prefix = await getPrefix()
 				const id = await getId()
-
-				setPrefix(prefix)
 				setId(id)
 
-				Bluetooth.broadcast(prefix + id)
+				Bluetooth.broadcast(id)
 				Bluetooth.scan()
 
 				setLoading(false)
-				setConnected(true)
 
 			} catch(error) {
-				setConnected(false)
-				setTimeout(loadName, 100)
+				setTimeout(loadId, 100)
 			}
 		})()
 	}
@@ -66,16 +54,9 @@ const App = () => {
 			setBluetooth(false)
 		})
 
-		BluetoothEvents.addListener('discovered', name => {
-			if(name.startsWith(prefix) && !ids.has(name.slice(prefix.length))) {
-				setIds(ids => new Set(ids.add(name.slice(prefix.length))))
-			}
-		})
-
-		loadName()
+		loadId()
 
 		return () => {
-			BluetoothEvents.removeAllListeners('discovered')
 			BluetoothEvents.removeAllListeners('enabled')
 			BluetoothEvents.removeAllListeners('disabled')
 		}

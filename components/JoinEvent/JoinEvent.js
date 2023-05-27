@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react'
-import {View, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import {useState, useEffect, useRef} from 'react'
+import {View, StyleSheet, useWindowDimensions, Text, ScrollView, NativeModules, NativeEventEmitter} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
@@ -7,54 +7,36 @@ import {getEvents} from '../../api'
 import Event from './components/Event/Event'
 import Message from '../Message/Message'
 
-const JoinEvent = ({id, ids, bluetooth}) => {
+const {Bluetooth} = NativeModules
+const BluetoothEvents = new NativeEventEmitter(Bluetooth)
+
+const JoinEvent = ({id, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
-    
-    const [selected, setSelected] = useState(-1)
-    const [events, setEvents] = useState([])
 
     const [connected, setConnected] = useState(false)
+    const [selected, setSelected] = useState(-1)
+
+    const [peerIds, setPeerIds] = useState(new Set())
+    const [events, setEvents] = useState([])
 
     const loadEvents = () => {
         (async () => {
             try {
-                let events = []
+                const responses = await Promise.all(
+                    [...peerIds].map(peerId => getEvents(peerId))
+                )
 
-                ids.forEach(id => {
-                    (async () => {
-                        const response = await getEvents(id)
-
-                        if(!connected) {
-                            setConnected(true)
-                        }
-
-                        events.push(...response.map(({title, host_name, host_id, fields, expiration}) => ({
-                            title: title, 
-                            hostName: host_name,
-                            hostId: host_id,
-                            fields: fields,
-                            expiration: expiration
-                        })))
-                    })()
-                })
-    
-                setEvents(events)
-                
-                /*
-                const events = await getEvents(id) 
-
-                setConnected(true)
-
-                setEvents(events.map(({title, host_name, host_id, fields, expiration}) => ({
+                setEvents(responses.flat(2).map(({title, host_name, host_id, fields, expiration}) => ({
                     title: title, 
                     hostName: host_name,
                     hostId: host_id,
                     fields: fields,
                     expiration: expiration
                 })))
-                */
 
+                setConnected(true)
+                
             } catch(error) {
                 setConnected(false)
             }
@@ -62,10 +44,19 @@ const JoinEvent = ({id, ids, bluetooth}) => {
     }
 
     useEffect(() => {
-        loadEvents()
-        const interval = setInterval(loadEvents, 5000)
+        BluetoothEvents.addListener('discovered', peerId => {
+            if(!peerIds.has(peerId)) {
+                setPeerIds(peerIds => new Set(peerIds.add(peerId)))
+            }
+        })
 
-        return () => clearInterval(interval)
+        loadEvents()
+        const interval = setInterval(loadEvents, 2000)
+
+        return () => {
+            BluetoothEvents.removeAllListeners('discovered')
+            clearInterval(interval)
+        }
     }, [])
 
     return (

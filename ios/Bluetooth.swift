@@ -6,9 +6,11 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	private var centralManager: CBCentralManager!
 	private var peripheralManager: CBPeripheralManager!
 	
-	let enabled = "enabled"
-	let disabled = "disabled"
-	let discovered = "discovered"
+	let serviceUUID: CBUUID = CBUUID(string: "053462F7-2700-42EE-B7D5-1B3D4D5491A5")
+	
+	let enabled: String = "enabled"
+	let disabled: String = "disabled"
+	let discovered: String = "discovered"
 	
 	var state: String
 	var listening: Bool
@@ -16,7 +18,6 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	override init() {
 		state = disabled
 		listening = false
-		
 		super.init()
 		
 		centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -87,33 +88,22 @@ class Bluetooth: RCTEventEmitter, CBCentralManagerDelegate, CBPeripheralManagerD
 	}
 	
 	func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-		if peripheral.name != nil {
-			sendEvent(withName: discovered, body: peripheral.name!)
+		if(advertisementData["kCBAdvDataLocalName"] != nil) {
+			sendEvent(withName: discovered, body: advertisementData["kCBAdvDataLocalName"]!)
 		}
 	}
 	
 	@objc func scan() {
-		centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+		centralManager.scanForPeripherals(withServices: [serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
 	}
-	
+		
 	@objc func broadcast(_ name: NSString) {
-		let serviceUUID: CBUUID = CBUUID(string: "00778c48-9147-11ed-a1eb-0242ac120002")
-		let characteristicUUID: CBUUID = CBUUID(string: "31cdc2e4-9147-11ed-a1eb-0242ac120002")
-		
 		let mutableService: CBMutableService = CBMutableService(type: serviceUUID, primary: true)
-		let mutableCharacteristic: CBMutableCharacteristic = CBMutableCharacteristic(
-			type: characteristicUUID,
-			properties: [.read, .write],
-			value: nil,
-			permissions: [.writeable, .readable]
-		)
-		
-		mutableService.characteristics = [mutableCharacteristic]
 		peripheralManager.add(mutableService)
 		
 		peripheralManager.startAdvertising([
 			CBAdvertisementDataServiceUUIDsKey: [serviceUUID],
-			CBAdvertisementDataLocalNameKey: name
+			CBAdvertisementDataLocalNameKey: name,
 		])
 	}
 	
