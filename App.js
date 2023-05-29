@@ -6,8 +6,8 @@ import {getPrefix, getId} from './api'
 
 import Loading from './components/Loading/Loading'
 import NavigationBar from './components/NavigationBar/NavigationBar'
-import JoinEvent from './components/JoinEvent/JoinEvent'
-import HostEvent from './components/HostEvent/HostEvent'
+import Join from './components/Join/Join'
+import Host from './components/Host/Host'
 
 const {Bluetooth} = NativeModules
 const BluetoothEvents = new NativeEventEmitter(Bluetooth)
@@ -20,8 +20,8 @@ const App = () => {
 	const [bluetooth, setBluetooth] = useState(true)
 	
 	const pages = [
-		{key: 'join', render: () => <JoinEvent id = {id} bluetooth = {bluetooth}/>},
-		{key: 'host', render: () => <HostEvent id = {id} bluetooth = {bluetooth}/>}
+		{key: 'join', render: () => <Join id = {id} bluetooth = {bluetooth}/>},
+		{key: 'host', render: () => <Host id = {id} bluetooth = {bluetooth}/>}
 	]
 
 	const offset = useRef(new Animated.Value(0)).current

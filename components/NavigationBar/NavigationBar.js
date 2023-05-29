@@ -68,17 +68,15 @@ const styles = StyleSheet.create({
     tab: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: '40%',
+        height: 50,
         width: '50%',
         flexDirection: 'row',
-        paddingBottom: 15,
     },
 
     text: {
         color: '#212427',
         fontWeight: '500',
-        fontSize: 16,
-        paddingBottom: 15,
+        fontSize: 16
     },
 
     joinImage: {
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
         width: 28,
         marginLeft: 5,
         resizeMode: 'contain',
-        tintColor: '#212427',
+        tintColor: '#212427'
     },
 
     hostImage: {
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
         width: 35,
         marginLeft: 8,
         resizeMode: 'contain',
-        tintColor: '#212427',
+        tintColor: '#212427'
     },
 
     underline: {

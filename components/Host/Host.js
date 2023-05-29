@@ -8,7 +8,7 @@ import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
 import Message from '../Message/Message'
 
-const HostEvent = ({id, bluetooth}) => {
+const Host = ({id, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
 
@@ -77,7 +77,7 @@ const HostEvent = ({id, bluetooth}) => {
     )
 }
 
-export default HostEvent
+export default Host
 
 const styles = StyleSheet.create({
     container: {

@@ -10,7 +10,7 @@ import Message from '../Message/Message'
 const {Bluetooth} = NativeModules
 const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
-const JoinEvent = ({id, bluetooth}) => {
+const Join = ({id, bluetooth}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
 
@@ -27,12 +27,11 @@ const JoinEvent = ({id, bluetooth}) => {
                     [...peerIds].map(peerId => getEvents(peerId))
                 )
 
-                setEvents(responses.flat(2).map(({title, host_name, host_id, fields, expiration}) => ({
+                setEvents(responses.flat(2).map(({title, host_name, host_id, fields}) => ({
                     title: title, 
                     hostName: host_name,
                     hostId: host_id,
-                    fields: fields,
-                    expiration: expiration
+                    fields: fields
                 })))
 
                 setConnected(true)
@@ -83,7 +82,7 @@ const JoinEvent = ({id, bluetooth}) => {
     )
 }
 
-export default JoinEvent
+export default Join
 
 const styles = StyleSheet.create({
     container: {
