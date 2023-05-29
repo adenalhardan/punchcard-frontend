@@ -8,21 +8,17 @@ import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
 import Message from '../Message/Message'
 
-const Host = ({id, bluetooth}) => {
+const Host = ({id, bluetooth, connected, setConnected}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
 
     const [selected, setSelected] = useState(-1)
     const [events, setEvents] = useState([])
 
-    const [connected, setConnected] = useState(false)
-
     const loadEvents = () => {
         (async () => {
             try {
                 const events = await getEvents(id)
-
-                setConnected(true)
 
                 setEvents(events.map(({title, host_name, host_id, fields}) => ({
                     title: title, 
@@ -30,6 +26,8 @@ const Host = ({id, bluetooth}) => {
                     hostId: host_id,
                     fields: fields
                 })))
+
+                setConnected(true)
 
             } catch(error) {
                 setConnected(false)

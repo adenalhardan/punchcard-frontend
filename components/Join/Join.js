@@ -10,11 +10,10 @@ import Message from '../Message/Message'
 const {Bluetooth} = NativeModules
 const BluetoothEvents = new NativeEventEmitter(Bluetooth)
 
-const Join = ({id, bluetooth}) => {
+const Join = ({id, bluetooth, connected, setConnected}) => {
     const {width} = useWindowDimensions()
     const {top} = useSafeAreaInsets()
 
-    const [connected, setConnected] = useState(false)
     const [selected, setSelected] = useState(-1)
 
     const [peerIds, setPeerIds] = useState(new Set())
@@ -34,7 +33,9 @@ const Join = ({id, bluetooth}) => {
                     fields: fields
                 })))
 
-                setConnected(true)
+                if(peerIds.size > 0) {
+                    setConnected(true)
+                }
                 
             } catch(error) {
                 setConnected(false)
