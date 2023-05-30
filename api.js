@@ -24,19 +24,6 @@ export const getId = async () => {
     return storedId
 }
 
-export const getPrefix = async () => {
-    const endpoint = url + '/get-prefix'
-
-    const response = await fetch(endpoint)
-    const {prefix} = await response.json()
-
-    if(prefix === undefined) {
-        throw 'prefix not in response'
-    }
-
-    return prefix
-}
-
 export const postEvent = async (hostId, title, hostName, fields) => {
     const endpoint = url + '/post-event'
 
