@@ -4,12 +4,11 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import {deleteEvent} from '../../../../../../api'
 
-const EndEvent = ({event, onDelete}) => {
+const EndEvent = ({id, title, onDelete}) => {
     const onPress = () => {
         (async () => {
             try {
-                const {hostId, title} = event
-                await deleteEvent(hostId, title)
+                await deleteEvent(id, title)
                 onDelete()
 
             } catch(error) {

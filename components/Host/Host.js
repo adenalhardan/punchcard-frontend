@@ -1,8 +1,9 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {View, StyleSheet, useWindowDimensions, Image, Text, ScrollView} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
+import {useInterval} from '../../hooks'
 
 import Event from './components/Event/Event'
 import NewEvent from './components/NewEvent/NewEvent'
@@ -18,12 +19,11 @@ const Host = ({id, bluetooth, connected, setConnected}) => {
     const loadEvents = () => {
         (async () => {
             try {
-                const events = await getEvents(id)
+                const response = await getEvents(id)
 
-                setEvents(events.map(({title, host_name, host_id, fields}) => ({
+                setEvents(response.map(({title, host_name, fields}) => ({
                     title: title, 
                     hostName: host_name,
-                    hostId: host_id,
                     fields: fields
                 })))
 
@@ -35,12 +35,8 @@ const Host = ({id, bluetooth, connected, setConnected}) => {
         })()
     }
 
-    useEffect(() => {
-        loadEvents()
-        const interval = setInterval(loadEvents, 5000)
-
-        return () => clearInterval(interval)
-    }, [])
+    useEffect(loadEvents, [])
+    useInterval(loadEvents, 5000)
 
     return (
         <View style = {{...styles.container, width}}>
@@ -61,14 +57,15 @@ const Host = ({id, bluetooth, connected, setConnected}) => {
                 
                 {bluetooth && connected && events.map((event, i) => (
                     <Event 
-                        key = {event.title + event.hostId} 
+                        key = {event.title + id} 
                         event = {event}
+                        id = {id}
                         selected = {selected === i + 1}
                         onPress = {() => setSelected((selected === i + 1) ? -1 : i + 1)}
                         loadEvents = {loadEvents}
                     />
                 ))}
-
+              
                 {bluetooth && connected && events.length === 0 && <Text style = {styles.text}>No Events</Text>}
             </ScrollView>
         </View>

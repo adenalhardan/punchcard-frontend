@@ -9,8 +9,8 @@ import Download from './components/Download/Download'
 import EndEvent from './components/EndEvent/EndEvent'
 import Forms from './components/Forms'
 
-const Event = ({event, selected, onPress, loadEvents}) => {
-    const {title, hostName, hostId, fields} = event
+const Event = ({event, id, selected, onPress, loadEvents}) => {
+    const {title, hostName, fields} = event
 
     const [expanded, setExpanded] = useState(false)
     
@@ -19,7 +19,7 @@ const Event = ({event, selected, onPress, loadEvents}) => {
     const loadForms = () => {
         (async () => {
             try {
-                const forms = await getForms(hostId, title)
+                const forms = await getForms(id, title)
                 setForms(forms)
 
             } catch(error) {
@@ -83,7 +83,7 @@ const Event = ({event, selected, onPress, loadEvents}) => {
                                 values = {forms.map(({fields}) => fields.map(({value}) => value))}
                             />
 
-                            <EndEvent event = {event} onDelete = {onDelete}/>
+                            <EndEvent id = {id} title = {title} onDelete = {onDelete}/>
                         </View>
 
                         <Forms 

@@ -44,7 +44,7 @@ const Modal = ({id, loadEvents, onPress, maxHeight, paddingTop, paddingBottom}) 
                 setFields([{name: '', type: 'string', presence: 'required'}])
 
             } catch(error) {
-                setError(error.message)
+                setError(error)
             }
         })()
     }

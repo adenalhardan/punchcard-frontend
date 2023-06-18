@@ -3,6 +3,7 @@ import {View, StyleSheet, useWindowDimensions, Text, ScrollView, NativeModules, 
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {getEvents} from '../../api'
+import {useInterval} from '../../hooks'
 
 import Event from './components/Event/Event'
 import Message from '../Message/Message'
@@ -51,13 +52,13 @@ const Join = ({id, bluetooth, connected, setConnected}) => {
         })
 
         loadEvents()
-        const interval = setInterval(loadEvents, 2000)
 
         return () => {
             BluetoothEvents.removeAllListeners('discovered')
-            clearInterval(interval)
         }
     }, [])
+
+    useInterval(loadEvents, 1000)
 
     return (
         <View style = {{...styles.container, width}}>

@@ -18,7 +18,6 @@ export const getId = async () => {
 
         await AsyncStorage.setItem(key, id)
         return id
-
     } 
         
     return storedId

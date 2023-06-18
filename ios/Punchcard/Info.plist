@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -30,11 +32,7 @@
 		<dict/>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This app requires Bluetooth to broadcast events and submit forms</string>
-	<key>NSBluetoothPeripheralUsageDescription </key>
-	<string>This app requires Bluetooth to broadcast events and submit forms</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>This app requires Bluetooth to communicate with nearby users</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

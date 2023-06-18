@@ -501,6 +501,7 @@
 				DEVELOPMENT_TEAM = J44B6TTFD7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Punchcard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -528,6 +529,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J44B6TTFD7;
 				INFOPLIST_FILE = Punchcard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
