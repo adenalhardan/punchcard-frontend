@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from 'react'
 import {View, TouchableOpacity, Text, Animated, StyleSheet, Easing} from 'react-native'
 
 import {getForms} from '../../../../api'
+import {useInterval} from '../../../../hooks'
 
 import FormCount from './components/FormCount/FormCount'
 
@@ -33,12 +34,8 @@ const Event = ({event, id, selected, onPress, loadEvents}) => {
         onPress()
     }
     
-    useEffect(() => {
-        loadForms()
-        const interval = setInterval(loadForms, 5000)
-
-        return () => clearInterval(interval)
-    }, [])
+    useEffect(loadForms, [])
+    useInterval(loadForms, 2000)
 
     const maxHeight = useRef(new Animated.Value(0)).current
     const paddingTop = useRef(new Animated.Value(0)).current
